@@ -1,0 +1,853 @@
+# AIRZONE GROUP — MANDATORY BUSINESS GROWTH FEATURES
+
+These features are not optional design ideas. Build the architecture and UI so they are functional and manageable through the admin dashboard.
+
+---
+
+# 1. WHATSAPP BUSINESS CONVERSION SYSTEM
+
+Implement separate WhatsApp conversion flows for the two Airzone divisions.
+
+## LOGISTICS
+
+CTA:
+
+**Talk to Logistics**
+
+or
+
+**Chat with a Logistics Expert**
+
+Use a configurable WhatsApp number from Admin Settings.
+
+Pre-filled message example:
+
+> Hello Airzone Logistics, I would like assistance with a logistics/customs clearance requirement.
+
+For specific services, dynamically generate a more relevant message.
+
+Example:
+
+> Hello Airzone Logistics, I need customs clearance assistance for a shipment from [Origin] to [Destination].
+
+---
+
+## TRAVEL & TOURISM
+
+CTA:
+
+**Plan My Trip on WhatsApp**
+
+Pre-filled message:
+
+> Hello Airzone Travels & Tourism, I would like assistance planning my trip.
+
+If the customer is viewing a package:
+
+> Hello Airzone Travel Team, I am interested in the [Package Name] package.
+
+Do not hardcode phone numbers.
+
+Store WhatsApp numbers in:
+
+**Admin → Website Settings → WhatsApp**
+
+Allow separate numbers for:
+
+* Logistics
+* Travel
+
+Track WhatsApp clicks through analytics.
+
+---
+
+# 2. ENGLISH + ARABIC FROM DAY ONE
+
+This is a core requirement.
+
+Default language:
+
+**English**
+
+Secondary language:
+
+**Arabic**
+
+Header language selector:
+
+**EN | العربية**
+
+When Arabic is selected:
+
+* Switch to RTL
+* Correctly mirror navigation
+* Correctly align text
+* Mirror appropriate icons
+* Preserve image composition
+* Support Arabic forms
+* Support Arabic validation messages
+* Support Arabic SEO metadata
+* Support Arabic page titles
+* Support Arabic Open Graph metadata
+
+Do NOT build English first and manually translate later.
+
+Build the application with proper internationalization from the beginning.
+
+---
+
+## LANGUAGE URL STRUCTURE
+
+Use a technically sound architecture such as:
+
+/en/
+
+/ar/
+
+or another SEO-friendly architecture.
+
+Implement:
+
+* hreflang
+* language-specific canonical URLs
+* language-specific metadata
+* language-specific sitemap handling
+
+Example:
+
+English:
+
+/en/logistics/customs-clearance
+
+Arabic:
+
+/ar/logistics/customs-clearance
+
+---
+
+# 3. GOOGLE MAPS + LOCAL SEO
+
+Create a professional location/contact section.
+
+If Airzone has physical offices, display:
+
+* Address
+* Google Maps location
+* Opening hours
+* Phone
+* Email
+* WhatsApp
+
+Use an embedded Google Map or Google Maps link where appropriate.
+
+Do not invent addresses.
+
+All location information must be editable through:
+
+**Admin → Company Settings**
+
+---
+
+## LOCAL SEO
+
+Prepare location-focused SEO pages based ONLY on actual operating areas.
+
+Examples:
+
+### LOGISTICS
+
+/locations/riyadh/customs-clearance
+
+/locations/riyadh/logistics
+
+/locations/saudi-arabia/customs-clearance
+
+/locations/saudi-arabia/freight-forwarding
+
+### TRAVEL
+
+/locations/riyadh/travel-agency
+
+/locations/saudi-arabia/travel-agency
+
+Only publish locations where Airzone genuinely provides services.
+
+Do not create hundreds of thin location pages.
+
+Each page must contain genuinely useful, unique information.
+
+---
+
+# 4. GOOGLE SEARCH CONSOLE + GA4
+
+Prepare complete Google Search Console and Google Analytics 4 integration.
+
+Do NOT hardcode credentials or IDs.
+
+Use environment variables/configuration.
+
+---
+
+## GA4 EVENTS
+
+Track important conversions separately for the two business divisions.
+
+### LOGISTICS EVENTS
+
+* logistics_quote_started
+* logistics_quote_submitted
+* customs_clearance_enquiry
+* shipment_tracking_search
+* logistics_whatsapp_click
+* logistics_phone_click
+* logistics_email_click
+* logistics_callback_request
+
+### TRAVEL EVENTS
+
+* travel_enquiry_started
+* travel_enquiry_submitted
+* package_enquiry
+* corporate_travel_enquiry
+* travel_whatsapp_click
+* travel_phone_click
+* travel_email_click
+* travel_callback_request
+
+### GENERAL
+
+* contact_form_submitted
+* google_review_click
+* language_changed
+* document_uploaded
+
+This will allow Airzone to determine whether website visitors are primarily interested in:
+
+**LOGISTICS**
+
+or
+
+**TRAVEL & TOURISM**
+
+---
+
+# 5. STRONG SEO LANDING PAGES
+
+Build an SEO architecture designed around actual Airzone services.
+
+Do not keyword-stuff.
+
+Do not generate hundreds of nearly identical pages.
+
+Every landing page must provide useful information.
+
+---
+
+## LOGISTICS SEO PAGES
+
+Examples:
+
+### Customs Clearance Riyadh
+
+Target concept:
+
+**Customs Clearance in Riyadh**
+
+Include:
+
+* What customs clearance involves
+* Import/export documentation
+* Air cargo clearance
+* Sea cargo clearance
+* Road/border clearance where applicable
+* Customs coordination
+* How to request assistance
+* FAQ
+* CTA
+
+---
+
+### Customs Clearance Saudi Arabia
+
+Include:
+
+* Saudi customs clearance overview
+* Import/export support
+* Documentation
+* Airport/port/border services where applicable
+* Saudi logistics coordination
+* FAQ
+
+---
+
+### Freight Forwarding Riyadh
+
+Include:
+
+* Air freight
+* Sea freight
+* Road freight
+* Door-to-door logistics
+* Cargo coordination
+* Quote CTA
+
+---
+
+### Logistics Company Riyadh
+
+Explain Airzone's actual logistics capabilities.
+
+Do NOT claim market leadership unless verified.
+
+---
+
+## TRAVEL SEO PAGES
+
+Examples:
+
+### Travel Agency Riyadh
+
+Include:
+
+* Flight assistance
+* Holiday packages
+* Hotels
+* Tours
+* Visa assistance
+* Corporate travel
+* Family travel
+* CTA
+
+---
+
+### Travel Agency Saudi Arabia
+
+Create useful information about Airzone's travel services.
+
+---
+
+### Holiday Packages from Riyadh
+
+Create destination/package content based on actual Airzone offerings.
+
+---
+
+## SEO CONTENT RULE
+
+Every landing page should have:
+
+* Unique H1
+* Unique title
+* Unique meta description
+* Helpful introduction
+* Service details
+* FAQs
+* Internal links
+* CTA
+* Breadcrumb
+* Schema where appropriate
+
+Do not create AI-generated filler content just to target keywords.
+
+---
+
+# 6. CORPORATE TRAVEL DIVISION
+
+Create a dedicated section:
+
+# CORPORATE TRAVEL
+
+URL:
+
+/travel/corporate-travel
+
+Position it as a B2B travel service.
+
+Headline:
+
+**BUSINESS TRAVEL, SIMPLIFIED.**
+
+Services:
+
+### Corporate Flight Management
+
+* Business flight arrangements
+* Employee travel
+* Executive travel
+* Group bookings
+
+### Corporate Hotels
+
+* Business accommodation
+* Hotel arrangements
+* Long stays
+* Group accommodation
+
+### Employee Travel
+
+* Staff travel
+* Business trips
+* Relocation-related travel assistance where applicable
+
+### Group Travel
+
+* Corporate groups
+* Conferences
+* Events
+* Incentive travel
+
+### Business Trip Planning
+
+* Flights
+* Hotels
+* Transfers
+* Itineraries
+
+---
+
+## CORPORATE TRAVEL ENQUIRY
+
+Create a dedicated form.
+
+Fields:
+
+* Company
+* Contact Person
+* Email
+* Phone
+* Number of Travellers
+* Departure City
+* Destination
+* Travel Dates
+* Trip Type
+* Flight Required
+* Hotel Required
+* Airport Transfer
+* Special Requirements
+* Additional Message
+
+CTA:
+
+**REQUEST CORPORATE TRAVEL ASSISTANCE**
+
+Generate an enquiry ID.
+
+Example:
+
+**AZC-2026-00001**
+
+---
+
+# 7. REQUEST A CALLBACK
+
+Create a simple high-conversion callback form.
+
+CTA:
+
+**REQUEST A CALLBACK**
+
+Keep it extremely simple.
+
+Fields:
+
+* Name
+* Mobile
+* Department
+* Preferred Time
+* Message
+
+Department:
+
+* Logistics
+* Customs Clearance
+* Travel & Tourism
+* Corporate Travel
+* General
+
+Optional:
+
+**Urgency**
+
+* Normal
+* Urgent
+
+Submit:
+
+**CALL ME BACK**
+
+After submission:
+
+* Generate callback ID
+* Save to database
+* Notify relevant admin/team
+* Send customer acknowledgement
+
+---
+
+# 8. SMART CALLBACK CTA
+
+Place the callback option strategically.
+
+Homepage:
+
+**Need Help? Request a Callback**
+
+Logistics pages:
+
+**Need Help With Customs Clearance?**
+
+Travel pages:
+
+**Planning a Trip? Talk to Us**
+
+Corporate Travel:
+
+**Speak to Our Corporate Travel Team**
+
+Do not place large popup forms everywhere.
+
+Keep the design elegant.
+
+---
+
+# 9. CUSTOMER TESTIMONIAL SYSTEM
+
+Create a proper testimonial management system.
+
+IMPORTANT:
+
+Only real customer testimonials may be published.
+
+Admin dashboard:
+
+### Testimonials
+
+Admin can:
+
+* Add testimonial
+* Edit testimonial
+* Delete testimonial
+* Approve/unapprove
+* Publish/unpublish
+* Assign division
+* Assign service
+* Add customer name
+* Add company name
+* Add photo/logo if authorized
+* Add rating
+* Add date
+
+Division:
+
+* Logistics
+* Travel
+* Corporate Travel
+
+---
+
+# 10. VERIFIED TESTIMONIALS
+
+Add an optional field:
+
+**Verified Customer**
+
+Admin can mark a testimonial as verified only when the business has actually verified the customer's relationship/service.
+
+Display discreetly:
+
+**Verified Customer**
+
+Do not falsely label Google reviews as verified testimonials.
+
+---
+
+# 11. GOOGLE REVIEW REDIRECTION
+
+Create a separate Google Review CTA.
+
+Button:
+
+**Leave a Review on Google**
+
+This button must redirect directly to the official Google review URL configured by Airzone.
+
+Admin setting:
+
+**Google Review URL**
+
+Do not create a fake review form.
+
+Do not ask customers to rate Airzone 5 stars before redirecting.
+
+Do not filter unhappy customers away from Google.
+
+The process must be transparent.
+
+---
+
+# 12. REVIEW SECTION
+
+Homepage section:
+
+# WHAT OUR CUSTOMERS SAY
+
+Show approved genuine testimonials.
+
+Below testimonials:
+
+**Want to share your experience?**
+
+Button:
+
+**Review Airzone on Google**
+
+---
+
+## LOGISTICS REVIEW SECTION
+
+On logistics pages:
+
+**HOW DID WE DO?**
+
+Text:
+
+Your feedback helps us improve our logistics and customs clearance services.
+
+Button:
+
+**Leave a Google Review**
+
+---
+
+## TRAVEL REVIEW SECTION
+
+On travel pages:
+
+**SHARE YOUR JOURNEY**
+
+Text:
+
+Tell us about your experience with Airzone Travels & Tourism.
+
+Button:
+
+**Review Us on Google**
+
+---
+
+# 13. ADMIN REVIEW SETTINGS
+
+Admin Settings should include:
+
+### Google Review
+
+Google Business Profile URL:
+[editable]
+
+Google Review URL:
+[editable]
+
+Google Maps URL:
+[editable]
+
+### Testimonials
+
+Enable testimonials:
+
+YES / NO
+
+### Homepage testimonial section:
+
+YES / NO
+
+### Logistics testimonial section:
+
+YES / NO
+
+### Travel testimonial section:
+
+YES / NO
+
+---
+
+# 14. TRUST & CREDIBILITY
+
+Do not manufacture trust signals.
+
+Only show actual:
+
+* Certifications
+* Licenses
+* Memberships
+* Partnerships
+* Awards
+* Client logos
+* Years of experience
+* Statistics
+
+when Airzone provides verified information.
+
+Create an admin-managed:
+
+**Trust & Credentials**
+
+section so verified information can be added later.
+
+---
+
+# 15. DIVISION-SPECIFIC CONVERSION STRATEGY
+
+The website should behave differently depending on which division the visitor is exploring.
+
+## LOGISTICS
+
+Primary CTA:
+
+**REQUEST A QUOTE**
+
+Secondary:
+
+**TALK TO LOGISTICS**
+
+Third:
+
+**REQUEST A CALLBACK**
+
+Optional:
+
+**TRACK SHIPMENT**
+
+---
+
+## TRAVEL
+
+Primary CTA:
+
+**PLAN YOUR TRIP**
+
+Secondary:
+
+**WHATSAPP US**
+
+Third:
+
+**REQUEST A CALLBACK**
+
+---
+
+## CORPORATE TRAVEL
+
+Primary CTA:
+
+**REQUEST CORPORATE TRAVEL ASSISTANCE**
+
+Secondary:
+
+**TALK TO OUR TEAM**
+
+---
+
+# 16. MOBILE CONVERSION BAR
+
+On mobile, optionally display a fixed bottom action bar.
+
+For Logistics:
+
+**WhatsApp | Call | Quote**
+
+For Travel:
+
+**WhatsApp | Call | Plan Trip**
+
+For Corporate Travel:
+
+**WhatsApp | Call | Enquire**
+
+Only display actions when the relevant contact details are configured.
+
+Ensure the bar does not cover important page content.
+
+---
+
+# 17. ADMIN LEAD DASHBOARD
+
+The admin dashboard should separate leads by business division.
+
+### LOGISTICS
+
+* New Quotes
+* Active Quotes
+* Won
+* Lost
+* Callback Requests
+
+### TRAVEL
+
+* New Travel Enquiries
+* Package Enquiries
+* Corporate Travel
+* Callback Requests
+
+### GENERAL
+
+* Contact Enquiries
+* Review Requests
+
+Show conversion metrics where enough data exists.
+
+Example:
+
+**This Month**
+
+Logistics Enquiries: 32
+
+Travel Enquiries: 21
+
+Corporate Travel: 8
+
+Callbacks: 17
+
+Do not use fake numbers in production.
+
+---
+
+# 18. FINAL BUSINESS OBJECTIVE
+
+Every major feature should support one of three objectives:
+
+### 1. GENERATE LEADS
+
+Quote
+Enquiry
+Callback
+WhatsApp
+
+### 2. BUILD TRUST
+
+Reviews
+Testimonials
+Credentials
+Google Maps
+Professional content
+
+### 3. IMPROVE OPERATIONS
+
+Admin dashboard
+Customer portal
+Tracking
+Document uploads
+Lead management
+
+The website should not become overloaded with unnecessary features.
+
+The final experience should remain:
+
+**PREMIUM**
+**FAST**
+**TRUSTWORTHY**
+**BILINGUAL**
+**SAUDI-MARKET READY**
+**SEO-OPTIMIZED**
+**CONVERSION-FOCUSED**
+
+Airzone Group should look like an established professional company — not a template website or an experimental startup.

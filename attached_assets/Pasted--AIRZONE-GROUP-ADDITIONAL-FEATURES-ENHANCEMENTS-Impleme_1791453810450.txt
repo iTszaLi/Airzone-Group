@@ -1,0 +1,1037 @@
+# AIRZONE GROUP — ADDITIONAL FEATURES & ENHANCEMENTS
+
+Implement the following enhancements as part of the Airzone Group website architecture.
+
+Prioritize functionality, reliability, performance and professional UX.
+
+---
+
+# HIGH PRIORITY FEATURES
+
+## 1. ENGLISH + ARABIC MULTI-LANGUAGE SUPPORT
+
+The website must support:
+
+### English
+
+Default language:
+
+**EN**
+
+### Arabic
+
+Secondary language:
+
+**AR**
+
+Add a visible language switcher in the header:
+
+**EN | AR**
+
+When Arabic is selected:
+
+* Switch the entire website to RTL
+* Use appropriate Arabic typography
+* Mirror navigation where appropriate
+* Align text correctly
+* Mirror icons/layouts where appropriate
+* Keep forms fully RTL-compatible
+* Keep images and visual composition natural
+* Maintain the same premium design quality
+
+The language selection should persist between pages.
+
+Use a proper internationalization architecture rather than duplicating the entire application.
+
+All important content should be translation-ready:
+
+* Navigation
+* Homepage
+* Services
+* Logistics pages
+* Travel pages
+* Forms
+* Buttons
+* Error messages
+* Admin labels where applicable
+* SEO metadata
+* Footer
+* Privacy/Terms pages
+
+Architecture should allow additional languages later, such as:
+
+* Hindi
+* Kannada
+
+Do NOT add additional languages to the visible interface until configured by the administrator.
+
+---
+
+# 2. WHATSAPP BUSINESS / LIVE CHAT
+
+Prepare the website for official WhatsApp Business integration.
+
+Create contextual WhatsApp CTAs.
+
+For Logistics:
+
+**Chat with Logistics**
+
+For Travel:
+
+**Plan Your Trip on WhatsApp**
+
+Do not hardcode an unconfirmed WhatsApp number.
+
+Store the WhatsApp number in:
+
+**Admin Settings**
+
+or environment variables.
+
+The WhatsApp button should open the official WhatsApp conversation link.
+
+On mobile, make the experience especially easy.
+
+Optional future feature:
+
+Create a small floating chat launcher that allows users to choose:
+
+**Logistics**
+
+or
+
+**Travel & Tourism**
+
+before opening WhatsApp.
+
+Do not create an artificial chatbot that pretends to be a human.
+
+---
+
+# 3. CUSTOMER LOGIN / CLIENT PORTAL
+
+Prepare a secure customer portal.
+
+URL:
+
+/portal
+
+Customers should eventually be able to:
+
+* View submitted enquiries
+* View quote status
+* View shipment status
+* View booking status
+* View uploaded documents
+* Download quotations/documents
+* View travel itinerary
+* Receive notifications
+
+For the initial implementation, keep the portal simple.
+
+Do not build unnecessary complexity.
+
+Use secure authentication.
+
+Customer data must only be visible to the authenticated customer.
+
+Admin users must have separate administrative permissions.
+
+---
+
+# 4. CUSTOMS DOCUMENT UPLOAD
+
+Enhance the Logistics Quote form.
+
+Allow customers to upload relevant documents such as:
+
+* Commercial Invoice
+* Packing List
+* Bill of Lading
+* Air Waybill
+* Certificate of Origin
+* Other supporting documents
+
+Supported formats:
+
+* PDF
+* JPG
+* JPEG
+* PNG
+* DOC
+* DOCX
+
+Implement:
+
+* File size limits
+* MIME validation
+* Extension validation
+* Secure filenames
+* Virus/malware scanning architecture where available
+* Private storage
+* Access control
+
+Uploaded documents must NOT be publicly accessible.
+
+Only authorized administrators and the relevant authenticated customer should be able to access them.
+
+---
+
+# 5. REVIEW / GOOGLE REVIEWS SYSTEM
+
+Create a professional customer review system.
+
+IMPORTANT:
+
+Do NOT create a fake review platform.
+
+Do NOT allow fabricated reviews.
+
+Do NOT create fake ratings.
+
+Instead, create an internal review-request flow that encourages genuine customers to leave their review on the company's official Google Business Profile.
+
+---
+
+## REVIEW CTA
+
+Create a section on the website:
+
+# HOW DID WE DO?
+
+Supporting text:
+
+**Your feedback helps us improve and helps other customers choose Airzone with confidence.**
+
+Buttons:
+
+### Leave a Google Review
+
+### Contact Our Team
+
+The **Leave a Google Review** button must redirect directly to the official Airzone Group Google review page.
+
+The Google Review URL must be configurable from:
+
+**Admin → Website Settings → Google Review URL**
+
+Do NOT hardcode a fake Google URL.
+
+If the URL has not been configured, hide the button or show an admin-configurable fallback.
+
+---
+
+# 6. REVIEW REQUEST SYSTEM
+
+Inside the Admin Dashboard, create:
+
+## Review Requests
+
+Admin can create/send a review request after:
+
+* Logistics service completed
+* Customs clearance completed
+* Shipment delivered
+* Travel completed
+* Holiday package completed
+* Customer booking completed
+
+The customer receives a simple message such as:
+
+**Thank you for choosing Airzone Group. We would appreciate your feedback.**
+
+Then:
+
+**Leave a Google Review**
+
+The button opens the official Google review page.
+
+Do not require the customer to submit a review through the Airzone website first.
+
+---
+
+# 7. OPTIONAL INTERNAL TESTIMONIAL DISPLAY
+
+Create an optional:
+
+**Customer Stories / Testimonials**
+
+section.
+
+However:
+
+Only testimonials manually approved by an administrator should appear.
+
+Admin fields:
+
+* Customer name
+* Company name
+* Service
+* Testimonial
+* Rating
+* Date
+* Customer photo/logo if authorized
+* Published / Unpublished
+
+Never automatically publish submitted feedback.
+
+Do not represent internal testimonials as Google Reviews unless they actually originate from Google.
+
+---
+
+# 8. GOOGLE REVIEWS LINK
+
+Admin settings should include:
+
+### Google Business Profile URL
+
+### Google Review URL
+
+### Google Maps URL
+
+This allows Airzone to update the links without modifying code.
+
+The frontend should use these configured URLs.
+
+---
+
+# 9. REVIEW CTA PLACEMENT
+
+Place Google Review CTAs naturally in:
+
+Homepage:
+**Trusted by Our Customers**
+
+Logistics:
+**How Did We Do?**
+
+Travel:
+**Share Your Travel Experience**
+
+Footer:
+**Review Airzone on Google**
+
+Contact page:
+**Leave Us a Review**
+
+Do not place the review CTA aggressively on every section.
+
+Keep it premium and subtle.
+
+---
+
+# 10. ONLINE PAYMENTS — FUTURE READY
+
+Prepare architecture for online payments.
+
+Potential providers:
+
+* Stripe
+* Razorpay
+* Saudi-compatible payment gateway in the future
+
+Do NOT activate a payment gateway without valid merchant credentials.
+
+Potential future use:
+
+* Travel package deposit
+* Holiday booking deposit
+* Visa service fee
+* Travel consultation fee
+* Other approved services
+
+Never store raw card information.
+
+Use the payment provider's hosted/secure payment flow.
+
+---
+
+# 11. TRAVEL CURRENCY CONVERTER
+
+Add an optional currency converter to Travel pages.
+
+Example:
+
+**SAR | AED | USD | EUR | GBP | INR**
+
+The currency converter should use a reliable exchange-rate source/API if live rates are enabled.
+
+If no API is configured:
+
+* Do not display fake "live" rates.
+* Either hide the converter or clearly label rates as indicative/manual.
+
+Add:
+
+**Rates are indicative and may vary.**
+
+---
+
+# 12. TRAVEL PACKAGE COMPARISON
+
+Create an optional package comparison feature.
+
+Customers can select up to:
+
+**3 packages**
+
+and compare:
+
+* Destination
+* Duration
+* Hotel category
+* Flight included
+* Transfers included
+* Meals
+* Activities
+* Visa assistance
+* Price
+* Availability
+
+Use:
+
+**Compare Packages**
+
+Do not compare packages that have insufficient data.
+
+The comparison should work beautifully on mobile.
+
+---
+
+# 13. BLOG / INSIGHTS
+
+Create:
+
+/insights
+
+Use categories:
+
+### LOGISTICS
+
+* Customs Updates
+* Import & Export
+* Freight
+* GCC Logistics
+* Industry News
+
+### TRAVEL
+
+* Travel Guides
+* Destination Guides
+* Visa Information
+* Travel Tips
+* Holiday Ideas
+
+### COMPANY
+
+* Airzone News
+* Announcements
+* Events
+
+Each article should support:
+
+* Title
+* Slug
+* Category
+* Featured image
+* Author
+* Publish date
+* Content
+* Excerpt
+* SEO title
+* SEO description
+* Tags
+* Related articles
+* Published/draft status
+
+Admin should manage articles.
+
+---
+
+# 14. NEWSLETTER
+
+Create an optional newsletter signup.
+
+Fields:
+
+* Name
+* Email
+
+CTA:
+
+**Subscribe**
+
+Store subscribers securely.
+
+Prepare integration for:
+
+* Mailchimp
+* Brevo
+* ConvertKit
+* another email provider
+
+Do not send marketing emails without appropriate consent.
+
+Add:
+
+**Unsubscribe**
+
+functionality.
+
+---
+
+# 15. GOOGLE ANALYTICS 4
+
+Prepare GA4 integration.
+
+Use environment/configuration values.
+
+Do not hardcode tracking IDs.
+
+Track:
+
+* Page views
+* Logistics quote submission
+* Travel enquiry
+* Contact form
+* Shipment tracking search
+* WhatsApp click
+* Phone click
+* Email click
+* Google Review click
+* Package enquiry
+* Language switch
+
+---
+
+# 16. META PIXEL
+
+Prepare optional Meta Pixel integration.
+
+Tracking ID must be configurable.
+
+Do not load Meta Pixel if no ID is configured.
+
+Track important conversion actions only.
+
+Respect applicable privacy/cookie requirements.
+
+---
+
+# 17. STRUCTURED DATA / SCHEMA
+
+Implement appropriate schema markup.
+
+Use:
+
+### Organization
+
+For Airzone Group.
+
+### LocalBusiness
+
+Only if appropriate and actual business location information is available.
+
+### TravelAgency
+
+For the Travel & Tourism division where applicable.
+
+### Service
+
+For major Logistics services.
+
+### BreadcrumbList
+
+For internal pages.
+
+### Article
+
+For Insights/blog pages.
+
+### FAQPage
+
+Only for genuine FAQ content.
+
+Do not create fake structured data.
+
+Structured data must match visible page content.
+
+---
+
+# 18. AI CHATBOT — FUTURE READY
+
+Prepare the architecture for an AI assistant.
+
+Potential use cases:
+
+### Logistics
+
+* What documents do I need?
+* What is customs clearance?
+* How can I request a quote?
+* How can I track my shipment?
+
+### Travel
+
+* What services do you offer?
+* How can I plan a holiday?
+* What documents are required?
+* How can I contact Airzone?
+
+IMPORTANT:
+
+The AI assistant must not:
+
+* invent customs regulations
+* guarantee customs clearance
+* guarantee visa approval
+* guarantee travel prices
+* provide false legal/regulatory information
+* pretend to be a human employee
+
+For uncertain/high-risk questions:
+
+**Please contact the Airzone team for confirmation.**
+
+Build the architecture so an AI API can be connected later.
+
+Do not activate an AI API without credentials.
+
+---
+
+# 19. FLIGHT / HOTEL API ARCHITECTURE
+
+Prepare integration interfaces for future providers such as:
+
+* Amadeus
+* Duffel
+* other approved travel APIs
+
+The current website should NOT pretend to have live flight or hotel availability.
+
+Until APIs are configured:
+
+Use:
+
+**Request Flight Assistance**
+
+and
+
+**Request Hotel Assistance**
+
+instead of fake booking results.
+
+When an API is eventually connected, the architecture should support:
+
+* flight search
+* hotel search
+* availability
+* pricing
+* booking
+* cancellation rules
+* passenger information
+
+---
+
+# 20. CLIENT SHIPMENT PORTAL
+
+Prepare the customer portal for logistics customers.
+
+Customer can enter:
+
+**Tracking Number**
+
+or log into their account.
+
+Show:
+
+### Shipment Overview
+
+Tracking Number:
+AZL-XXXXXX
+
+Origin:
+...
+
+Destination:
+...
+
+Current Status:
+...
+
+ETA:
+...
+
+### Shipment Timeline
+
+Booking Confirmed
+↓
+Documents Received
+↓
+Cargo Received
+↓
+Customs Processing
+↓
+Customs Cleared
+↓
+Out for Delivery
+↓
+Delivered
+
+Admin controls all status updates initially.
+
+Do not claim real-time carrier tracking until an actual integration is implemented.
+
+---
+
+# 21. DARK MODE
+
+Dark mode may be supported in the future.
+
+Do not make dark mode the default.
+
+The primary website should use a premium light/corporate appearance.
+
+If dark mode is implemented:
+
+* Preserve brand identity
+* Maintain accessibility
+* Maintain readable contrast
+* Do not simply invert colors
+
+Store the user's preference.
+
+---
+
+# 22. PROGRESSIVE WEB APP
+
+Prepare the website to support PWA capabilities in the future.
+
+Potential features:
+
+* Installable website
+* App icon
+* Offline shell
+* Fast loading
+* Cached static assets
+
+Do not compromise website performance just to make it a PWA.
+
+---
+
+# 23. SMART CONTACT ROUTING
+
+When a customer submits a form, determine the appropriate department.
+
+Examples:
+
+Logistics quote:
+
+**LOGISTICS TEAM**
+
+Travel enquiry:
+
+**TRAVEL TEAM**
+
+Visa enquiry:
+
+**TRAVEL / VISA TEAM**
+
+General enquiry:
+
+**ADMIN**
+
+Admin should see the department clearly.
+
+---
+
+# 24. LEAD SOURCE TRACKING
+
+Store how a customer arrived.
+
+Potential sources:
+
+* Google
+* Facebook
+* Instagram
+* WhatsApp
+* Direct
+* Referral
+* Other
+
+Where technically possible, capture:
+
+* UTM source
+* UTM medium
+* UTM campaign
+* Landing page
+* Referrer
+
+This will help determine which marketing channels generate actual customers.
+
+---
+
+# 25. ENQUIRY PRIORITY
+
+Allow admin to assign:
+
+### LOW
+
+### NORMAL
+
+### HIGH
+
+### URGENT
+
+For logistics enquiries, urgent cargo/customs cases can be prioritized.
+
+For travel, upcoming departures can be prioritized.
+
+---
+
+# 26. AUTOMATED CUSTOMER ACKNOWLEDGEMENT
+
+After form submission, automatically send:
+
+**Thank you for contacting Airzone Group.**
+
+Include:
+
+* Enquiry ID
+* Department
+* Submitted date
+* Summary
+* Expected next step
+* Contact information
+
+Do not promise a response time unless the company has officially defined one.
+
+---
+
+# 27. ADMIN NOTIFICATIONS
+
+Admin should receive notification when:
+
+* New logistics quote
+* New travel enquiry
+* New contact form
+* New shipment tracking request if required
+* New customer registration
+* New document upload
+* Important status change
+
+Use email initially.
+
+Architecture can later support:
+
+* WhatsApp notifications
+* SMS
+* push notifications
+
+---
+
+# 28. GOOGLE REVIEW CONVERSION STRATEGY
+
+Create a smart but ethical review flow.
+
+After a completed service:
+
+1. Customer receives thank-you message.
+2. Customer sees:
+
+**We'd love to hear about your experience.**
+
+3. Customer clicks:
+
+**Leave a Google Review**
+
+4. Customer is redirected directly to Airzone's official Google review page.
+
+Do NOT:
+
+* ask customers to give 5 stars before opening Google
+* hide the review option from unhappy customers
+* create fake reviews
+* incentivize positive reviews unless compliant with Google's policies
+* copy Google reviews into the website automatically without permission
+
+The objective is genuine customer feedback.
+
+---
+
+# 29. REVIEW PAGE DESIGN
+
+Create a small dedicated page:
+
+/reviews
+
+Hero:
+
+# YOUR EXPERIENCE MATTERS
+
+Text:
+
+**Your feedback helps us improve our services and helps future customers make informed decisions.**
+
+Primary button:
+
+**LEAVE A GOOGLE REVIEW**
+
+Secondary button:
+
+**CONTACT OUR TEAM**
+
+Optional:
+
+**What Our Customers Say**
+
+Display only approved authentic testimonials.
+
+---
+
+# 30. ADMIN SETTINGS
+
+Create:
+
+## Website Settings
+
+Sections:
+
+### Company
+
+* Company Name
+* Logo
+* Address
+* Email
+* Phone
+* WhatsApp
+
+### Social
+
+* Instagram
+* Facebook
+* LinkedIn
+* YouTube
+
+### Reviews
+
+* Google Business Profile URL
+* Google Review URL
+* Google Maps URL
+
+### Analytics
+
+* GA4 ID
+* Meta Pixel ID
+
+### Languages
+
+* English enabled
+* Arabic enabled
+* Future languages
+
+### SEO
+
+* Default title
+* Default description
+* Default social image
+
+### Travel
+
+* Currency
+* Booking enquiry email
+* Travel WhatsApp
+
+### Logistics
+
+* Quote email
+* Logistics WhatsApp
+* Tracking configuration
+
+---
+
+# 31. ENGLISH / ARABIC SEO
+
+The multilingual implementation must also support SEO.
+
+English pages:
+
+/en/...
+
+Arabic pages:
+
+/ar/...
+
+OR use another technically correct i18n URL architecture.
+
+Implement:
+
+* hreflang
+* language-specific metadata
+* language-specific canonical URLs
+* Arabic RTL
+* translated page titles
+* translated descriptions
+* translated Open Graph data
+
+Do not create duplicate pages without proper language annotations.
+
+---
+
+# 32. FINAL PRIORITY ORDER
+
+When implementing these enhancements, prioritize:
+
+### PRIORITY 1
+
+* English + Arabic
+* WhatsApp
+* Logistics document upload
+* Quote/enquiry CRM
+* Google Review redirect system
+* Customer enquiry IDs
+* Admin management
+
+### PRIORITY 2
+
+* Customer portal
+* GA4
+* Meta Pixel
+* SEO schema
+* Blog/Insights
+* Newsletter
+* Package comparison
+* Currency converter
+
+### PRIORITY 3
+
+* Payment gateway
+* AI chatbot
+* Flight API
+* Hotel API
+* PWA
+* Advanced automation
+
+Do not allow lower-priority features to make the core website unstable.
+
+---
+
+# FINAL RULE
+
+The website must remain:
+
+**FAST**
+**PREMIUM**
+**PROFESSIONAL**
+**TRUSTWORTHY**
+**MOBILE-FIRST**
+**SEO-FRIENDLY**
+**BILINGUAL**
+**FULLY FUNCTIONAL**
+
+Do not add features merely because they are technically possible.
+
+Every feature must improve:
+
+**CUSTOMER TRUST + LEAD GENERATION + OPERATIONAL EFFICIENCY.**

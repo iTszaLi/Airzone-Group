@@ -3,13 +3,19 @@ info:
   # Do not change the title, if the title changes, the import paths will be broken
   title: Api
   version: 0.1.0
-  description: API specification
+  description: Airzone Group website and enquiry API
 servers:
   - url: /api
     description: Base API path
 tags:
   - name: health
     description: Health operations
+  - name: enquiries
+    description: Public website enquiries
+  - name: tracking
+    description: Shipment tracking
+  - name: admin
+    description: Authenticated administration
 paths:
   /healthz:
     get:
@@ -24,6 +30,236 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HealthStatus"
+  /enquiries/logistics:
+    post:
+      operationId: createLogisticsEnquiry
+      tags: [enquiries]
+      summary: Submit a logistics quote request
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LogisticsEnquiryInput"
+      responses:
+        "201":
+          description: Enquiry received
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EnquiryReceipt"
+  /enquiries/travel:
+    post:
+      operationId: createTravelEnquiry
+      tags: [enquiries]
+      summary: Submit a travel enquiry
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TravelEnquiryInput"
+      responses:
+        "201":
+          description: Enquiry received
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EnquiryReceipt"
+  /enquiries/contact:
+    post:
+      operationId: createContactEnquiry
+      tags: [enquiries]
+      summary: Submit a contact enquiry
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ContactEnquiryInput"
+      responses:
+        "201":
+          description: Enquiry received
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EnquiryReceipt"
+  /shipments/{trackingNumber}:
+    get:
+      operationId: getShipmentTracking
+      tags: [tracking]
+      summary: Look up a shipment by tracking number
+      parameters:
+        - name: trackingNumber
+          in: path
+          required: true
+          schema:
+            type: string
+            minLength: 3
+            maxLength: 40
+      responses:
+        "200":
+          description: Shipment tracking information
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ShipmentTracking"
+        "404":
+          description: Shipment not found
+  /admin/overview:
+    get:
+      operationId: getAdminOverview
+      tags: [admin]
+      summary: Get enquiry and shipment overview
+      responses:
+        "200":
+          description: Dashboard summary
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AdminOverview"
+        "401":
+          description: Authentication required
+        "403":
+          description: Administrator access required
+  /admin/enquiries:
+    get:
+      operationId: listAdminEnquiries
+      tags: [admin]
+      summary: Search and filter enquiries
+      parameters:
+        - name: kind
+          in: query
+          required: false
+          schema:
+            type: string
+            enum: [logistics, travel, contact]
+        - name: status
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: search
+          in: query
+          required: false
+          schema:
+            type: string
+            maxLength: 120
+      responses:
+        "200":
+          description: Matching enquiries
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/AdminEnquiry"
+        "401":
+          description: Authentication required
+        "403":
+          description: Administrator access required
+  /admin/enquiries/{id}:
+    patch:
+      operationId: updateAdminEnquiry
+      tags: [admin]
+      summary: Update enquiry status and internal notes
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            minimum: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AdminEnquiryUpdate"
+      responses:
+        "200":
+          description: Updated enquiry
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AdminEnquiry"
+        "401":
+          description: Authentication required
+        "403":
+          description: Administrator access required
+        "404":
+          description: Enquiry not found
+  /admin/shipments:
+    get:
+      operationId: listAdminShipments
+      tags: [admin]
+      summary: List shipments for management
+      responses:
+        "200":
+          description: Shipment records
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ShipmentTracking"
+        "401":
+          description: Authentication required
+        "403":
+          description: Administrator access required
+    post:
+      operationId: createAdminShipment
+      tags: [admin]
+      summary: Create a shipment record for public tracking
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ShipmentInput"
+      responses:
+        "201":
+          description: Shipment created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ShipmentTracking"
+        "401":
+          description: Authentication required
+        "403":
+          description: Administrator access required
+  /admin/shipments/{trackingNumber}:
+    patch:
+      operationId: updateAdminShipment
+      tags: [admin]
+      summary: Update shipment status and append a timeline event
+      parameters:
+        - name: trackingNumber
+          in: path
+          required: true
+          schema:
+            type: string
+            minLength: 3
+            maxLength: 40
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ShipmentUpdate"
+      responses:
+        "200":
+          description: Updated shipment
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ShipmentTracking"
+        "401":
+          description: Authentication required
+        "403":
+          description: Administrator access required
+        "404":
+          description: Shipment not found
 components:
   schemas:
     HealthStatus:
@@ -33,4 +269,131 @@ components:
           type: string
       required:
         - status
+    LogisticsEnquiryInput:
+      type: object
+      required: [fullName, email, mobile, shipmentType, origin, destination, service]
+      properties:
+        fullName: { type: string, minLength: 2, maxLength: 120 }
+        company: { type: string, maxLength: 160 }
+        email: { type: string, format: email, maxLength: 254 }
+        mobile: { type: string, minLength: 5, maxLength: 40 }
+        shipmentType: { type: string, enum: [Import, Export, Domestic, GCC, International] }
+        origin: { type: string, minLength: 2, maxLength: 180 }
+        destination: { type: string, minLength: 2, maxLength: 180 }
+        cargoType: { type: string, maxLength: 120 }
+        packages: { type: integer, minimum: 1, maximum: 100000 }
+        weight: { type: string, maxLength: 80 }
+        dimensions: { type: string, maxLength: 120 }
+        incoterm: { type: string, maxLength: 20 }
+        mode: { type: string, enum: [Air, Sea, Road, Multimodal] }
+        service: { type: string, minLength: 2, maxLength: 80 }
+        expectedDate: { type: ["string", "null"], format: date }
+        details: { type: string, maxLength: 4000 }
+    TravelEnquiryInput:
+      type: object
+      required: [name, mobile, email, departureCity, destination, travelType]
+      properties:
+        name: { type: string, minLength: 2, maxLength: 120 }
+        mobile: { type: string, minLength: 5, maxLength: 40 }
+        email: { type: string, format: email, maxLength: 254 }
+        departureCity: { type: string, minLength: 2, maxLength: 120 }
+        destination: { type: string, minLength: 2, maxLength: 180 }
+        departureDate: { type: ["string", "null"], format: date }
+        returnDate: { type: ["string", "null"], format: date }
+        adults: { type: integer, minimum: 1, maximum: 50, default: 1 }
+        children: { type: integer, minimum: 0, maximum: 50, default: 0 }
+        travelType: { type: string, minLength: 2, maxLength: 80 }
+        accommodationRequired: { type: boolean, default: false }
+        flightRequired: { type: boolean, default: false }
+        visaAssistanceRequired: { type: boolean, default: false }
+        airportTransferRequired: { type: boolean, default: false }
+        budget: { type: string, maxLength: 80 }
+        preferredPackage: { type: string, maxLength: 160 }
+        message: { type: string, maxLength: 4000 }
+    ContactEnquiryInput:
+      type: object
+      required: [name, email, department, message]
+      properties:
+        name: { type: string, minLength: 2, maxLength: 120 }
+        company: { type: string, maxLength: 160 }
+        email: { type: string, format: email, maxLength: 254 }
+        phone: { type: string, maxLength: 40 }
+        department: { type: string, enum: [Logistics, "Customs Clearance", "Travel & Tourism", "Corporate Travel", "General Enquiry"] }
+        message: { type: string, minLength: 2, maxLength: 4000 }
+    EnquiryReceipt:
+      type: object
+      required: [id, reference, message]
+      properties:
+        id: { type: integer }
+        reference: { type: string }
+        message: { type: string }
+    ShipmentEvent:
+      type: object
+      required: [status, location, occurredAt]
+      properties:
+        status: { type: string }
+        location: { type: ["string", "null"] }
+        occurredAt: { type: string, format: date-time }
+        note: { type: ["string", "null"] }
+    ShipmentTracking:
+      type: object
+      required: [trackingNumber, status, origin, destination, shipmentType, events]
+      properties:
+        trackingNumber: { type: string }
+        status: { type: string }
+        origin: { type: string }
+        destination: { type: string }
+        shipmentType: { type: string }
+        currentLocation: { type: ["string", "null"] }
+        estimatedDelivery: { type: ["string", "null"], format: date }
+        events:
+          type: array
+          items: { $ref: "#/components/schemas/ShipmentEvent" }
+    ShipmentInput:
+      type: object
+      required: [trackingNumber, status, origin, destination, shipmentType]
+      properties:
+        trackingNumber: { type: string, minLength: 3, maxLength: 40 }
+        status: { type: string, minLength: 2, maxLength: 80 }
+        origin: { type: string, minLength: 2, maxLength: 180 }
+        destination: { type: string, minLength: 2, maxLength: 180 }
+        shipmentType: { type: string, minLength: 2, maxLength: 80 }
+        currentLocation: { type: ["string", "null"], maxLength: 180 }
+        estimatedDelivery: { type: ["string", "null"], format: date }
+        eventNote: { type: string, maxLength: 500 }
+    ShipmentUpdate:
+      type: object
+      properties:
+        status: { type: string, minLength: 2, maxLength: 80 }
+        currentLocation: { type: ["string", "null"], maxLength: 180 }
+        estimatedDelivery: { type: ["string", "null"], format: date }
+        eventNote: { type: string, maxLength: 500 }
+    AdminOverview:
+      type: object
+      required: [logistics, travel, contact, shipments]
+      properties:
+        logistics: { type: integer }
+        travel: { type: integer }
+        contact: { type: integer }
+        shipments: { type: integer }
+    AdminEnquiry:
+      type: object
+      required: [id, reference, kind, name, email, status, createdAt, details]
+      properties:
+        id: { type: integer }
+        reference: { type: string }
+        kind: { type: string, enum: [logistics, travel, contact] }
+        name: { type: string }
+        email: { type: string }
+        phone: { type: ["string", "null"] }
+        company: { type: ["string", "null"] }
+        status: { type: string }
+        createdAt: { type: string, format: date-time }
+        details: { type: string }
+        internalNotes: { type: ["string", "null"] }
+    AdminEnquiryUpdate:
+      type: object
+      properties:
+        status: { type: string, minLength: 2, maxLength: 80 }
+        internalNotes: { type: ["string", "null"], maxLength: 4000 }
 

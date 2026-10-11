@@ -16,10 +16,11 @@ magick attached_assets/image_1791693486305.png -fuzz 3% -trim +repage \
 magick attached_assets/image_1791693486305.png -fuzz 3% -trim +repage \
   -bordercolor white -border 6 -filter Lanczos -resize 392x324 \
   -unsharp 0x0.6+0.2+0.02 -strip "$out/airzone-travel-logo@2x.png"
-# Keep the complete Logistics letterhead artwork, including its bilingual name.
-magick attached_assets/image_1791693474953.png -resize 577x102 \
+# User-approved Logistics crop: English name and globe only.
+magick attached_assets/image_1791694690225.png \
   -strip "$out/airzone-logistics-logo.png"
-magick attached_assets/image_1791693474953.png -strip \
+magick attached_assets/image_1791694690225.png -filter Lanczos -resize 824x224 \
+  -unsharp 0x0.6+0.2+0.02 -strip \
   "$out/airzone-logistics-logo@2x.png"
 
 for size in 16 32 180 192 512; do

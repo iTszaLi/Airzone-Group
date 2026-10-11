@@ -432,7 +432,7 @@ button { cursor: pointer; }
 .form-success .page-brand-logo { margin-inline: auto; }
 .form-success .division-logo { display: flex; justify-content: center; }
 .division-logo { margin-bottom: 22px; }
-.division-logo .brand-logo-logistics { width: min(640px, 100%); height: auto; aspect-ratio: 1154 / 203; }
+.division-logo .brand-logo-logistics { width: min(440px, 100%); height: auto; aspect-ratio: 412 / 112; }
 .division-logo .brand-logo-travel { height: 110px; width: auto; aspect-ratio: 196 / 162; padding: 4px; }
 .main-nav { gap: clamp(12px, 1.15vw, 20px); }
 .nav-link, .nav-track, .nav-quote { white-space: nowrap; }

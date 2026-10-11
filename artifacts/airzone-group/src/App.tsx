@@ -107,7 +107,7 @@ const brandBase = import.meta.env.BASE_URL;
 const brandAsset = (name: string) => `${brandBase}assets/brand/${name}`;
 const brandLogos = {
   group: { src: 'airzone-group-logo', alt: 'Airzone Group', w: 184, h: 116 },
-  logistics: { src: 'airzone-logistics-logo', alt: 'Airzone Logistics', w: 577, h: 102 },
+  logistics: { src: 'airzone-logistics-logo', alt: 'Airzone Logistics', w: 412, h: 112 },
   travel: { src: 'airzone-travel-logo', alt: 'Airzone Travels & Tourism', w: 196, h: 162 },
 } as const;
 

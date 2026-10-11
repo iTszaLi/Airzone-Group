@@ -6,7 +6,7 @@ were supplied. Sources are opaque PNGs:
 | Brand | Original pixels | Treatment |
 | --- | --- | --- |
 | Airzone Group | 119 × 62 | Trim empty white margins; retain the complete artwork; mild Lanczos enlargement and restrained sharpening |
-| Airzone Logistics | 1154 × 203 | Keep the complete bilingual letterhead strip; provide smaller responsive delivery |
+| Airzone Logistics | 412 × 112 | Use the user's approved crop containing only the English name and globe; exclude the Arabic registration-details panel |
 | Airzone Travels & Tourism | 216 × 222 | Trim empty white margins; retain the artwork and white background; provide a restrained enlarged delivery |
 
 The Group and Travel logos remain limited by their raster originals. Upscaling

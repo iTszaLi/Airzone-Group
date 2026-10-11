@@ -16,3 +16,13 @@ Do not redraw, retype, recolour or invent missing detail. Keep an appropriate
 white backing when no official dark-background variant exists. Never call
 enlarged low-resolution originals native 4K. Asset provenance and processing are
 documented in `docs/branding-assets.md`.
+
+For Logistics, use only the user-approved cropped artwork with the English name
+and globe. Do not restore the Arabic registration-details panel from the earlier
+letterhead image.
+
+**Why:** The user supplied a replacement crop and said “use only this much logo
+for logistics.”
+
+**How to apply:** Keep this crop across Logistics pages, quotation forms and
+confirmation states; leave the Group and Travel logos unchanged.

@@ -423,3 +423,45 @@ button { cursor: pointer; }
  .admin-page { display:block; }.admin-sidebar { width:100%;height:65px;flex-direction:row;align-items:center;padding:10px 5%; }.admin-sidebar .brand { transform:scale(.8);width:190px; }.admin-nav-label,.admin-nav,.admin-sidebar-bottom { display:none; }.admin-main { padding:30px 5%; }.admin-topbar h1 { font-size:24px; }.admin-view-site { font-size:0;padding:9px; }.admin-view-site svg { width:17px;height:17px; }.admin-kpis { grid-template-columns:1fr 1fr;gap:9px; }.kpi { padding:13px;min-height:105px; }.kpi>b { font-size:23px; }.table-heading { padding:18px 15px 13px; }.table-tools { padding:0 15px 15px;flex-wrap:wrap; }.admin-search { flex-basis:100%;height:36px; }.table-tools select { height:32px;flex:1; }.table-scroll th,.table-scroll td { padding:12px 10px; }.table-scroll table { min-width:750px; }.auth-screen { grid-template-columns:1fr; }.auth-brand-side { min-height:205px;padding:22px 7%; }.auth-brand-side .brand-mark { height:31px;width:31px; }.auth-brand-side .brand-name { font-size:12px; }.auth-brand-side>div:nth-child(2) { margin:24px 0; }.auth-brand-side h1 { font-size:37px;margin:13px 0 8px; }.auth-brand-side p { font-size:10px;margin:0; }.auth-brand-side>span { display:none; }.auth-brand-side .eyebrow { font-size:7px; }.auth-content { min-height:calc(100vh - 205px);padding:22px 8%; }.auth-card { margin:45px auto; }.auth-card h2 { font-size:27px; }
 }
 @media (prefers-reduced-motion: reduce) { *,*::before,*::after { scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important; } }
+
+/* Official logo artwork: contain, white backing preserved */
+.brand-logo { display: block; object-fit: contain; background: #fff; max-width: 100%; }
+.brand .brand-logo-group { height: 64px; width: auto; aspect-ratio: 184 / 116; padding: 2px 4px; }
+.brand-inverse .brand-logo-group { height: 74px; padding: 4px 6px; }
+.page-brand-logo { width: 125px; height: auto; margin-bottom: 24px; }
+.form-success .page-brand-logo { margin-inline: auto; }
+.form-success .division-logo { display: flex; justify-content: center; }
+.division-logo { margin-bottom: 22px; }
+.division-logo .brand-logo-logistics { width: min(640px, 100%); height: auto; aspect-ratio: 1154 / 203; }
+.division-logo .brand-logo-travel { height: 110px; width: auto; aspect-ratio: 196 / 162; padding: 4px; }
+.main-nav { gap: clamp(12px, 1.15vw, 20px); }
+.nav-link, .nav-track, .nav-quote { white-space: nowrap; }
+.nav-quote { background: var(--gold); color: var(--navy); padding: 13px 15px; font-size: 11px; }
+.language-switch { display: inline-flex; align-items: center; gap: 8px; }
+.language-switch button { cursor: pointer; background: none; border: 0; color: inherit; font-size: 10px; padding: 3px; }
+.language-switch button[aria-pressed="true"] { text-decoration: underline; text-underline-offset: 4px; }
+.callback-strip { padding: 45px 7%; display: flex; gap: 25px; align-items: center; justify-content: space-between; background: #eeeae0; }
+.callback-strip h2 { margin-top: 10px; font: 600 24px var(--app-font-serif); }
+.footer-brand>a:not(.brand) { display: block; margin-top: 12px; color: #d5dce0; font-size: 12px; }
+.mobile-bar { display: none; }
+@media (max-width: 1200px) {
+  .mobile-toggle { display: block; }
+  .main-nav { display: none; position: absolute; inset-inline: 0; top: 100%; height: auto; background: #f8f6f0; padding: 15px 5% 22px; box-shadow: 0 15px 22px #1429401a; align-items: stretch; flex-direction: column; gap: 0; max-height: calc(100dvh - 115px); overflow-y: auto; }
+  .main-nav.nav-open { display: flex; }
+  .main-nav>.nav-link, .nav-trigger { padding: 12px 0; text-align: start; font-size: 12px; }
+  .nav-group { display: block; height: auto; }
+  .nav-trigger { width: 100%; justify-content: space-between; }
+  .nav-dropdown { position: static; width: 100%; box-shadow: none; margin: 0 0 8px; }
+  .nav-track, .nav-quote { justify-content: center; margin-top: 7px; text-align: center; }
+}
+@media (max-width: 760px) {
+  body { padding-bottom: 48px; }
+  .mobile-bar { position: fixed; z-index: 30; left: 0; right: 0; bottom: 0; display: grid; grid-template-columns: 1fr 1fr; background: #142940; }
+  .mobile-bar a { padding: 14px; text-align: center; color: #f4f1e8; font-size: 11px; text-transform: uppercase; letter-spacing: .1em; }
+  .brand .brand-logo-group { height: 50px; }
+  .brand-inverse .brand-logo-group { height: 65px; }
+  .division-logo .brand-logo-travel { height: 90px; }
+  .callback-strip { display: block; padding: 32px 7%; }
+  .callback-strip .button { margin-top: 20px; }
+  .topline .language-switch button { font-size: 9px; }
+}

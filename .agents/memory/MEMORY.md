@@ -1,0 +1,1 @@
+- [Airzone brand hierarchy](brand-authority.md) — master corporate identity vs division logos; supplied artwork must remain authentic.

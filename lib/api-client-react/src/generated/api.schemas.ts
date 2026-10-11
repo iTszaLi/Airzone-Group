@@ -79,6 +79,18 @@ export interface LogisticsEnquiryInput {
   expectedDate?: string | null;
   /** @maxLength 4000 */
   details?: string;
+  /** @maxLength 80 */
+  source?: string;
+  /** @maxLength 160 */
+  utmSource?: string;
+  /** @maxLength 160 */
+  utmMedium?: string;
+  /** @maxLength 160 */
+  utmCampaign?: string;
+  /** @maxLength 300 */
+  landingPage?: string;
+  /** @maxLength 500 */
+  referrer?: string;
 }
 
 export interface TravelEnquiryInput {
@@ -133,6 +145,27 @@ export interface TravelEnquiryInput {
   preferredPackage?: string;
   /** @maxLength 4000 */
   message?: string;
+  /** @maxLength 160 */
+  company?: string;
+  /**
+     * @minimum 1
+     * @maximum 500
+     */
+  travellers?: number;
+  /** @maxLength 80 */
+  tripType?: string;
+  /** @maxLength 80 */
+  source?: string;
+  /** @maxLength 160 */
+  utmSource?: string;
+  /** @maxLength 160 */
+  utmMedium?: string;
+  /** @maxLength 160 */
+  utmCampaign?: string;
+  /** @maxLength 300 */
+  landingPage?: string;
+  /** @maxLength 500 */
+  referrer?: string;
 }
 
 export type ContactEnquiryInputDepartment = typeof ContactEnquiryInputDepartment[keyof typeof ContactEnquiryInputDepartment];
@@ -164,6 +197,71 @@ export interface ContactEnquiryInput {
      * @maxLength 4000
      */
   message: string;
+  /** @maxLength 80 */
+  source?: string;
+  /** @maxLength 160 */
+  utmSource?: string;
+  /** @maxLength 160 */
+  utmMedium?: string;
+  /** @maxLength 160 */
+  utmCampaign?: string;
+  /** @maxLength 300 */
+  landingPage?: string;
+  /** @maxLength 500 */
+  referrer?: string;
+}
+
+export type CallbackRequestInputDepartment = typeof CallbackRequestInputDepartment[keyof typeof CallbackRequestInputDepartment];
+
+
+export const CallbackRequestInputDepartment = {
+  Logistics: 'Logistics',
+  Customs_Clearance: 'Customs Clearance',
+  'Travel_&_Tourism': 'Travel & Tourism',
+  Corporate_Travel: 'Corporate Travel',
+  General_Enquiry: 'General Enquiry',
+} as const;
+
+export type CallbackRequestInputUrgency = typeof CallbackRequestInputUrgency[keyof typeof CallbackRequestInputUrgency];
+
+
+export const CallbackRequestInputUrgency = {
+  Normal: 'Normal',
+  Urgent: 'Urgent',
+} as const;
+
+export interface CallbackRequestInput {
+  /**
+     * @minLength 2
+     * @maxLength 120
+     */
+  name: string;
+  /**
+     * @minLength 5
+     * @maxLength 40
+     */
+  mobile: string;
+  department: CallbackRequestInputDepartment;
+  /**
+     * @minLength 2
+     * @maxLength 120
+     */
+  preferredTime: string;
+  /** @maxLength 2000 */
+  message?: string;
+  urgency?: CallbackRequestInputUrgency;
+  /** @maxLength 80 */
+  source?: string;
+  /** @maxLength 160 */
+  utmSource?: string;
+  /** @maxLength 160 */
+  utmMedium?: string;
+  /** @maxLength 160 */
+  utmCampaign?: string;
+  /** @maxLength 300 */
+  landingPage?: string;
+  /** @maxLength 500 */
+  referrer?: string;
 }
 
 export interface EnquiryReceipt {
@@ -231,6 +329,23 @@ export interface ShipmentInput {
   eventNote?: string;
 }
 
+export interface ShipmentUpdate {
+  /**
+     * @minLength 2
+     * @maxLength 80
+     */
+  status?: string;
+  /**
+     * @maxLength 180
+     * @nullable
+     */
+  currentLocation?: string | null;
+  /** @nullable */
+  estimatedDelivery?: string | null;
+  /** @maxLength 500 */
+  eventNote?: string;
+}
+
 export interface AdminOverview {
   logistics: number;
   travel: number;
@@ -245,6 +360,17 @@ export const AdminEnquiryKind = {
   logistics: 'logistics',
   travel: 'travel',
   contact: 'contact',
+  callback: 'callback',
+} as const;
+
+export type AdminEnquiryPriority = typeof AdminEnquiryPriority[keyof typeof AdminEnquiryPriority];
+
+
+export const AdminEnquiryPriority = {
+  Low: 'Low',
+  Normal: 'Normal',
+  High: 'High',
+  Urgent: 'Urgent',
 } as const;
 
 export interface AdminEnquiry {
@@ -252,17 +378,43 @@ export interface AdminEnquiry {
   reference: string;
   kind: AdminEnquiryKind;
   name: string;
-  email: string;
+  /** @nullable */
+  email: string | null;
   /** @nullable */
   phone?: string | null;
   /** @nullable */
   company?: string | null;
+  /** @nullable */
+  department?: string | null;
   status: string;
+  priority: AdminEnquiryPriority;
+  /** @nullable */
+  leadSource?: string | null;
+  /** @nullable */
+  utmSource?: string | null;
+  /** @nullable */
+  utmMedium?: string | null;
+  /** @nullable */
+  utmCampaign?: string | null;
+  /** @nullable */
+  landingPage?: string | null;
+  /** @nullable */
+  referrer?: string | null;
   createdAt: string;
   details: string;
   /** @nullable */
   internalNotes?: string | null;
 }
+
+export type AdminEnquiryUpdatePriority = typeof AdminEnquiryUpdatePriority[keyof typeof AdminEnquiryUpdatePriority];
+
+
+export const AdminEnquiryUpdatePriority = {
+  Low: 'Low',
+  Normal: 'Normal',
+  High: 'High',
+  Urgent: 'Urgent',
+} as const;
 
 export interface AdminEnquiryUpdate {
   /**
@@ -275,6 +427,94 @@ export interface AdminEnquiryUpdate {
      * @nullable
      */
   internalNotes?: string | null;
+  priority?: AdminEnquiryUpdatePriority;
+}
+
+export interface PortalEnquiry {
+  id: number;
+  reference: string;
+  kind: string;
+  status: string;
+  priority: string;
+  createdAt: string;
+  /** @nullable */
+  department?: string | null;
+}
+
+export interface PublicSiteSettings {
+  /** @nullable */
+  companyName: string | null;
+  /** @nullable */
+  contactEmail: string | null;
+  /** @nullable */
+  contactPhone: string | null;
+  /** @nullable */
+  logisticsWhatsapp: string | null;
+  /** @nullable */
+  travelWhatsapp: string | null;
+  /** @nullable */
+  googleReviewUrl: string | null;
+  /** @nullable */
+  googleBusinessUrl: string | null;
+  /** @nullable */
+  googleMapsUrl: string | null;
+  /** @nullable */
+  ga4MeasurementId: string | null;
+  /** @nullable */
+  metaPixelId?: string | null;
+}
+
+export interface AdminSiteSettingsUpdate {
+  /**
+     * @maxLength 160
+     * @nullable
+     */
+  companyName?: string | null;
+  /**
+     * @maxLength 254
+     * @nullable
+     */
+  contactEmail?: string | null;
+  /**
+     * @maxLength 60
+     * @nullable
+     */
+  contactPhone?: string | null;
+  /**
+     * @maxLength 40
+     * @nullable
+     */
+  logisticsWhatsapp?: string | null;
+  /**
+     * @maxLength 40
+     * @nullable
+     */
+  travelWhatsapp?: string | null;
+  /**
+     * @maxLength 1000
+     * @nullable
+     */
+  googleReviewUrl?: string | null;
+  /**
+     * @maxLength 1000
+     * @nullable
+     */
+  googleBusinessUrl?: string | null;
+  /**
+     * @maxLength 1000
+     * @nullable
+     */
+  googleMapsUrl?: string | null;
+  /**
+     * @maxLength 40
+     * @nullable
+     */
+  ga4MeasurementId?: string | null;
+  /**
+     * @maxLength 40
+     * @nullable
+     */
+  metaPixelId?: string | null;
 }
 
 export type ListAdminEnquiriesParams = {
@@ -293,5 +533,6 @@ export const ListAdminEnquiriesKind = {
   logistics: 'logistics',
   travel: 'travel',
   contact: 'contact',
+  callback: 'callback',
 } as const;
 

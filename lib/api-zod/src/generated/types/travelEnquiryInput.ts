@@ -58,4 +58,25 @@ export interface TravelEnquiryInput {
   preferredPackage?: string;
   /** @maxLength 4000 */
   message?: string;
+  /** @maxLength 160 */
+  company?: string;
+  /**
+     * @minimum 1
+     * @maximum 500
+     */
+  travellers?: number;
+  /** @maxLength 80 */
+  tripType?: string;
+  /** @maxLength 80 */
+  source?: string;
+  /** @maxLength 160 */
+  utmSource?: string;
+  /** @maxLength 160 */
+  utmMedium?: string;
+  /** @maxLength 160 */
+  utmCampaign?: string;
+  /** @maxLength 300 */
+  landingPage?: string;
+  /** @maxLength 500 */
+  referrer?: string;
 }

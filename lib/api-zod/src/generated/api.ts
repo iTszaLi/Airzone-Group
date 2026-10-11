@@ -51,6 +51,18 @@ export const createLogisticsEnquiryBodyServiceMax = 80;
 
 export const createLogisticsEnquiryBodyDetailsMax = 4000;
 
+export const createLogisticsEnquiryBodySourceMax = 80;
+
+export const createLogisticsEnquiryBodyUtmSourceMax = 160;
+
+export const createLogisticsEnquiryBodyUtmMediumMax = 160;
+
+export const createLogisticsEnquiryBodyUtmCampaignMax = 160;
+
+export const createLogisticsEnquiryBodyLandingPageMax = 300;
+
+export const createLogisticsEnquiryBodyReferrerMax = 500;
+
 
 
 export const CreateLogisticsEnquiryBody = zod.object({
@@ -69,7 +81,13 @@ export const CreateLogisticsEnquiryBody = zod.object({
   "mode": zod.enum(['Air', 'Sea', 'Road', 'Multimodal']).optional(),
   "service": zod.string().min(createLogisticsEnquiryBodyServiceMin).max(createLogisticsEnquiryBodyServiceMax),
   "expectedDate": zod.coerce.date().nullish(),
-  "details": zod.string().max(createLogisticsEnquiryBodyDetailsMax).optional()
+  "details": zod.string().max(createLogisticsEnquiryBodyDetailsMax).optional(),
+  "source": zod.string().max(createLogisticsEnquiryBodySourceMax).optional(),
+  "utmSource": zod.string().max(createLogisticsEnquiryBodyUtmSourceMax).optional(),
+  "utmMedium": zod.string().max(createLogisticsEnquiryBodyUtmMediumMax).optional(),
+  "utmCampaign": zod.string().max(createLogisticsEnquiryBodyUtmCampaignMax).optional(),
+  "landingPage": zod.string().max(createLogisticsEnquiryBodyLandingPageMax).optional(),
+  "referrer": zod.string().max(createLogisticsEnquiryBodyReferrerMax).optional()
 })
 
 export const CreateLogisticsEnquiryResponse = zod.object({
@@ -116,6 +134,24 @@ export const createTravelEnquiryBodyPreferredPackageMax = 160;
 
 export const createTravelEnquiryBodyMessageMax = 4000;
 
+export const createTravelEnquiryBodyCompanyMax = 160;
+
+export const createTravelEnquiryBodyTravellersMax = 500;
+
+export const createTravelEnquiryBodyTripTypeMax = 80;
+
+export const createTravelEnquiryBodySourceMax = 80;
+
+export const createTravelEnquiryBodyUtmSourceMax = 160;
+
+export const createTravelEnquiryBodyUtmMediumMax = 160;
+
+export const createTravelEnquiryBodyUtmCampaignMax = 160;
+
+export const createTravelEnquiryBodyLandingPageMax = 300;
+
+export const createTravelEnquiryBodyReferrerMax = 500;
+
 
 
 export const CreateTravelEnquiryBody = zod.object({
@@ -135,7 +171,16 @@ export const CreateTravelEnquiryBody = zod.object({
   "airportTransferRequired": zod.boolean().default(createTravelEnquiryBodyAirportTransferRequiredDefault),
   "budget": zod.string().max(createTravelEnquiryBodyBudgetMax).optional(),
   "preferredPackage": zod.string().max(createTravelEnquiryBodyPreferredPackageMax).optional(),
-  "message": zod.string().max(createTravelEnquiryBodyMessageMax).optional()
+  "message": zod.string().max(createTravelEnquiryBodyMessageMax).optional(),
+  "company": zod.string().max(createTravelEnquiryBodyCompanyMax).optional(),
+  "travellers": zod.number().int().min(1).max(createTravelEnquiryBodyTravellersMax).optional(),
+  "tripType": zod.string().max(createTravelEnquiryBodyTripTypeMax).optional(),
+  "source": zod.string().max(createTravelEnquiryBodySourceMax).optional(),
+  "utmSource": zod.string().max(createTravelEnquiryBodyUtmSourceMax).optional(),
+  "utmMedium": zod.string().max(createTravelEnquiryBodyUtmMediumMax).optional(),
+  "utmCampaign": zod.string().max(createTravelEnquiryBodyUtmCampaignMax).optional(),
+  "landingPage": zod.string().max(createTravelEnquiryBodyLandingPageMax).optional(),
+  "referrer": zod.string().max(createTravelEnquiryBodyReferrerMax).optional()
 })
 
 export const CreateTravelEnquiryResponse = zod.object({
@@ -160,6 +205,18 @@ export const createContactEnquiryBodyPhoneMax = 40;
 export const createContactEnquiryBodyMessageMin = 2;
 export const createContactEnquiryBodyMessageMax = 4000;
 
+export const createContactEnquiryBodySourceMax = 80;
+
+export const createContactEnquiryBodyUtmSourceMax = 160;
+
+export const createContactEnquiryBodyUtmMediumMax = 160;
+
+export const createContactEnquiryBodyUtmCampaignMax = 160;
+
+export const createContactEnquiryBodyLandingPageMax = 300;
+
+export const createContactEnquiryBodyReferrerMax = 500;
+
 
 
 export const CreateContactEnquiryBody = zod.object({
@@ -168,7 +225,13 @@ export const CreateContactEnquiryBody = zod.object({
   "email": zod.string().email().max(createContactEnquiryBodyEmailMax),
   "phone": zod.string().max(createContactEnquiryBodyPhoneMax).optional(),
   "department": zod.enum(['Logistics', 'Customs Clearance', 'Travel & Tourism', 'Corporate Travel', 'General Enquiry']),
-  "message": zod.string().min(createContactEnquiryBodyMessageMin).max(createContactEnquiryBodyMessageMax)
+  "message": zod.string().min(createContactEnquiryBodyMessageMin).max(createContactEnquiryBodyMessageMax),
+  "source": zod.string().max(createContactEnquiryBodySourceMax).optional(),
+  "utmSource": zod.string().max(createContactEnquiryBodyUtmSourceMax).optional(),
+  "utmMedium": zod.string().max(createContactEnquiryBodyUtmMediumMax).optional(),
+  "utmCampaign": zod.string().max(createContactEnquiryBodyUtmCampaignMax).optional(),
+  "landingPage": zod.string().max(createContactEnquiryBodyLandingPageMax).optional(),
+  "referrer": zod.string().max(createContactEnquiryBodyReferrerMax).optional()
 })
 
 export const CreateContactEnquiryResponse = zod.object({
@@ -176,6 +239,89 @@ export const CreateContactEnquiryResponse = zod.object({
   "reference": zod.string(),
   "message": zod.string()
 })
+
+
+/**
+ * @summary Request a callback from the relevant team
+ */
+export const createCallbackRequestBodyNameMin = 2;
+export const createCallbackRequestBodyNameMax = 120;
+
+export const createCallbackRequestBodyMobileMin = 5;
+export const createCallbackRequestBodyMobileMax = 40;
+
+export const createCallbackRequestBodyPreferredTimeMin = 2;
+export const createCallbackRequestBodyPreferredTimeMax = 120;
+
+export const createCallbackRequestBodyMessageMax = 2000;
+
+export const createCallbackRequestBodyUrgencyDefault = `Normal`;
+export const createCallbackRequestBodySourceMax = 80;
+
+export const createCallbackRequestBodyUtmSourceMax = 160;
+
+export const createCallbackRequestBodyUtmMediumMax = 160;
+
+export const createCallbackRequestBodyUtmCampaignMax = 160;
+
+export const createCallbackRequestBodyLandingPageMax = 300;
+
+export const createCallbackRequestBodyReferrerMax = 500;
+
+
+
+export const CreateCallbackRequestBody = zod.object({
+  "name": zod.string().min(createCallbackRequestBodyNameMin).max(createCallbackRequestBodyNameMax),
+  "mobile": zod.string().min(createCallbackRequestBodyMobileMin).max(createCallbackRequestBodyMobileMax),
+  "department": zod.enum(['Logistics', 'Customs Clearance', 'Travel & Tourism', 'Corporate Travel', 'General Enquiry']),
+  "preferredTime": zod.string().min(createCallbackRequestBodyPreferredTimeMin).max(createCallbackRequestBodyPreferredTimeMax),
+  "message": zod.string().max(createCallbackRequestBodyMessageMax).optional(),
+  "urgency": zod.enum(['Normal', 'Urgent']).default(createCallbackRequestBodyUrgencyDefault),
+  "source": zod.string().max(createCallbackRequestBodySourceMax).optional(),
+  "utmSource": zod.string().max(createCallbackRequestBodyUtmSourceMax).optional(),
+  "utmMedium": zod.string().max(createCallbackRequestBodyUtmMediumMax).optional(),
+  "utmCampaign": zod.string().max(createCallbackRequestBodyUtmCampaignMax).optional(),
+  "landingPage": zod.string().max(createCallbackRequestBodyLandingPageMax).optional(),
+  "referrer": zod.string().max(createCallbackRequestBodyReferrerMax).optional()
+})
+
+export const CreateCallbackRequestResponse = zod.object({
+  "id": zod.number().int(),
+  "reference": zod.string(),
+  "message": zod.string()
+})
+
+
+/**
+ * @summary Get configured public company contact and review links
+ */
+export const GetPublicSiteSettingsResponse = zod.object({
+  "companyName": zod.string().nullable(),
+  "contactEmail": zod.string().nullable(),
+  "contactPhone": zod.string().nullable(),
+  "logisticsWhatsapp": zod.string().nullable(),
+  "travelWhatsapp": zod.string().nullable(),
+  "googleReviewUrl": zod.string().nullable(),
+  "googleBusinessUrl": zod.string().nullable(),
+  "googleMapsUrl": zod.string().nullable(),
+  "ga4MeasurementId": zod.string().nullable(),
+  "metaPixelId": zod.string().nullish()
+})
+
+
+/**
+ * @summary List enquiries submitted by the signed-in customer
+ */
+export const ListMyEnquiriesResponseItem = zod.object({
+  "id": zod.number().int(),
+  "reference": zod.string(),
+  "kind": zod.string(),
+  "status": zod.string(),
+  "priority": zod.string(),
+  "createdAt": zod.coerce.date(),
+  "department": zod.string().nullish()
+})
+export const ListMyEnquiriesResponse = zod.array(ListMyEnquiriesResponseItem)
 
 
 /**
@@ -226,7 +372,7 @@ export const listAdminEnquiriesQuerySearchMax = 120;
 
 
 export const ListAdminEnquiriesQueryParams = zod.object({
-  "kind": zod.enum(['logistics', 'travel', 'contact']).optional(),
+  "kind": zod.enum(['logistics', 'travel', 'contact', 'callback']).optional(),
   "status": zod.coerce.string().optional(),
   "search": zod.coerce.string().max(listAdminEnquiriesQuerySearchMax).optional()
 })
@@ -234,12 +380,20 @@ export const ListAdminEnquiriesQueryParams = zod.object({
 export const ListAdminEnquiriesResponseItem = zod.object({
   "id": zod.number().int(),
   "reference": zod.string(),
-  "kind": zod.enum(['logistics', 'travel', 'contact']),
+  "kind": zod.enum(['logistics', 'travel', 'contact', 'callback']),
   "name": zod.string(),
-  "email": zod.string(),
+  "email": zod.string().nullable(),
   "phone": zod.string().nullish(),
   "company": zod.string().nullish(),
+  "department": zod.string().nullish(),
   "status": zod.string(),
+  "priority": zod.enum(['Low', 'Normal', 'High', 'Urgent']),
+  "leadSource": zod.string().nullish(),
+  "utmSource": zod.string().nullish(),
+  "utmMedium": zod.string().nullish(),
+  "utmCampaign": zod.string().nullish(),
+  "landingPage": zod.string().nullish(),
+  "referrer": zod.string().nullish(),
   "createdAt": zod.coerce.date(),
   "details": zod.string(),
   "internalNotes": zod.string().nullish()
@@ -266,22 +420,52 @@ export const updateAdminEnquiryBodyInternalNotesMax = 4000;
 
 export const UpdateAdminEnquiryBody = zod.object({
   "status": zod.string().min(updateAdminEnquiryBodyStatusMin).max(updateAdminEnquiryBodyStatusMax).optional(),
-  "internalNotes": zod.string().max(updateAdminEnquiryBodyInternalNotesMax).nullish()
+  "internalNotes": zod.string().max(updateAdminEnquiryBodyInternalNotesMax).nullish(),
+  "priority": zod.enum(['Low', 'Normal', 'High', 'Urgent']).optional()
 })
 
 export const UpdateAdminEnquiryResponse = zod.object({
   "id": zod.number().int(),
   "reference": zod.string(),
-  "kind": zod.enum(['logistics', 'travel', 'contact']),
+  "kind": zod.enum(['logistics', 'travel', 'contact', 'callback']),
   "name": zod.string(),
-  "email": zod.string(),
+  "email": zod.string().nullable(),
   "phone": zod.string().nullish(),
   "company": zod.string().nullish(),
+  "department": zod.string().nullish(),
   "status": zod.string(),
+  "priority": zod.enum(['Low', 'Normal', 'High', 'Urgent']),
+  "leadSource": zod.string().nullish(),
+  "utmSource": zod.string().nullish(),
+  "utmMedium": zod.string().nullish(),
+  "utmCampaign": zod.string().nullish(),
+  "landingPage": zod.string().nullish(),
+  "referrer": zod.string().nullish(),
   "createdAt": zod.coerce.date(),
   "details": zod.string(),
   "internalNotes": zod.string().nullish()
 })
+
+
+/**
+ * @summary List shipments for management
+ */
+export const ListAdminShipmentsResponseItem = zod.object({
+  "trackingNumber": zod.string(),
+  "status": zod.string(),
+  "origin": zod.string(),
+  "destination": zod.string(),
+  "shipmentType": zod.string(),
+  "currentLocation": zod.string().nullish(),
+  "estimatedDelivery": zod.coerce.date().nullish(),
+  "events": zod.array(zod.object({
+  "status": zod.string(),
+  "location": zod.string().nullable(),
+  "occurredAt": zod.coerce.date(),
+  "note": zod.string().nullish()
+}))
+})
+export const ListAdminShipmentsResponse = zod.array(ListAdminShipmentsResponseItem)
 
 
 /**
@@ -333,6 +517,103 @@ export const CreateAdminShipmentResponse = zod.object({
   "occurredAt": zod.coerce.date(),
   "note": zod.string().nullish()
 }))
+})
+
+
+/**
+ * @summary Update shipment status and append a timeline event
+ */
+export const updateAdminShipmentPathTrackingNumberMin = 3;
+export const updateAdminShipmentPathTrackingNumberMax = 40;
+
+
+
+export const UpdateAdminShipmentParams = zod.object({
+  "trackingNumber": zod.coerce.string().min(updateAdminShipmentPathTrackingNumberMin).max(updateAdminShipmentPathTrackingNumberMax)
+})
+
+export const updateAdminShipmentBodyStatusMin = 2;
+export const updateAdminShipmentBodyStatusMax = 80;
+
+export const updateAdminShipmentBodyCurrentLocationMax = 180;
+
+export const updateAdminShipmentBodyEventNoteMax = 500;
+
+
+
+export const UpdateAdminShipmentBody = zod.object({
+  "status": zod.string().min(updateAdminShipmentBodyStatusMin).max(updateAdminShipmentBodyStatusMax).optional(),
+  "currentLocation": zod.string().max(updateAdminShipmentBodyCurrentLocationMax).nullish(),
+  "estimatedDelivery": zod.coerce.date().nullish(),
+  "eventNote": zod.string().max(updateAdminShipmentBodyEventNoteMax).optional()
+})
+
+export const UpdateAdminShipmentResponse = zod.object({
+  "trackingNumber": zod.string(),
+  "status": zod.string(),
+  "origin": zod.string(),
+  "destination": zod.string(),
+  "shipmentType": zod.string(),
+  "currentLocation": zod.string().nullish(),
+  "estimatedDelivery": zod.coerce.date().nullish(),
+  "events": zod.array(zod.object({
+  "status": zod.string(),
+  "location": zod.string().nullable(),
+  "occurredAt": zod.coerce.date(),
+  "note": zod.string().nullish()
+}))
+})
+
+
+/**
+ * @summary Update configurable public company settings
+ */
+export const updateAdminSiteSettingsBodyCompanyNameMax = 160;
+
+export const updateAdminSiteSettingsBodyContactEmailMax = 254;
+
+export const updateAdminSiteSettingsBodyContactPhoneMax = 60;
+
+export const updateAdminSiteSettingsBodyLogisticsWhatsappMax = 40;
+
+export const updateAdminSiteSettingsBodyTravelWhatsappMax = 40;
+
+export const updateAdminSiteSettingsBodyGoogleReviewUrlMax = 1000;
+
+export const updateAdminSiteSettingsBodyGoogleBusinessUrlMax = 1000;
+
+export const updateAdminSiteSettingsBodyGoogleMapsUrlMax = 1000;
+
+export const updateAdminSiteSettingsBodyGa4MeasurementIdMax = 40;
+
+export const updateAdminSiteSettingsBodyMetaPixelIdMax = 40;
+
+
+
+export const UpdateAdminSiteSettingsBody = zod.object({
+  "companyName": zod.string().max(updateAdminSiteSettingsBodyCompanyNameMax).nullish(),
+  "contactEmail": zod.string().email().max(updateAdminSiteSettingsBodyContactEmailMax).nullish(),
+  "contactPhone": zod.string().max(updateAdminSiteSettingsBodyContactPhoneMax).nullish(),
+  "logisticsWhatsapp": zod.string().max(updateAdminSiteSettingsBodyLogisticsWhatsappMax).nullish(),
+  "travelWhatsapp": zod.string().max(updateAdminSiteSettingsBodyTravelWhatsappMax).nullish(),
+  "googleReviewUrl": zod.string().url().max(updateAdminSiteSettingsBodyGoogleReviewUrlMax).nullish(),
+  "googleBusinessUrl": zod.string().url().max(updateAdminSiteSettingsBodyGoogleBusinessUrlMax).nullish(),
+  "googleMapsUrl": zod.string().url().max(updateAdminSiteSettingsBodyGoogleMapsUrlMax).nullish(),
+  "ga4MeasurementId": zod.string().max(updateAdminSiteSettingsBodyGa4MeasurementIdMax).nullish(),
+  "metaPixelId": zod.string().max(updateAdminSiteSettingsBodyMetaPixelIdMax).nullish()
+})
+
+export const UpdateAdminSiteSettingsResponse = zod.object({
+  "companyName": zod.string().nullable(),
+  "contactEmail": zod.string().nullable(),
+  "contactPhone": zod.string().nullable(),
+  "logisticsWhatsapp": zod.string().nullable(),
+  "travelWhatsapp": zod.string().nullable(),
+  "googleReviewUrl": zod.string().nullable(),
+  "googleBusinessUrl": zod.string().nullable(),
+  "googleMapsUrl": zod.string().nullable(),
+  "ga4MeasurementId": zod.string().nullable(),
+  "metaPixelId": zod.string().nullish()
 })
 
 

@@ -57,4 +57,16 @@ export interface LogisticsEnquiryInput {
   expectedDate?: Date | null;
   /** @maxLength 4000 */
   details?: string;
+  /** @maxLength 80 */
+  source?: string;
+  /** @maxLength 160 */
+  utmSource?: string;
+  /** @maxLength 160 */
+  utmMedium?: string;
+  /** @maxLength 160 */
+  utmCampaign?: string;
+  /** @maxLength 300 */
+  landingPage?: string;
+  /** @maxLength 500 */
+  referrer?: string;
 }

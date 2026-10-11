@@ -1,0 +1,119 @@
+AIRZONE GROUP — LOGO QUALITY ENHANCEMENT & WEBSITE BRANDING REFINEMENT
+I have already attached the official logos in this chat. Please locate and use those exact attached logo files. Do not ask me to upload them again.
+I want you to improve the clarity, quality, sizing, and integration of all three logos throughout the existing Airzone Group website.
+Important: The main corporate identity is AIRZONE GROUP. The other two logos belong to the separate business divisions.
+1. AIRZONE GROUP — MAIN CORPORATE LOGO
+Use the official Airzone Group logo as the primary brand logo throughout the website.
+Use it in:
+- Main website header and navigation.
+- Homepage hero or appropriate brand introduction.
+- About Airzone Group page.
+- Main footer.
+- Contact page.
+- Loading or transition elements, if appropriate.
+- Browser favicon and website application icons, using a suitable version of the actual logo.
+The Airzone Group logo must be the primary identity visitors see when they open the website.
+2. AIRZONE LOGISTICS — DIVISION LOGO
+Use the separate official Airzone Logistics logo in the Logistics division.
+Use it in:
+- Logistics landing page.
+- Customs clearance page.
+- Freight forwarding and logistics service pages.
+- Logistics quotation form.
+- Logistics enquiry confirmation page.
+- Relevant Logistics-specific branding sections.
+3. AIRZONE TRAVELS & TOURISM — DIVISION LOGO
+Use the separate official Airzone Travels & Tourism logo in the Travel division.
+Use it in:
+- Travel landing page.
+- Travel and tourism service pages.
+- Holiday packages and destinations sections, where appropriate.
+- Travel enquiry form.
+- Corporate travel page, where appropriate.
+- Relevant Travel-specific branding sections.
+Do not use the Logistics logo as the Travel logo or vice versa. Do not replace the Airzone Group master logo with either division logo in the main website header.
+4. ENHANCE ALL THREE LOGOS TO THE HIGHEST PRACTICAL QUALITY
+The currently attached logo files may not have sufficient resolution or clarity. Improve their presentation so they look sharp and professional on modern 4K displays and high-density screens.
+First inspect the original files and determine their formats, dimensions, transparency, and quality.
+Then:
+- If original vector files such as SVG or PDF are available, use them where appropriate.
+- If high-resolution originals are available, use them instead of low-resolution copies.
+- If the source is a low-resolution raster image, carefully upscale it and apply appropriate sharpening or cleanup.
+- Remove unwanted white edges, compression artifacts, pixelation, and jagged edges where possible.
+- Preserve the original logo design, typography, letterforms, symbols, proportions and brand colours.
+- Preserve transparency where the original design requires it.
+- Ensure the logo remains clear against both light and dark backgrounds.
+Do not redesign, retype, reinterpret, or invent any part of the logos. Do not change their identity or brand colours.
+Important: Upscaling a low-resolution image alone does not restore missing detail. Use the best available source file and vector artwork wherever possible. Never claim that a logo is true native 4K if the original artwork cannot support that quality.
+5. FIT THE LOGOS NATURALLY INTO THE WEBSITE DESIGN
+The logos should feel like an integral part of the website, not images pasted into random areas.
+Adjust:
+- Width and height.
+- Header alignment.
+- Padding and surrounding whitespace.
+- Aspect ratio.
+- Contrast.
+- Background treatment.
+- Mobile sizing.
+- Alignment with navigation items.
+- Spacing around other content.
+Use object-fit: contain or an equivalent appropriate method to preserve the entire logo without cropping.
+Do not stretch logos to fill fixed-size containers.
+Do not force every logo into the same dimensions if their original aspect ratios differ.
+Use responsive sizing with sensible maximum widths and heights.
+For the main header, make the Airzone Group logo prominent enough to be immediately recognizable without making the navigation oversized.
+For the two division pages, size their respective logos to suit the hero and section layouts while keeping headings, photography, and CTAs balanced.
+6. BACKGROUND AND COLOUR INTEGRATION
+Use the existing premium website palette and adapt the logo treatment to each section.
+For light backgrounds:
+- Use the original logo variant when it has sufficient contrast.
+- Avoid unnecessary borders or background boxes.
+For dark navy backgrounds:
+- Use an official light/transparent logo variant if available.
+- If a different variant is required, create a carefully approved visual treatment without changing the underlying logo artwork.
+Do not add excessive glow, neon effects, shadows, gradients, or decorative outlines around the logos.
+Keep the result elegant, minimal, luxurious and professional.
+If the source logo has a solid background that cannot be removed cleanly without damaging the artwork, do not automatically erase it. Use a suitable background or obtain a better source asset.
+7. FAVICON — AIRZONE GROUP ONLY
+The website favicon must use the Airzone Group logo, not the Airzone Logistics or Airzone Travels & Tourism logo.
+Create appropriate favicon assets from the actual Airzone Group logo.
+Provide, where supported:
+- SVG favicon.
+- 32 × 32 PNG.
+- 16 × 16 PNG.
+- Apple touch icon.
+- Appropriate web app icons.
+If the full logo is too detailed to remain legible at small sizes, use an existing standalone symbol or monogram from the official Airzone Group artwork. Do not invent a new brand mark.
+Update the website metadata and favicon references correctly. Remove outdated favicon references and verify that the new favicon appears in the browser.
+8. PERFORMANCE AND FILE ORGANIZATION
+Store optimized logo assets in a logical public assets directory.
+Use clear filenames, for example:
+- airzone-group-logo
+- airzone-logistics-logo
+- airzone-travel-logo
+- favicon
+Use appropriate file extensions and avoid duplicate, unused logo files.
+Prefer optimized SVG for genuine vector artwork and optimized WebP or PNG for raster assets, depending on transparency and browser support.
+Do not load enormous 4K raster files into the navigation when a smaller responsive asset is sufficient.
+Use responsive image delivery where appropriate, while preserving maximum-quality source assets.
+9. FINAL CHECKS
+After implementing the changes:
+1. Verify the Airzone Group logo appears in the main header and footer.
+2. Verify the Airzone Logistics logo appears in the Logistics division.
+3. Verify the Airzone Travels & Tourism logo appears in the Travel division.
+4. Verify the favicon uses the Airzone Group logo.
+5. Inspect all three logos on white, ivory and navy backgrounds where applicable.
+6. Check that no logo is distorted, cropped, blurry or disproportionately large.
+7. Test desktop, mobile and high-density displays.
+8. Confirm the navigation remains correctly aligned.
+9. Confirm that the logos load without broken paths or console errors.
+10. Confirm the changes have not broken any existing website functionality.
+FINAL INSTRUCTION
+Please implement these changes directly in the existing project. Do not merely explain how to do them.
+Prioritize authentic branding, clean edges, maximum achievable image clarity, correct logo assignment, responsive sizing and seamless integration into the premium Airzone Group website.
+Do not modify unrelated page content, backend functionality, or the existing design system unless a small adjustment is necessary to integrate the logos properly.
+
+
+
+
+One extra tip, bro: if the attached logos are screenshots or small JPEGs, ask Replit to check whether the original vector or high-resolution files are available before upscaling. That will give you much sharper results than simply enlarging a blurry image.

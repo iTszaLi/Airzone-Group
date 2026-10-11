@@ -6,18 +6,35 @@
  * OpenAPI spec version: 0.1.0
  */
 import type { AdminEnquiryKind } from './adminEnquiryKind';
+import type { AdminEnquiryPriority } from './adminEnquiryPriority';
 
 export interface AdminEnquiry {
   id: number;
   reference: string;
   kind: AdminEnquiryKind;
   name: string;
-  email: string;
+  /** @nullable */
+  email: string | null;
   /** @nullable */
   phone?: string | null;
   /** @nullable */
   company?: string | null;
+  /** @nullable */
+  department?: string | null;
   status: string;
+  priority: AdminEnquiryPriority;
+  /** @nullable */
+  leadSource?: string | null;
+  /** @nullable */
+  utmSource?: string | null;
+  /** @nullable */
+  utmMedium?: string | null;
+  /** @nullable */
+  utmCampaign?: string | null;
+  /** @nullable */
+  landingPage?: string | null;
+  /** @nullable */
+  referrer?: string | null;
   createdAt: Date;
   details: string;
   /** @nullable */

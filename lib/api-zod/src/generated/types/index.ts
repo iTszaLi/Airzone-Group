@@ -8,8 +8,14 @@
 
 export * from './adminEnquiry';
 export * from './adminEnquiryKind';
+export * from './adminEnquiryPriority';
 export * from './adminEnquiryUpdate';
+export * from './adminEnquiryUpdatePriority';
 export * from './adminOverview';
+export * from './adminSiteSettingsUpdate';
+export * from './callbackRequestInput';
+export * from './callbackRequestInputDepartment';
+export * from './callbackRequestInputUrgency';
 export * from './contactEnquiryInput';
 export * from './contactEnquiryInputDepartment';
 export * from './enquiryReceipt';
@@ -19,7 +25,10 @@ export * from './listAdminEnquiriesParams';
 export * from './logisticsEnquiryInput';
 export * from './logisticsEnquiryInputMode';
 export * from './logisticsEnquiryInputShipmentType';
+export * from './portalEnquiry';
+export * from './publicSiteSettings';
 export * from './shipmentEvent';
 export * from './shipmentInput';
 export * from './shipmentTracking';
+export * from './shipmentUpdate';
 export * from './travelEnquiryInput';

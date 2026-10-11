@@ -84,6 +84,54 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/EnquiryReceipt"
+  /enquiries/callback:
+    post:
+      operationId: createCallbackRequest
+      tags: [enquiries]
+      summary: Request a callback from the relevant team
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CallbackRequestInput"
+      responses:
+        "201":
+          description: Callback request received
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EnquiryReceipt"
+  /site/settings:
+    get:
+      operationId: getPublicSiteSettings
+      tags: [public]
+      summary: Get configured public company contact and review links
+      responses:
+        "200":
+          description: Public settings; unconfigured fields are null
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PublicSiteSettings"
+  /portal/enquiries:
+    get:
+      operationId: listMyEnquiries
+      tags: [portal]
+      summary: List enquiries submitted by the signed-in customer
+      responses:
+        "200":
+          description: Enquiries belonging to the verified signed-in email
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/PortalEnquiry"
+        "401":
+          description: Authentication required
+        "403":
+          description: A verified email is required
   /shipments/{trackingNumber}:
     get:
       operationId: getShipmentTracking
@@ -133,7 +181,7 @@ paths:
           required: false
           schema:
             type: string
-            enum: [logistics, travel, contact]
+            enum: [logistics, travel, contact, callback]
         - name: status
           in: query
           required: false
@@ -260,6 +308,28 @@ paths:
           description: Administrator access required
         "404":
           description: Shipment not found
+  /admin/settings:
+    patch:
+      operationId: updateAdminSiteSettings
+      tags: [admin]
+      summary: Update configurable public company settings
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AdminSiteSettingsUpdate"
+      responses:
+        "200":
+          description: Updated public settings
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PublicSiteSettings"
+        "401":
+          description: Authentication required
+        "403":
+          description: Administrator access required
 components:
   schemas:
     HealthStatus:
@@ -289,6 +359,12 @@ components:
         service: { type: string, minLength: 2, maxLength: 80 }
         expectedDate: { type: ["string", "null"], format: date }
         details: { type: string, maxLength: 4000 }
+        source: { type: string, maxLength: 80 }
+        utmSource: { type: string, maxLength: 160 }
+        utmMedium: { type: string, maxLength: 160 }
+        utmCampaign: { type: string, maxLength: 160 }
+        landingPage: { type: string, maxLength: 300 }
+        referrer: { type: string, maxLength: 500 }
     TravelEnquiryInput:
       type: object
       required: [name, mobile, email, departureCity, destination, travelType]
@@ -310,6 +386,15 @@ components:
         budget: { type: string, maxLength: 80 }
         preferredPackage: { type: string, maxLength: 160 }
         message: { type: string, maxLength: 4000 }
+        company: { type: string, maxLength: 160 }
+        travellers: { type: integer, minimum: 1, maximum: 500 }
+        tripType: { type: string, maxLength: 80 }
+        source: { type: string, maxLength: 80 }
+        utmSource: { type: string, maxLength: 160 }
+        utmMedium: { type: string, maxLength: 160 }
+        utmCampaign: { type: string, maxLength: 160 }
+        landingPage: { type: string, maxLength: 300 }
+        referrer: { type: string, maxLength: 500 }
     ContactEnquiryInput:
       type: object
       required: [name, email, department, message]
@@ -320,6 +405,28 @@ components:
         phone: { type: string, maxLength: 40 }
         department: { type: string, enum: [Logistics, "Customs Clearance", "Travel & Tourism", "Corporate Travel", "General Enquiry"] }
         message: { type: string, minLength: 2, maxLength: 4000 }
+        source: { type: string, maxLength: 80 }
+        utmSource: { type: string, maxLength: 160 }
+        utmMedium: { type: string, maxLength: 160 }
+        utmCampaign: { type: string, maxLength: 160 }
+        landingPage: { type: string, maxLength: 300 }
+        referrer: { type: string, maxLength: 500 }
+    CallbackRequestInput:
+      type: object
+      required: [name, mobile, department, preferredTime]
+      properties:
+        name: { type: string, minLength: 2, maxLength: 120 }
+        mobile: { type: string, minLength: 5, maxLength: 40 }
+        department: { type: string, enum: [Logistics, "Customs Clearance", "Travel & Tourism", "Corporate Travel", "General Enquiry"] }
+        preferredTime: { type: string, minLength: 2, maxLength: 120 }
+        message: { type: string, maxLength: 2000 }
+        urgency: { type: string, enum: [Normal, Urgent], default: Normal }
+        source: { type: string, maxLength: 80 }
+        utmSource: { type: string, maxLength: 160 }
+        utmMedium: { type: string, maxLength: 160 }
+        utmCampaign: { type: string, maxLength: 160 }
+        landingPage: { type: string, maxLength: 300 }
+        referrer: { type: string, maxLength: 500 }
     EnquiryReceipt:
       type: object
       required: [id, reference, message]
@@ -378,16 +485,24 @@ components:
         shipments: { type: integer }
     AdminEnquiry:
       type: object
-      required: [id, reference, kind, name, email, status, createdAt, details]
+      required: [id, reference, kind, name, email, status, priority, createdAt, details]
       properties:
         id: { type: integer }
         reference: { type: string }
-        kind: { type: string, enum: [logistics, travel, contact] }
+        kind: { type: string, enum: [logistics, travel, contact, callback] }
         name: { type: string }
-        email: { type: string }
+        email: { type: ["string", "null"] }
         phone: { type: ["string", "null"] }
         company: { type: ["string", "null"] }
+        department: { type: ["string", "null"] }
         status: { type: string }
+        priority: { type: string, enum: [Low, Normal, High, Urgent] }
+        leadSource: { type: ["string", "null"] }
+        utmSource: { type: ["string", "null"] }
+        utmMedium: { type: ["string", "null"] }
+        utmCampaign: { type: ["string", "null"] }
+        landingPage: { type: ["string", "null"] }
+        referrer: { type: ["string", "null"] }
         createdAt: { type: string, format: date-time }
         details: { type: string }
         internalNotes: { type: ["string", "null"] }
@@ -396,4 +511,43 @@ components:
       properties:
         status: { type: string, minLength: 2, maxLength: 80 }
         internalNotes: { type: ["string", "null"], maxLength: 4000 }
+        priority: { type: string, enum: [Low, Normal, High, Urgent] }
+    PortalEnquiry:
+      type: object
+      required: [id, reference, kind, status, priority, createdAt]
+      properties:
+        id: { type: integer }
+        reference: { type: string }
+        kind: { type: string }
+        status: { type: string }
+        priority: { type: string }
+        createdAt: { type: string, format: date-time }
+        department: { type: ["string", "null"] }
+    PublicSiteSettings:
+      type: object
+      required: [companyName, contactEmail, contactPhone, logisticsWhatsapp, travelWhatsapp, googleReviewUrl, googleBusinessUrl, googleMapsUrl, ga4MeasurementId]
+      properties:
+        companyName: { type: ["string", "null"] }
+        contactEmail: { type: ["string", "null"] }
+        contactPhone: { type: ["string", "null"] }
+        logisticsWhatsapp: { type: ["string", "null"] }
+        travelWhatsapp: { type: ["string", "null"] }
+        googleReviewUrl: { type: ["string", "null"] }
+        googleBusinessUrl: { type: ["string", "null"] }
+        googleMapsUrl: { type: ["string", "null"] }
+        ga4MeasurementId: { type: ["string", "null"] }
+        metaPixelId: { type: ["string", "null"] }
+    AdminSiteSettingsUpdate:
+      type: object
+      properties:
+        companyName: { type: ["string", "null"], maxLength: 160 }
+        contactEmail: { type: ["string", "null"], format: email, maxLength: 254 }
+        contactPhone: { type: ["string", "null"], maxLength: 60 }
+        logisticsWhatsapp: { type: ["string", "null"], maxLength: 40 }
+        travelWhatsapp: { type: ["string", "null"], maxLength: 40 }
+        googleReviewUrl: { type: ["string", "null"], format: uri, maxLength: 1000 }
+        googleBusinessUrl: { type: ["string", "null"], format: uri, maxLength: 1000 }
+        googleMapsUrl: { type: ["string", "null"], format: uri, maxLength: 1000 }
+        ga4MeasurementId: { type: ["string", "null"], maxLength: 40 }
+        metaPixelId: { type: ["string", "null"], maxLength: 40 }
 

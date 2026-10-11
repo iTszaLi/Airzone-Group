@@ -1,25 +1,90 @@
-import { useState } from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { Link, Route, Router, Switch, useLocation } from 'wouter';
+import { Link as WouterLink, Route, Router, Switch, useLocation } from 'wouter';
 import {
   ArrowDown, ArrowRight, ArrowUpRight, Menu, X, Ship, Plane, PackageCheck,
   Globe2, MapPin, ShieldCheck, Boxes, Truck, Compass, ChevronRight,
   Search, Check, CircleAlert, LoaderCircle, FileText, SlidersHorizontal,
   LogIn, Mail, Phone, CalendarDays, Send, MoveRight, Anchor,
-  Landmark, CircleHelp
+  Landmark, CircleHelp, MessageCircle, Star, Settings2, LogOut
 } from 'lucide-react';
 import {
   useCreateContactEnquiry, useCreateLogisticsEnquiry, useCreateTravelEnquiry,
   useGetShipmentTracking, getGetShipmentTrackingQueryKey, useGetAdminOverview,
-  useListAdminEnquiries, useUpdateAdminEnquiry
+  useListAdminEnquiries, useUpdateAdminEnquiry, useGetPublicSiteSettings,
+  useCreateCallbackRequest, useListMyEnquiries, useListAdminShipments,
+  useCreateAdminShipment, useUpdateAdminShipment, useUpdateAdminSiteSettings
 } from '@workspace/api-client-react';
 import type {
   ContactEnquiryInput, LogisticsEnquiryInput, TravelEnquiryInput,
-  AdminEnquiryUpdate
+  AdminEnquiryUpdate, CallbackRequestInput, ShipmentInput, AdminSiteSettingsUpdate
 } from '@workspace/api-client-react';
+import { t, pageDirection, type Locale } from './lib/i18n';
 import './index.css';
 
 const client = new QueryClient();
+
+type LocaleContextValue = { locale: Locale; changeLocale: (locale: Locale) => void };
+const LocaleContext = createContext<LocaleContextValue>({
+  locale: 'en',
+  changeLocale: () => undefined,
+});
+
+function LocaleProvider({ children }: { children: React.ReactNode }) {
+  const [location, setLocation] = useLocation();
+  const locale: Locale = location === '/ar' || location.startsWith('/ar/') ? 'ar' : 'en';
+  useEffect(() => {
+    document.documentElement.lang = locale;
+    document.documentElement.dir = pageDirection(locale);
+  }, [locale]);
+  const changeLocale = (next: Locale) => {
+    const cleanPath = location.replace(/^\/(ar|en)(?=\/|$)/, '') || '/';
+    const normalizedPath = cleanPath.startsWith('/') ? cleanPath : `/${cleanPath}`;
+    setLocation(next === 'ar'
+      ? (normalizedPath === '/' ? '/ar/' : `/ar${normalizedPath}`)
+      : normalizedPath);
+    window.localStorage.setItem('airzone-locale', next);
+  };
+  return <LocaleContext.Provider value={{ locale, changeLocale }}>{children}</LocaleContext.Provider>;
+}
+
+function useLocale() {
+  return useContext(LocaleContext);
+}
+
+function Link(props: React.ComponentProps<typeof WouterLink>) {
+  const { locale } = useLocale();
+  const href = typeof props.href === 'string' ? props.href : String(props.href);
+  const localizedHref = href.startsWith('/')
+    ? (locale === 'ar'
+      ? (href === '/' ? '/ar/' : `/ar${href}`)
+      : href.replace(/^\/(ar|en)(?=\/|$)/, '') || '/')
+    : href;
+  return <WouterLink {...props} href={localizedHref} />;
+}
+
+function LanguageSwitcher() {
+  const { locale, changeLocale } = useLocale();
+  return <div className="language-switch" aria-label="Language">
+    <button type="button" onClick={() => changeLocale('en')} aria-pressed={locale === 'en'}>EN</button>
+    <span aria-hidden="true">|</span>
+    <button type="button" onClick={() => changeLocale('ar')} aria-pressed={locale === 'ar'}>العربية</button>
+  </div>;
+}
+
+function useSiteSettings() {
+  return useGetPublicSiteSettings({ query: { staleTime: 120_000 } });
+}
+
+function whatsappHref(phone: string | null | undefined, message: string) {
+  const digits = phone?.replace(/\D/g, '');
+  return digits ? `https://wa.me/${digits}?text=${encodeURIComponent(message)}` : null;
+}
+
+function trackEvent(event: string, division?: string) {
+  const tracker = (window as Window & { gtag?: (...args: unknown[]) => void }).gtag;
+  tracker?.('event', event, division ? { division } : {});
+}
 
 const services = [
   ['Customs clearance', '/logistics/customs-clearance', 'A clear path through import and export requirements.', Landmark],
@@ -38,52 +103,61 @@ const travelLinks = [
 ] as const;
 
 function Brand({ inverse = false }: { inverse?: boolean }) {
-  return <Link href="/" className={`brand ${inverse ? 'brand-inverse' : ''}`} data-testid="link-home">
-    <span className="brand-mark"><span>A</span><i /></span>
-    <span className="brand-name">AIRZONE <b>GROUP</b><small>ONE GROUP. MANY POSSIBILITIES.</small></span>
+  const { locale } = useLocale();
+  return <Link href="/" className={`brand ${inverse ? 'brand-inverse' : ''}`} data-testid="link-home" aria-label="Airzone Group home">
+    <span className="brand-name">AIRZONE <b>GROUP</b><small>{locale === 'ar' ? 'الخدمات اللوجستية · السفر والسياحة' : 'LOGISTICS · TRAVEL & TOURISM'}</small></span>
   </Link>;
 }
 
 function Header() {
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState('');
+  const { locale } = useLocale();
+  const copy = (key: string) => t(locale, key);
   return <header className="site-header">
-    <div className="topline"><span>Saudi Arabia · International reach</span><span className="top-right"><span>Corporate group</span><span className="top-dot" /> <Link href="/contact">Get in touch <ArrowUpRight size={12}/></Link></span></div>
+    <div className="topline"><span>{locale === 'ar' ? 'مجموعة إيرزون · أعمال متخصصة' : 'AIRZONE GROUP · SPECIALIST BUSINESSES'}</span><span className="top-right"><LanguageSwitcher/><span className="top-dot" /><Link href="/contact">{copy('nav.getInTouch')} <ArrowUpRight size={12}/></Link></span></div>
     <div className="nav-wrap">
       <Brand />
-      <button className="mobile-toggle" aria-label={open ? 'Close navigation' : 'Open navigation'} onClick={() => setOpen(!open)} data-testid="button-menu">{open ? <X/> : <Menu/>}</button>
+      <button className="mobile-toggle" aria-label={open ? 'Close navigation' : 'Open navigation'} aria-expanded={open} onClick={() => setOpen(!open)} data-testid="button-menu">{open ? <X/> : <Menu/>}</button>
       <nav className={`main-nav ${open ? 'nav-open' : ''}`}>
-        <Link onClick={() => setOpen(false)} href="/" className="nav-link">Home</Link>
+        <Link onClick={() => setOpen(false)} href="/" className="nav-link">{copy('nav.home')}</Link>
         <div className="nav-group" onMouseEnter={() => setActive('business')} onMouseLeave={() => setActive('')}>
-          <button className="nav-link nav-trigger" onClick={() => setActive(active === 'business' ? '' : 'business')}>Our businesses <ChevronRight size={14}/></button>
+          <button className="nav-link nav-trigger" aria-expanded={active === 'business'} onClick={() => setActive(active === 'business' ? '' : 'business')}>{copy('nav.businesses')} <ChevronRight size={14}/></button>
           <div className={`nav-dropdown ${active === 'business' ? 'dropdown-open' : ''}`}>
-            <Link href="/logistics"><span className="drop-icon"><Boxes size={18}/></span><span><b>Logistics</b><small>Move business forward</small></span><ArrowUpRight size={15}/></Link>
-            <Link href="/travel"><span className="drop-icon travel-drop"><Compass size={18}/></span><span><b>Travel & tourism</b><small>Make every journey count</small></span><ArrowUpRight size={15}/></Link>
+            <Link href="/logistics" onClick={() => setOpen(false)}><span className="drop-icon"><Boxes size={18}/></span><span><b>{locale === 'ar' ? 'الخدمات اللوجستية' : 'Logistics'}</b><small>{locale === 'ar' ? 'نُسهم في تقدّم الأعمال' : 'Move business forward'}</small></span><ArrowUpRight size={15}/></Link>
+            <Link href="/travel" onClick={() => setOpen(false)}><span className="drop-icon travel-drop"><Compass size={18}/></span><span><b>{locale === 'ar' ? 'السفر والسياحة' : 'Travel & tourism'}</b><small>{locale === 'ar' ? 'نجعل كل رحلة تجربة مميزة' : 'Make every journey count'}</small></span><ArrowUpRight size={15}/></Link>
           </div>
         </div>
-        <Link onClick={() => setOpen(false)} href="/destinations" className="nav-link">Destinations</Link>
-        <Link onClick={() => setOpen(false)} href="/about" className="nav-link">About us</Link>
-        <Link onClick={() => setOpen(false)} href="/contact" className="nav-link">Contact</Link>
-        <Link onClick={() => setOpen(false)} href="/track" className="nav-track"><PackageCheck size={15}/> Track a shipment</Link>
+        <Link onClick={() => setOpen(false)} href="/destinations" className="nav-link">{copy('nav.destinations')}</Link>
+        <Link onClick={() => setOpen(false)} href="/travel/corporate-travel" className="nav-link">{copy('nav.corporate')}</Link>
+        <Link onClick={() => setOpen(false)} href="/insights" className="nav-link">{copy('nav.insights')}</Link>
+        <Link onClick={() => setOpen(false)} href="/about" className="nav-link">{copy('nav.about')}</Link>
+        <Link onClick={() => setOpen(false)} href="/contact" className="nav-link">{copy('nav.contact')}</Link>
+        <Link onClick={() => setOpen(false)} href="/track" className="nav-track"><PackageCheck size={15}/> {copy('nav.track')}</Link>
+        <Link onClick={() => setOpen(false)} href="/logistics/request-quote" className="nav-quote">{copy('common.quote')}</Link>
       </nav>
     </div>
   </header>;
 }
 
 function Footer() {
+  const { locale } = useLocale();
+  const settings = useSiteSettings().data;
+  const reviewUrl = settings?.googleReviewUrl;
+  const copy = (key: string) => t(locale, key);
   return <footer className="footer">
     <div className="footer-main">
-      <div className="footer-brand"><Brand inverse/><p>Two specialist businesses.<br/>One dependable point of connection.</p></div>
-      <div className="footer-col"><h4>Businesses</h4><Link href="/logistics">Logistics</Link><Link href="/travel">Travel & tourism</Link><Link href="/track">Track shipment</Link></div>
-      <div className="footer-col"><h4>Explore</h4><Link href="/about">About Airzone</Link><Link href="/destinations">Destinations</Link><Link href="/contact">Contact</Link></div>
-      <div className="footer-callout"><span className="eyebrow">Start a conversation</span><h3>Let's find the<br/>right way forward.</h3><Link href="/contact" className="footer-cta">Talk to our team <ArrowRight size={15}/></Link></div>
+      <div className="footer-brand"><Brand inverse/><p>{copy('footer.statement')}</p>{settings?.contactEmail && <a href={`mailto:${settings.contactEmail}`}>{settings.contactEmail}</a>}{settings?.contactPhone && <a href={`tel:${settings.contactPhone}`}>{settings.contactPhone}</a>}{reviewUrl && <a className="footer-review" href={reviewUrl} target="_blank" rel="noreferrer" onClick={() => trackEvent('google_review_click')}>{copy('common.review')}</a>}</div>
+      <div className="footer-col"><h4>{copy('footer.businesses')}</h4><Link href="/logistics">{locale === 'ar' ? 'الخدمات اللوجستية' : 'Logistics'}</Link><Link href="/travel">{locale === 'ar' ? 'السفر والسياحة' : 'Travel & tourism'}</Link><Link href="/travel/corporate-travel">{copy('nav.corporate')}</Link><Link href="/track">{copy('nav.track')}</Link></div>
+      <div className="footer-col"><h4>{copy('footer.explore')}</h4><Link href="/about">{copy('nav.about')}</Link><Link href="/destinations">{copy('nav.destinations')}</Link><Link href="/insights">{copy('nav.insights')}</Link><Link href="/reviews">{copy('common.review')}</Link><Link href="/portal">{locale === 'ar' ? 'بوابة العملاء' : 'Client portal'}</Link><Link href="/contact">{copy('nav.contact')}</Link></div>
+      <div className="footer-callout"><span className="eyebrow">{copy('footer.start')}</span><h3>{locale === 'ar' ? 'لنحدد معاً الخطوة المناسبة.' : 'Let’s find the right way forward.'}</h3><Link href="/contact" className="footer-cta">{copy('common.contact')} <ArrowRight size={15}/></Link></div>
     </div>
-    <div className="footer-bottom"><span>© {new Date().getFullYear()} Airzone Group</span><span className="legal"><Link href="/privacy">Privacy</Link><Link href="/terms">Terms</Link><Link href="/admin">Admin access</Link></span><span>Saudi Arabia</span></div>
+    <div className="footer-bottom"><span>© {new Date().getFullYear()} Airzone Group</span><span className="legal"><Link href="/privacy">{copy('footer.privacy')}</Link><Link href="/terms">{copy('footer.terms')}</Link><Link href="/admin">Admin access</Link></span><span><LanguageSwitcher/></span></div>
   </footer>;
 }
 
 function Layout({ children }: { children: React.ReactNode }) {
-  return <><Header/><main>{children}</main><Footer/></>;
+  return <><Header/><main>{children}</main><Footer/><MobileConversionBar/><AnalyticsConsent/></>;
 }
 
 function Eyebrow({ children, gold = false }: { children: React.ReactNode; gold?: boolean }) {
@@ -91,43 +165,49 @@ function Eyebrow({ children, gold = false }: { children: React.ReactNode; gold?:
 }
 
 function Home() {
+  const { locale } = useLocale();
+  const copy = (key: string) => t(locale, key);
+  const settings = useSiteSettings().data;
   return <Layout>
     <section className="hero">
       <div className="hero-image" />
       <div className="hero-shade" />
       <div className="hero-grid">
         <div className="hero-copy">
-          <Eyebrow gold>Airzone Group · Saudi Arabia</Eyebrow>
-          <h1>Progress moves<br/><em>with purpose.</em></h1>
-          <p>From the movement of goods to the making of journeys, we bring specialist services together under one trusted group.</p>
-          <div className="hero-actions"><Link href="/logistics" className="button button-gold">Explore our businesses <ArrowRight size={17}/></Link><Link href="/about" className="text-link light-link">Get to know us <ArrowUpRight size={15}/></Link></div>
-          <div className="hero-note"><span className="note-rule"/><span>Built around what<br/>moves you forward.</span></div>
+          <Eyebrow gold>{copy('home.eyebrow')}</Eyebrow>
+          <h1>{locale === 'ar' ? <>نحرّك الأعمال.<br/><em>ونصنع الرحلات.</em></> : <>Moving business.<br/><em>Creating journeys.</em></>}</h1>
+          <p>{copy('home.intro')}</p>
+          <div className="hero-actions"><Link href="/logistics" className="button button-gold">{copy('home.explore')} <ArrowRight size={17}/></Link><Link href="/contact" className="text-link light-link">{copy('home.team')} <ArrowUpRight size={15}/></Link></div>
+          <div className="hero-note"><span className="note-rule"/><span>{locale === 'ar' ? <>نبدأ بفهم احتياجك،<br/>ونعمل على خطوتك التالية.</> : <>Built around what<br/>moves you forward.</>}</span></div>
         </div>
         <div className="hero-side"><div className="hero-index">01 <span>/</span> 02</div><div className="vertical-label">CONNECTED BY CARE</div></div>
       </div>
-      <div className="hero-bottom"><span>01 / A GROUP THAT MOVES WITH YOU</span><a href="#businesses">Scroll to explore <ArrowDown size={14}/></a><span className="hero-coordinate">24°42' N&nbsp;&nbsp; 46°40' E</span></div>
+      <div className="hero-bottom"><span>01 / {locale === 'ar' ? 'مجموعة تتحرك معك' : 'A GROUP THAT MOVES WITH YOU'}</span><a href="#businesses">{copy('home.scroll')} <ArrowDown size={14}/></a><span className="hero-coordinate">{locale === 'ar' ? 'الخدمات اللوجستية · السفر والسياحة' : 'LOGISTICS · TRAVEL & TOURISM'}</span></div>
     </section>
     <section className="intro-section">
-      <div className="intro-aside"><Eyebrow>One group, two disciplines</Eyebrow><span className="section-number">01 — 03</span></div>
-      <div className="intro-body"><h2>Different journeys.<br/><span>One clear point of view.</span></h2><p>Airzone Group brings together logistics and travel & tourism: two focused businesses, each built around understanding what matters to the people who rely on them.</p><Link href="/about" className="under-link">The Airzone approach <ArrowRight size={16}/></Link></div>
+      <div className="intro-aside"><Eyebrow>{copy('home.introEyebrow')}</Eyebrow><span className="section-number">01 — 03</span></div>
+      <div className="intro-body"><h2>{locale === 'ar' ? <>رحلات مختلفة.<br/><span>رؤية واضحة.</span></> : <>Different journeys.<br/><span>One clear point of view.</span></>}</h2><p>{copy('home.introBody')}</p><Link href="/about" className="under-link">{copy('home.approach')} <ArrowRight size={16}/></Link></div>
     </section>
     <section className="businesses-section" id="businesses">
-      <div className="section-heading"><div><Eyebrow>Our businesses</Eyebrow><h2>Expertise with<br/>a shared standard.</h2></div><p>Choose the specialist team that fits your next move.</p></div>
+      <div className="section-heading"><div><Eyebrow>{copy('home.businessEyebrow')}</Eyebrow><h2>{locale === 'ar' ? <>خبرات متنوعة<br/>بمعيار مشترك.</> : <>Expertise with<br/>a shared standard.</>}</h2></div><p>{copy('home.businessIntro')}</p></div>
       <div className="business-grid">
-        <Link href="/logistics" className="business-card logistics-card"><div className="business-card-top"><span>01 / LOGISTICS</span><ArrowUpRight size={20}/></div><div className="business-card-image logistics-image"><div className="route-line"><span/><i/><b/></div></div><div className="business-card-copy"><div className="business-icon"><Boxes size={20}/></div><h3>Moving business<br/>forward.</h3><p>Logistics and customs services designed around the demands of moving cargo across borders and routes.</p><span className="card-link">Explore logistics <ArrowRight size={15}/></span></div></Link>
-        <Link href="/travel" className="business-card travel-card"><div className="business-card-top"><span>02 / TRAVEL & TOURISM</span><ArrowUpRight size={20}/></div><div className="business-card-image travel-image"><div className="sun-disc"/><div className="travel-arch"/></div><div className="business-card-copy"><div className="business-icon"><Compass size={20}/></div><h3>Journeys,<br/>made personal.</h3><p>Travel planning that brings flights, stays and experiences into one considered itinerary.</p><span className="card-link">Explore travel <ArrowRight size={15}/></span></div></Link>
+        <Link href="/logistics" className="business-card logistics-card"><div className="business-card-top"><span>01 / LOGISTICS</span><ArrowUpRight size={20}/></div><div className="business-card-image logistics-image" role="img" aria-label="Abstract route illustration for logistics"/><div className="business-card-copy"><div className="business-icon"><Boxes size={20}/></div><h3>{copy('home.logisticsTitle')}</h3><p>{copy('home.logisticsBody')}</p><span className="card-link">{copy('home.discoverLogistics')} <ArrowRight size={15}/></span></div></Link>
+        <Link href="/travel" className="business-card travel-card"><div className="business-card-top"><span>02 / TRAVEL & TOURISM</span><ArrowUpRight size={20}/></div><div className="business-card-image travel-image" role="img" aria-label="Abstract destination illustration"><div className="sun-disc"/><div className="travel-arch"/></div><div className="business-card-copy"><div className="business-icon"><Compass size={20}/></div><h3>{copy('home.travelTitle')}</h3><p>{copy('home.travelBody')}</p><span className="card-link">{copy('home.discoverTravel')} <ArrowRight size={15}/></span></div></Link>
       </div>
     </section>
     <section className="manifesto">
-      <div className="manifesto-side"><Eyebrow gold>A considered way forward</Eyebrow><span>02 — 03</span></div><div className="manifesto-copy"><h2>Clear thinking.<br/><i>Careful coordination.</i><br/>A better next step.</h2><Link href="/contact" className="button button-outline">Talk to our team <ArrowRight size={16}/></Link></div><div className="manifesto-decoration">AZ<span>G</span></div>
+      <div className="manifesto-side"><Eyebrow gold>{locale === 'ar' ? 'نهج مدروس للمضي قدماً' : 'A considered way forward'}</Eyebrow><span>02 — 03</span></div><div className="manifesto-copy"><h2>{locale === 'ar' ? <>وضوح في الرؤية.<br/><i>تنسيق بعناية.</i><br/>وخطوة أفضل.</> : <>Clear thinking.<br/><i>Careful coordination.</i><br/>A better next step.</>}</h2><Link href="/contact" className="button button-outline">{copy('home.team')} <ArrowRight size={16}/></Link></div><div className="manifesto-decoration" aria-hidden="true">AZ<span>G</span></div>
     </section>
     <section className="pathways">
-      <div className="pathways-intro"><Eyebrow>Here for the practical details</Eyebrow><h2>Start where<br/>you are.</h2><p>Whether you are moving a shipment or planning a trip, find your next step here.</p></div>
-      <Link href="/track" className="pathway-row"><span className="pathway-icon"><PackageCheck/></span><span><small>FOR SHIPMENTS</small><b>Track a shipment</b><em>Check the latest shipment status.</em></span><ArrowUpRight className="pathway-arrow"/></Link>
-      <Link href="/logistics/request-quote" className="pathway-row"><span className="pathway-icon"><FileText/></span><span><small>FOR BUSINESSES</small><b>Request a quote</b><em>Tell us what your cargo needs.</em></span><ArrowUpRight className="pathway-arrow"/></Link>
-      <Link href="/travel/enquiry" className="pathway-row"><span className="pathway-icon"><CalendarDays/></span><span><small>FOR TRAVELLERS</small><b>Plan a journey</b><em>Share your plans with our team.</em></span><ArrowUpRight className="pathway-arrow"/></Link>
+      <div className="pathways-intro"><Eyebrow>{copy('home.pathwayEyebrow')}</Eyebrow><h2>{locale === 'ar' ? <>ابدأ من<br/>احتياجك.</> : <>Start where<br/>you are.</>}</h2><p>{copy('home.pathwayBody')}</p></div>
+      <Link href="/track" className="pathway-row"><span className="pathway-icon"><PackageCheck/></span><span><small>FOR SHIPMENTS</small><b>{copy('home.track')}</b><em>{copy('home.trackDesc')}</em></span><ArrowUpRight className="pathway-arrow"/></Link>
+      <Link href="/logistics/request-quote" className="pathway-row"><span className="pathway-icon"><FileText/></span><span><small>FOR BUSINESSES</small><b>{copy('home.quote')}</b><em>{copy('home.quoteDesc')}</em></span><ArrowUpRight className="pathway-arrow"/></Link>
+      <Link href="/travel/enquiry" className="pathway-row"><span className="pathway-icon"><CalendarDays/></span><span><small>FOR TRAVELLERS</small><b>{copy('home.plan')}</b><em>{copy('home.planDesc')}</em></span><ArrowUpRight className="pathway-arrow"/></Link>
     </section>
-    <section className="closing-band"><div><span className="closing-mark">AZ</span><div><Eyebrow gold>Airzone Group</Eyebrow><h2>Good journeys<br/>start with a conversation.</h2></div></div><Link className="button button-gold" href="/contact">Contact our team <ArrowRight size={16}/></Link></section>
+    <ReviewInvitation division="group"/>
+    {settings?.googleReviewUrl && <section className="closing-band"><div><span className="closing-mark" aria-hidden="true">AZ</span><div><Eyebrow gold>{locale === 'ar' ? 'مجموعة إيرزون' : 'Airzone Group'}</Eyebrow><h2>{copy('home.closeTitle')}<br/>{copy('home.closeBody')}</h2></div></div><Link className="button button-gold" href="/contact">{copy('common.contact')} <ArrowRight size={16}/></Link></section>}
+    <section className="callback-strip"><div><Eyebrow>{locale === 'ar' ? 'نحن هنا للمساعدة' : 'Need help?'}</Eyebrow><h2>{copy('home.callback')}</h2></div><Link href="/callback" className="button button-navy">{copy('common.callback')} <ArrowRight size={16}/></Link><WhatsAppLink department="logistics" className="button button-outline-dark" message="Hello Airzone Logistics, I would like assistance with a logistics or customs clearance requirement." label={locale === 'ar' ? 'تحدث إلى فريق الخدمات اللوجستية' : 'Talk to Logistics'} />
+    </section>
   </Layout>;
 }
 

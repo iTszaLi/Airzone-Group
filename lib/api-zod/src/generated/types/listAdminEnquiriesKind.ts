@@ -13,4 +13,5 @@ export const ListAdminEnquiriesKind = {
   logistics: 'logistics',
   travel: 'travel',
   contact: 'contact',
+  callback: 'callback',
 } as const;

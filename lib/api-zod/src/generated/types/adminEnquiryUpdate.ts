@@ -5,6 +5,7 @@
  * Airzone Group website and enquiry API
  * OpenAPI spec version: 0.1.0
  */
+import type { AdminEnquiryUpdatePriority } from './adminEnquiryUpdatePriority';
 
 export interface AdminEnquiryUpdate {
   /**
@@ -17,4 +18,5 @@ export interface AdminEnquiryUpdate {
      * @nullable
      */
   internalNotes?: string | null;
+  priority?: AdminEnquiryUpdatePriority;
 }

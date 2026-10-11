@@ -1,4 +1,4 @@
-import { and, asc, count, eq, ilike, or } from "drizzle-orm";
+import { and, count, desc, eq, ilike, or } from "drizzle-orm";
 import { Router, type IRouter } from "express";
 import {
   CreateAdminShipmentBody,
@@ -8,9 +8,13 @@ import {
   ListAdminEnquiriesQueryParams,
   ListAdminEnquiriesResponse,
   ListAdminEnquiriesResponseItem,
+  ListAdminShipmentsResponse,
   UpdateAdminEnquiryBody,
   UpdateAdminEnquiryParams,
   UpdateAdminEnquiryResponse,
+  UpdateAdminShipmentBody,
+  UpdateAdminShipmentParams,
+  UpdateAdminShipmentResponse,
 } from "@workspace/api-zod";
 import {
   db,
@@ -44,6 +48,7 @@ const travelStatuses = [
   "Closed",
 ];
 const contactStatuses = ["New", "Contacted", "Closed"];
+const callbackStatuses = ["New", "Contacted", "Complete", "Closed", "Cancelled"];
 
 function toAdminEnquiry(enquiry: typeof enquiriesTable.$inferSelect) {
   return ListAdminEnquiriesResponseItem.parse({
@@ -54,7 +59,15 @@ function toAdminEnquiry(enquiry: typeof enquiriesTable.$inferSelect) {
     email: enquiry.email,
     phone: enquiry.phone,
     company: enquiry.company,
+    department: enquiry.department,
     status: enquiry.status,
+    priority: enquiry.priority,
+    leadSource: enquiry.leadSource,
+    utmSource: enquiry.utmSource,
+    utmMedium: enquiry.utmMedium,
+    utmCampaign: enquiry.utmCampaign,
+    landingPage: enquiry.landingPage,
+    referrer: enquiry.referrer,
     createdAt: enquiry.createdAt.toISOString(),
     details: JSON.stringify(enquiry.details, null, 2),
     internalNotes: enquiry.internalNotes,
@@ -92,9 +105,14 @@ router.get("/admin/enquiries", requireAdmin, async (req, res): Promise<void> => 
   let kind = query.data.kind;
   if (role === "logistics_admin" && !kind) kind = "logistics";
   if (role === "travel_admin" && !kind) kind = "travel";
+  const callbackAccess =
+    kind === "callback" &&
+    (role === "super_admin" ||
+      role === "logistics_admin" ||
+      role === "travel_admin");
   if (
     role !== "super_admin" &&
-    (!kind || !canManageEnquiryKind(role, kind))
+    (!kind || (!canManageEnquiryKind(role, kind) && !callbackAccess))
   ) {
     res.status(403).json({ error: "This role cannot view the requested enquiries" });
     return;
@@ -102,6 +120,22 @@ router.get("/admin/enquiries", requireAdmin, async (req, res): Promise<void> => 
 
   const conditions = [];
   if (kind) conditions.push(eq(enquiriesTable.kind, kind));
+  if (kind === "callback" && role === "logistics_admin") {
+    conditions.push(
+      or(
+        eq(enquiriesTable.department, "Logistics"),
+        eq(enquiriesTable.department, "Customs Clearance"),
+      )!,
+    );
+  }
+  if (kind === "callback" && role === "travel_admin") {
+    conditions.push(
+      or(
+        eq(enquiriesTable.department, "Travel & Tourism"),
+        eq(enquiriesTable.department, "Corporate Travel"),
+      )!,
+    );
+  }
   if (query.data.status) conditions.push(eq(enquiriesTable.status, query.data.status));
   if (query.data.search) {
     const term = `%${query.data.search}%`;
@@ -118,7 +152,7 @@ router.get("/admin/enquiries", requireAdmin, async (req, res): Promise<void> => 
     .select()
     .from(enquiriesTable)
     .where(conditions.length ? and(...conditions) : undefined)
-    .orderBy(asc(enquiriesTable.createdAt))
+    .orderBy(desc(enquiriesTable.createdAt))
     .limit(250);
   res.json(ListAdminEnquiriesResponse.parse(rows.map(toAdminEnquiry)));
 });
@@ -134,8 +168,12 @@ router.patch("/admin/enquiries/:id", requireAdmin, async (req, res): Promise<voi
     res.status(400).json({ error: body.error.message });
     return;
   }
-  if (!body.data.status && body.data.internalNotes === undefined) {
-    res.status(400).json({ error: "Provide a status or internal notes update" });
+  if (
+    !body.data.status &&
+    !body.data.priority &&
+    body.data.internalNotes === undefined
+  ) {
+    res.status(400).json({ error: "Provide a status, priority, or notes update" });
     return;
   }
   const [existing] = await db
@@ -148,7 +186,13 @@ router.patch("/admin/enquiries/:id", requireAdmin, async (req, res): Promise<voi
     return;
   }
   const role = roleFromLocals(res);
-  if (!canManageEnquiryKind(role, existing.kind)) {
+  const callbackDepartmentAllowed =
+    existing.kind === "callback" &&
+    ((role === "logistics_admin" &&
+      ["Logistics", "Customs Clearance"].includes(existing.department ?? "")) ||
+      (role === "travel_admin" &&
+        ["Travel & Tourism", "Corporate Travel"].includes(existing.department ?? "")));
+  if (!canManageEnquiryKind(role, existing.kind) && !callbackDepartmentAllowed) {
     res.status(403).json({ error: "This role cannot update this enquiry" });
     return;
   }
@@ -158,6 +202,8 @@ router.patch("/admin/enquiries/:id", requireAdmin, async (req, res): Promise<voi
         ? logisticsStatuses
         : existing.kind === "travel"
           ? travelStatuses
+          : existing.kind === "callback"
+            ? callbackStatuses
           : contactStatuses;
     if (!allowedStatuses.includes(body.data.status)) {
       res.status(400).json({ error: "Invalid status for this enquiry type" });
@@ -168,6 +214,7 @@ router.patch("/admin/enquiries/:id", requireAdmin, async (req, res): Promise<voi
     .update(enquiriesTable)
     .set({
       ...(body.data.status ? { status: body.data.status } : {}),
+      ...(body.data.priority ? { priority: body.data.priority } : {}),
       ...(body.data.internalNotes !== undefined
         ? { internalNotes: body.data.internalNotes }
         : {}),
@@ -179,6 +226,44 @@ router.patch("/admin/enquiries/:id", requireAdmin, async (req, res): Promise<voi
     return;
   }
   res.json(UpdateAdminEnquiryResponse.parse(toAdminEnquiry(updated)));
+});
+
+router.get("/admin/shipments", requireAdmin, async (_req, res): Promise<void> => {
+  const role = roleFromLocals(res);
+  if (role !== "super_admin" && role !== "logistics_admin") {
+    res.status(403).json({ error: "This role cannot manage shipments" });
+    return;
+  }
+  const records = await db
+    .select()
+    .from(shipmentsTable)
+    .orderBy(desc(shipmentsTable.updatedAt))
+    .limit(250);
+  const result = await Promise.all(
+    records.map(async (shipment) => {
+      const events = await db
+        .select()
+        .from(shipmentEventsTable)
+        .where(eq(shipmentEventsTable.shipmentId, shipment.id))
+        .orderBy(desc(shipmentEventsTable.occurredAt));
+      return GetShipmentTrackingResponse.parse({
+        trackingNumber: shipment.trackingNumber,
+        status: shipment.status,
+        origin: shipment.origin,
+        destination: shipment.destination,
+        shipmentType: shipment.shipmentType,
+        currentLocation: shipment.currentLocation,
+        estimatedDelivery: shipment.estimatedDelivery,
+        events: events.map((event) => ({
+          status: event.status,
+          location: event.location,
+          note: event.note,
+          occurredAt: event.occurredAt.toISOString(),
+        })),
+      });
+    }),
+  );
+  res.json(ListAdminShipmentsResponse.parse(result));
 });
 
 router.post("/admin/shipments", requireAdmin, async (req, res): Promise<void> => {
@@ -247,5 +332,99 @@ router.post("/admin/shipments", requireAdmin, async (req, res): Promise<void> =>
     res.status(500).json({ error: "Unable to create shipment right now" });
   }
 });
+
+router.patch(
+  "/admin/shipments/:trackingNumber",
+  requireAdmin,
+  async (req, res): Promise<void> => {
+    const role = roleFromLocals(res);
+    if (role !== "super_admin" && role !== "logistics_admin") {
+      res.status(403).json({ error: "This role cannot manage shipments" });
+      return;
+    }
+    const params = UpdateAdminShipmentParams.safeParse(req.params);
+    if (!params.success) {
+      res.status(400).json({ error: params.error.message });
+      return;
+    }
+    const parsed = UpdateAdminShipmentBody.safeParse(req.body);
+    if (!parsed.success) {
+      res.status(400).json({ error: parsed.error.message });
+      return;
+    }
+    const input = parsed.data;
+    if (
+      input.status === undefined &&
+      input.currentLocation === undefined &&
+      input.estimatedDelivery === undefined &&
+      input.eventNote === undefined
+    ) {
+      res.status(400).json({ error: "Provide at least one shipment update" });
+      return;
+    }
+    const updated = await db.transaction(async (tx) => {
+      const [shipment] = await tx
+        .select()
+        .from(shipmentsTable)
+        .where(eq(shipmentsTable.trackingNumber, params.data.trackingNumber))
+        .limit(1);
+      if (!shipment) return null;
+      const nextStatus = input.status ?? shipment.status;
+      const nextLocation =
+        input.currentLocation === undefined
+          ? shipment.currentLocation
+          : input.currentLocation;
+      const [saved] = await tx
+        .update(shipmentsTable)
+        .set({
+          status: nextStatus,
+          currentLocation: nextLocation,
+          ...(input.estimatedDelivery !== undefined
+            ? {
+                estimatedDelivery: input.estimatedDelivery
+                  ? input.estimatedDelivery.toISOString().slice(0, 10)
+                  : null,
+              }
+            : {}),
+        })
+        .where(eq(shipmentsTable.id, shipment.id))
+        .returning();
+      if (!saved) return null;
+      await tx.insert(shipmentEventsTable).values({
+        shipmentId: shipment.id,
+        status: nextStatus,
+        location: nextLocation,
+        note: input.eventNote ?? null,
+      });
+      const events = await tx
+        .select()
+        .from(shipmentEventsTable)
+        .where(eq(shipmentEventsTable.shipmentId, saved.id))
+        .orderBy(desc(shipmentEventsTable.occurredAt));
+      return { shipment: saved, events };
+    });
+    if (!updated) {
+      res.status(404).json({ error: "Shipment not found" });
+      return;
+    }
+    res.json(
+      UpdateAdminShipmentResponse.parse({
+        trackingNumber: updated.shipment.trackingNumber,
+        status: updated.shipment.status,
+        origin: updated.shipment.origin,
+        destination: updated.shipment.destination,
+        shipmentType: updated.shipment.shipmentType,
+        currentLocation: updated.shipment.currentLocation,
+        estimatedDelivery: updated.shipment.estimatedDelivery,
+        events: updated.events.map((event) => ({
+          status: event.status,
+          location: event.location,
+          note: event.note,
+          occurredAt: event.occurredAt.toISOString(),
+        })),
+      }),
+    );
+  },
+);
 
 export default router;

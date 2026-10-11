@@ -26,3 +26,14 @@ for logistics.”
 
 **How to apply:** Keep this crop across Logistics pages, quotation forms and
 confirmation states; leave the Group and Travel logos unchanged.
+
+Browser favicons must use the Group logo in a circular disc with transparent
+outer corners. This treatment is for the browser icon, not the website's
+displayed logos. Keep Apple's touch icon separate from browser icon geometry.
+
+**Why:** The user explicitly rejected the square white browser-tab background
+and CSS-only rounding. Browser favicon caches can also retain the previous icon.
+
+**How to apply:** Generate genuinely transparent circular PNG/ICO and SVG
+container assets, and give changed favicon content fresh, matching versioned
+URLs so it does not depend on users manually clearing the previous icon cache.

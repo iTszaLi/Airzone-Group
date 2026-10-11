@@ -18,3 +18,16 @@ invert, trace, retype or automatically erase the artwork. Prefer authentic vecto
 or high-resolution masters if the company provides them later.
 
 Regenerate assets with `bash scripts/prepare-brand-assets.sh`.
+
+## Circular browser favicon
+
+Browser icons use the complete Group logo centred in a white circular disc with
+transparent pixels outside the circle. The source proportions and brand colours
+are preserved. The 16, 32 and 48 pixel PNGs, multi-size ICO and circular SVG
+container have distinct `favicon-circle-v1` filenames to bypass the previous
+square icon's browser cache. Future favicon revisions should use a new filename
+version. No browser-icon CSS masking is used.
+
+Regenerate only these browser icons with `bash scripts/prepare-favicons.sh`.
+The separate Apple touch icon remains an opaque 180 × 180 PNG, allowing Apple to
+apply its own icon mask. Existing PWA icons are unchanged.

@@ -1,0 +1,266 @@
+# AIRZONE GROUP — PREMIUM CORPORATE FOOTER REDESIGN
+
+Redesign the entire bottom section of the existing Airzone Group website. The current footer is too simple and does not provide enough company information or a professional finishing experience.
+
+I want a premium, elegant, international corporate footer that matches the website's navy blue, warm ivory, white and restrained gold design system.
+
+**Important:** Modify the existing footer and its responsive layouts directly. Do not rebuild the entire website or change unrelated sections.
+
+## 1. MAIN FOOTER BRANDING
+
+Use the actual Airzone Group logo already attached in this Replit project.
+
+At the top of the footer, create a refined brand section containing:
+
+- Airzone Group master logo
+- Official tagline: "ONE GROUP. MANY POSSIBILITIES."
+- Supporting text: "Two specialist businesses. One dependable point of connection."
+- A short, professional introduction to the Group's Logistics and Travel & Tourism divisions.
+
+Keep the logo sharp, correctly sized, proportionate and clearly visible against the footer background.
+
+Do not recreate the logo or replace it with plain text.
+
+## 2. PREMIUM FOOTER LAYOUT
+
+Use a well-balanced desktop layout with five logical areas:
+
+### Column 1 — Airzone Group
+
+- Airzone Group logo
+- ONE GROUP. MANY POSSIBILITIES.
+- Short company description
+- Saudi Arabia
+
+### Column 2 — Logistics
+
+Use the actual Airzone Logistics logo.
+
+Links:
+- Logistics Overview
+- Customs Clearance
+- Freight Forwarding
+- Air Freight
+- Sea Freight
+- Road Transportation, if offered
+- Request a Quote
+- Track Shipment
+
+### Column 3 — Travel & Tourism
+
+Use the actual Airzone Travels & Tourism logo.
+
+Links:
+- Travel Overview
+- Flights
+- Holiday Packages
+- Destinations
+- Hotels
+- Corporate Travel
+- Plan Your Trip
+
+Only show links for pages that exist or have been implemented. Do not create dead links.
+
+### Column 4 — Contact Our Businesses
+
+Clearly separate the Logistics and Travel contact details. Visitors must immediately understand which email address belongs to which division.
+
+**AIRZONE LOGISTICS**
+
+Email 1:
+fazlu@kingdomlogistics.net
+
+Email 2:
+airfreight@kingdomlogistics.net
+
+Both email addresses must be clickable and open the visitor's default email application using correctly formatted `mailto:` links.
+
+Use:
+- `mailto:fazlu@kingdomlogistics.net`
+- `mailto:airfreight@kingdomlogistics.net`
+
+Display each address clearly on its own line.
+
+Do not merge the addresses or show the Travel email under Logistics.
+
+**AIRZONE TRAVEL & TOURISM**
+
+Email:
+yahya.khan@airzonetravel.net
+
+Use:
+`mailto:yahya.khan@airzonetravel.net`
+
+Display the Travel email separately beneath the Travel division label.
+
+Use the actual Airzone Travels & Tourism logo next to or above the division name, with the Airzone Logistics logo used for Logistics.
+
+### Column 5 — Visit Our Office / Get in Touch
+
+Create a refined location and contact section.
+
+Include:
+- Saudi Arabia
+- Google Maps directions link for the confirmed office location
+- A Contact Us link
+- A Talk to Our Team CTA
+
+For the Travel division, use the supplied address:
+
+Prince Fahad Bin Ibrahim Al Saud, Al Malaz, Riyadh 12642, Saudi Arabia.
+
+Google Maps directions link:
+
+https://www.google.com/maps/search/?api=1&query=AirZone+Travel+%26+Tourism%2C+Al+Malaz%2C+Riyadh+12642%2C+Saudi+Arabia
+
+Open the directions link in a new tab where appropriate.
+
+**Important:** This address belongs to Airzone Travel & Tourism. Do not represent it as the Logistics office address unless that is separately confirmed.
+
+For Logistics, create a separate configurable office address and Google Maps URL. Until the Logistics location is confirmed, display only "Saudi Arabia" rather than inventing an address or map pin.
+
+Do not invent a Logistics phone number. If a verified phone number is available elsewhere in the existing project, use it; otherwise leave the Logistics phone field unconfigured until provided.
+
+## 3. PHONE AND WHATSAPP CONTACT
+
+For Airzone Travel & Tourism, use the confirmed phone number:
+
+**+966 59 356 7526**
+
+Make it clickable using:
+
+`tel:+966593567526`
+
+Display it beneath the Travel division's email or in the Travel contact section.
+
+Only add a WhatsApp button for this number if WhatsApp availability is confirmed. Otherwise provide a normal click-to-call link.
+
+For Logistics, use an existing verified phone number if one is already configured in the project. If not, do not invent one.
+
+Keep contact details in a centralized configuration or admin settings so they can be updated without editing multiple components.
+
+## 4. PREMIUM VISUAL DESIGN
+
+Make the footer feel like a deliberate part of a luxury corporate website.
+
+Use:
+- Deep navy background
+- Warm white text
+- Muted secondary text
+- Restrained gold accents
+- Thin, subtle divider lines
+- Generous spacing
+- Elegant typography
+- Consistent alignment
+- Professional hover states
+- Small, refined icons where appropriate
+
+Use the official division logos at a sensible size. Do not make them so large that they overwhelm the footer.
+
+Avoid excessive rounded cards, bright gradients, neon colours or clutter.
+
+Use subtle hover transitions for links, email addresses, map directions and buttons.
+
+Ensure adequate contrast and comfortable readability.
+
+## 5. FINAL CTA ABOVE THE FOOTER
+
+Before the main footer, retain and improve the existing closing CTA:
+
+Eyebrow:
+START A CONVERSATION
+
+Headline:
+**LET'S FIND THE RIGHT WAY FORWARD.**
+
+Supporting text:
+"Whether you need customs clearance and logistics support or help planning your next journey, our team is ready to hear from you."
+
+Buttons:
+- CONTACT OUR LOGISTICS TEAM
+- PLAN YOUR TRIP
+
+The buttons should link to the appropriate working enquiry routes. Do not send both buttons to the same generic page if separate forms already exist.
+
+Keep this CTA visually distinct from the footer itself.
+
+## 6. SOCIAL MEDIA
+
+If official company social media URLs already exist in the project, display the corresponding icons and links.
+
+Otherwise, do not invent social accounts or display inactive icons.
+
+Make social links configurable through admin settings.
+
+## 7. BOTTOM LEGAL BAR
+
+Add a thin divider and a polished final row containing:
+
+Left:
+© [Current Year] Airzone Group. All rights reserved.
+
+Right:
+- Privacy Policy
+- Terms & Conditions
+- Cookie Policy, if implemented
+- Admin Access
+
+Automatically update the year.
+
+Keep Admin Access discreet and do not expose administrative information.
+
+Ensure all links work correctly.
+
+## 8. MOBILE AND RESPONSIVE DESIGN
+
+The footer must be professionally responsive.
+
+Desktop:
+Use the multi-column layout with balanced spacing.
+
+Tablet:
+Reflow columns naturally without cramped text.
+
+Mobile:
+Stack the brand, division links, contact information and location sections vertically.
+
+Requirements:
+- No horizontal overflow.
+- No tiny text.
+- Email addresses must wrap cleanly.
+- Phone numbers must remain clickable.
+- Logos must retain their aspect ratios.
+- Buttons must be easy to tap.
+- Use subtle separators between sections.
+- Do not force visitors to scroll through oversized empty spaces.
+
+Ensure the footer also works correctly in Arabic RTL mode.
+
+## 9. FUNCTIONAL AND TECHNICAL REQUIREMENTS
+
+- Use the existing component system and styling conventions.
+- Reuse the exact official logo assets already attached.
+- Use semantic footer, navigation and contact markup.
+- Add accessible labels to icon-only links.
+- Ensure external links work correctly.
+- Check every internal route.
+- Keep contact information centralized and editable.
+- Do not add unnecessary dependencies.
+- Do not change the database or authentication system just for the footer.
+- Do not introduce broken links or placeholder phone numbers.
+
+## 10. FINAL VALIDATION
+
+Before finishing:
+
+1. Verify all three logos display clearly.
+2. Test all three email links.
+3. Test the Travel phone link.
+4. Verify the Travel Google Maps directions link.
+5. Confirm no incorrect Logistics address is displayed.
+6. Check the desktop, tablet and mobile layouts.
+7. Confirm the legal links and CTA buttons work.
+8. Check the English and Arabic footer layouts.
+9. Verify the final footer matches the premium styling of the rest of the website.
+
+**Final objective:** Turn the basic footer into a sophisticated corporate contact hub that reinforces the Airzone Group brand, clearly separates its two businesses, makes it easy to contact the right team and finishes the website with a premium, professional appearance.

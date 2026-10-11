@@ -1,12 +1,13 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { Link as WouterLink, Route, Router, Switch, useLocation } from 'wouter';
+import { Link as WouterLink, Router, useLocation } from 'wouter';
 import {
   ArrowDown, ArrowRight, ArrowUpRight, Menu, X, Ship, Plane, PackageCheck,
   Globe2, MapPin, ShieldCheck, Boxes, Truck, Compass, ChevronRight,
   Search, Check, CircleAlert, LoaderCircle, FileText, SlidersHorizontal,
   LogIn, Mail, Phone, CalendarDays, Send, MoveRight, Anchor,
-  Landmark, CircleHelp, MessageCircle, Star, Settings2, LogOut
+  Landmark, CircleHelp, MessageCircle, Star, Settings2, LogOut,
+  Facebook, Instagram, Linkedin, Youtube
 } from 'lucide-react';
 import {
   useCreateContactEnquiry, useCreateLogisticsEnquiry, useCreateTravelEnquiry,
@@ -20,6 +21,7 @@ import type {
   AdminEnquiryUpdate, CallbackRequestInput, ShipmentInput, AdminSiteSettingsUpdate
 } from '@workspace/api-client-react';
 import { t, pageDirection, type Locale } from './lib/i18n';
+import { businessContacts, corporateTagline } from './config/business-contacts';
 import './index.css';
 
 const client = new QueryClient();
@@ -180,20 +182,104 @@ function Header() {
   </header>;
 }
 
+function FooterContactBlock({ division }: { division: 'logistics' | 'travel' }) {
+  const { locale } = useLocale();
+  const ar = locale === 'ar';
+  const c = businessContacts[division];
+  return <div className="azf-contact-block">
+    <BrandLogo division={division} className="azf-contact-logo"/>
+    <h4>{division === 'logistics' ? (ar ? 'إيرزون للخدمات اللوجستية' : 'AIRZONE LOGISTICS') : (ar ? 'إيرزون للسفر والسياحة' : 'AIRZONE TRAVEL & TOURISM')}</h4>
+    <ul>
+      {c.emails.map(e => <li key={e}><a href={`mailto:${e}`} dir="ltr"><Mail size={14} aria-hidden="true"/><span>{e.slice(0, e.indexOf('@') + 1)}<wbr/>{e.slice(e.indexOf('@') + 1)}</span></a></li>)}
+      {c.phone && <li><a href={c.phone.href} dir="ltr"><Phone size={14} aria-hidden="true"/><span>{c.phone.label}</span></a></li>}
+    </ul>
+    {c.whatsappNumber && <a className="azf-map" href={`https://wa.me/${c.whatsappNumber.replace(/\D/g, '')}`} target="_blank" rel="noopener noreferrer"><MessageCircle size={15} aria-hidden="true"/>{ar ? 'واتساب' : 'WhatsApp'}<span className="azf-sr">{ar ? ' (يفتح في نافذة جديدة)' : ' (opens in a new tab)'}</span></a>}
+    {c.socialLinks.length > 0 && <div className="azf-social">{c.socialLinks.map(l => {
+      const Icon = { LinkedIn: Linkedin, Instagram, Facebook, YouTube: Youtube, X: null }[l.name];
+      return <a key={l.name} href={l.url} target="_blank" rel="noopener noreferrer" aria-label={`${c.name} on ${l.name} (opens in a new tab)`}>{Icon ? <Icon size={18} aria-hidden="true"/> : <span aria-hidden="true">X</span>}</a>;
+    })}</div>}
+  </div>;
+}
+
 function Footer() {
   const { locale } = useLocale();
-  const settings = useSiteSettings().data;
-  const reviewUrl = settings?.googleReviewUrl;
-  const copy = (key: string) => t(locale, key);
-  return <footer className="footer">
-    <div className="footer-main">
-      <div className="footer-brand"><Brand inverse/><p>{copy('footer.statement')}</p>{settings?.contactEmail && <a href={`mailto:${settings.contactEmail}`}>{settings.contactEmail}</a>}{settings?.contactPhone && <a href={`tel:${settings.contactPhone}`}>{settings.contactPhone}</a>}{reviewUrl && <a className="footer-review" href={reviewUrl} target="_blank" rel="noreferrer" onClick={() => trackEvent('google_review_click')}>{copy('common.review')}</a>}</div>
-      <div className="footer-col"><h4>{copy('footer.businesses')}</h4><Link href="/logistics">{locale === 'ar' ? 'الخدمات اللوجستية' : 'Logistics'}</Link><Link href="/travel">{locale === 'ar' ? 'السفر والسياحة' : 'Travel & tourism'}</Link><Link href="/travel/corporate-travel">{copy('nav.corporate')}</Link><Link href="/track">{copy('nav.track')}</Link></div>
-      <div className="footer-col"><h4>{copy('footer.explore')}</h4><Link href="/about">{copy('nav.about')}</Link><Link href="/destinations">{copy('nav.destinations')}</Link><Link href="/insights">{copy('nav.insights')}</Link><Link href="/reviews">{copy('common.review')}</Link><Link href="/portal">{locale === 'ar' ? 'بوابة العملاء' : 'Client portal'}</Link><Link href="/contact">{copy('nav.contact')}</Link></div>
-      <div className="footer-callout"><span className="eyebrow">{copy('footer.start')}</span><h3>{locale === 'ar' ? 'لنحدد معاً الخطوة المناسبة.' : 'Let’s find the right way forward.'}</h3><Link href="/contact" className="footer-cta">{copy('common.contact')} <ArrowRight size={15}/></Link></div>
-    </div>
-    <div className="footer-bottom"><span>© {new Date().getFullYear()} Airzone Group</span><span className="legal"><Link href="/privacy">{copy('footer.privacy')}</Link><Link href="/terms">{copy('footer.terms')}</Link><Link href="/admin">Admin access</Link></span><span><LanguageSwitcher/></span></div>
-  </footer>;
+  const ar = locale === 'ar';
+  const T = (en: string, arText: string) => ar ? arText : en;
+  const logisticsLinks: [string, string, string][] = [
+    ['Logistics overview', 'نظرة عامة', '/logistics'], ['Customs clearance', 'التخليص الجمركي', '/logistics/customs-clearance'],
+    ['Freight forwarding', 'الشحن والتوريد', '/logistics/freight-forwarding'], ['Air freight', 'الشحن الجوي', '/logistics/air-freight'],
+    ['Sea freight', 'الشحن البحري', '/logistics/sea-freight'], ['Road transportation', 'النقل البري', '/logistics/road-transportation'],
+    ['Request a quote', 'اطلب عرض سعر', '/logistics/request-quote'], ['Track shipment', 'تتبع الشحنة', '/track'],
+  ];
+  const travelFooterLinks: [string, string, string][] = [
+    ['Travel overview', 'نظرة عامة', '/travel'], ['Flights', 'الطيران', '/travel/flights'],
+    ['Holiday packages', 'باقات العطلات', '/travel/holiday-packages'], ['Destinations', 'الوجهات', '/destinations'],
+    ['Hotels', 'الفنادق', '/travel/hotels'], ['Corporate travel', 'سفر الأعمال', '/travel/corporate-travel'],
+    ['Plan your trip', 'خطط لرحلتك', '/travel/enquiry'],
+  ];
+  const travel = businessContacts.travel;
+  const logistics = businessContacts.logistics;
+  return <>
+    <section id="closing-contact-cta" className="azf-cta" aria-labelledby="azf-cta-title">
+      <div className="azf-cta-inner">
+        <div><div className="azf-eyebrow"><span aria-hidden="true"/>{T('START A CONVERSATION', 'ابدأ محادثة')}</div>
+          <h2 id="azf-cta-title">{T("LET'S FIND THE RIGHT WAY FORWARD.", 'لنحدد معاً الخطوة المناسبة.')}</h2>
+          <p>{T('Whether you need customs clearance and logistics support or help planning your next journey, our team is ready to hear from you.', 'سواء احتجت إلى التخليص الجمركي والدعم اللوجستي أو إلى المساعدة في تخطيط رحلتك القادمة، فريقنا جاهز للاستماع إليك.')}</p></div>
+        <div className="azf-cta-actions">
+          <Link href="/logistics/request-quote" className="azf-btn azf-btn-gold">{T('CONTACT OUR LOGISTICS TEAM', 'تواصل مع فريق الخدمات اللوجستية')} <ArrowRight size={15} aria-hidden="true"/></Link>
+          <Link href="/travel/enquiry" className="azf-btn azf-btn-line">{T('PLAN YOUR TRIP', 'خطط لرحلتك')} <ArrowRight size={15} aria-hidden="true"/></Link>
+        </div>
+      </div>
+    </section>
+    <footer id="site-footer" className="azf-footer">
+      <div className="azf-grid">
+        <div className="azf-col azf-brand-col">
+          <Brand inverse/>
+          <p className="azf-tagline" dir="ltr">{corporateTagline}</p>
+          <p className="azf-lead">{T('Two specialist businesses. One dependable point of connection.', 'نشاطان متخصصان، ونقطة تواصل موثوقة واحدة.')}</p>
+          <p className="azf-copy">{T('Airzone Logistics supports customs clearance and cargo movement, while Airzone Travel & Tourism helps individuals and companies plan journeys with care.', 'تدعم إيرزون للخدمات اللوجستية التخليص الجمركي ونقل البضائع، بينما تساعد إيرزون للسفر والسياحة الأفراد والشركات على تخطيط رحلاتهم بعناية.')}</p>
+          <p className="azf-place"><MapPin size={14} aria-hidden="true"/>{T('Saudi Arabia', 'المملكة العربية السعودية')}</p>
+        </div>
+        <nav className="azf-col" aria-label={T('Airzone Logistics', 'إيرزون للخدمات اللوجستية')}>
+          <BrandLogo division="logistics" className="azf-division-logo"/>
+          <h3 className="azf-heading">{T('Logistics', 'الخدمات اللوجستية')}</h3>
+          <ul>{logisticsLinks.map(([en, a, href]) => <li key={href}><Link href={href}>{T(en, a)}</Link></li>)}</ul>
+        </nav>
+        <nav className="azf-col" aria-label={T('Airzone Travel & Tourism', 'إيرزون للسفر والسياحة')}>
+          <BrandLogo division="travel" className="azf-division-logo"/>
+          <h3 className="azf-heading">{T('Travel & Tourism', 'السفر والسياحة')}</h3>
+          <ul>{travelFooterLinks.map(([en, a, href]) => <li key={href}><Link href={href}>{T(en, a)}</Link></li>)}</ul>
+        </nav>
+        <div id="footer-business-contacts" className="azf-col azf-contacts">
+          <h3 className="azf-heading">{T('Contact our businesses', 'تواصل مع أعمالنا')}</h3>
+          <FooterContactBlock division="logistics"/>
+          <FooterContactBlock division="travel"/>
+        </div>
+        <address className="azf-col azf-office">
+          <h3 className="azf-heading">{T('Visit our office', 'زيارة مكتبنا')}</h3>
+          <div className="azf-contact-block">
+            <h4>{T('AIRZONE TRAVEL & TOURISM', 'إيرزون للسفر والسياحة')}</h4>
+            {travel.officeAddress && <p dir="ltr" className="azf-addr">{travel.officeAddress}</p>}
+            {travel.mapsUrl && <a className="azf-map" href={travel.mapsUrl} target="_blank" rel="noopener noreferrer"><MapPin size={14} aria-hidden="true"/>{T('Get directions', 'احصل على الاتجاهات')}<ArrowUpRight size={13} aria-hidden="true"/><span className="azf-sr">{T(' (opens in a new tab)', ' (يفتح في نافذة جديدة)')}</span></a>}
+          </div>
+          <div className="azf-contact-block">
+            <h4>{T('AIRZONE LOGISTICS', 'إيرزون للخدمات اللوجستية')}</h4>
+            <p className="azf-addr">{logistics.officeAddress ?? T(logistics.country, 'المملكة العربية السعودية')}</p>
+            {logistics.mapsUrl && <a className="azf-map" href={logistics.mapsUrl} target="_blank" rel="noopener noreferrer"><MapPin size={14} aria-hidden="true"/>{T('Get directions', 'احصل على الاتجاهات')}<ArrowUpRight size={13} aria-hidden="true"/></a>}
+          </div>
+          <div className="azf-office-actions">
+            <Link href="/contact" className="azf-btn azf-btn-gold">{T('Talk to our team', 'تحدث إلى فريقنا')} <ArrowRight size={15} aria-hidden="true"/></Link>
+            <Link href="/contact" className="azf-textlink">{T('Contact us', 'اتصل بنا')}</Link>
+          </div>
+        </address>
+      </div>
+      <div className="azf-bottom">
+        <span>© {new Date().getFullYear()} Airzone Group. {T('All rights reserved.', 'جميع الحقوق محفوظة.')}</span>
+        <nav aria-label={T('Legal', 'قانوني')}><Link href="/privacy">{T('Privacy Policy', 'سياسة الخصوصية')}</Link><Link href="/terms">{T('Terms & Conditions', 'الشروط والأحكام')}</Link><Link href="/admin">{T('Admin Access', 'دخول الإدارة')}</Link></nav>
+        <LanguageSwitcher/>
+      </div>
+    </footer>
+  </>;
 }
 
 function Layout({ children }: { children: React.ReactNode }) {
@@ -472,6 +558,6 @@ function Routes() {
   return <NotFound/>;
 }
 
-function App() { return <QueryClientProvider client={client}><Router base={import.meta.env.BASE_URL.replace(/\/$/, '')}><LocaleProvider><Switch><Route path="/" component={Routes}/><Route path="/:rest*" component={Routes}/><Route component={NotFound}/></Switch></LocaleProvider></Router></QueryClientProvider>; }
+function App() { return <QueryClientProvider client={client}><Router base={import.meta.env.BASE_URL.replace(/\/$/, '')}><LocaleProvider><Routes/></LocaleProvider></Router></QueryClientProvider>; }
 
 export default App;

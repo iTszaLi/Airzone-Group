@@ -465,3 +465,80 @@ button { cursor: pointer; }
   .callback-strip .button { margin-top: 20px; }
   .topline .language-switch button { font-size: 9px; }
 }
+
+/* Corporate footer (azf-) */
+.azf-cta { background: #f1eee4; border-top: 1px solid #ddd8c6; padding: 72px 6%; color: #142940; }
+.azf-cta-inner { max-width: 1190px; margin: auto; display: grid; grid-template-columns: 1.5fr 1fr; gap: 48px; align-items: center; }
+.azf-eyebrow { display: flex; align-items: center; gap: 10px; font-size: 12px; letter-spacing: .18em; font-weight: 700; color: #8a7336; }
+.azf-eyebrow span { width: 28px; height: 1px; background: #b79e5c; }
+.azf-cta h2 { margin: 16px 0 14px; font: 500 clamp(30px,3.6vw,46px)/1.1 var(--app-font-serif); letter-spacing: -.03em; }
+.azf-cta p { max-width: 560px; font-size: 15px; line-height: 1.7; color: #55687a; margin: 0; }
+.azf-cta-actions { display: flex; flex-direction: column; gap: 12px; }
+.azf-btn { display: inline-flex; align-items: center; justify-content: center; gap: 12px; min-height: 52px; padding: 12px 22px; font-size: 12px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; border: 1px solid transparent; text-align: center; transition: background .2s, color .2s, border-color .2s; }
+.azf-btn-gold { background: #cbb06f; color: #142940; }
+.azf-btn-gold:hover { background: #dcc48a; }
+.azf-cta .azf-btn-line { border-color: #142940; color: #142940; }
+.azf-cta .azf-btn-line:hover { background: #142940; color: #f4f1e8; }
+.azf-footer { background: #0f2238; color: #e9e8e2; padding: 72px 6% 0; }
+.azf-grid { max-width: 1280px; margin: auto; display: grid; grid-template-columns: 1.25fr .9fr .9fr 1.15fr 1.1fr; gap: 0; }
+.azf-col { padding: 0 28px; border-inline-start: 1px solid rgba(255,255,255,.12); min-width: 0; font-style: normal; }
+.azf-col:first-child { padding-inline-start: 0; border: 0; }
+.azf-col:last-child { padding-inline-end: 0; }
+.azf-col ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 4px; }
+.azf-col li a { display: inline-block; padding: 6px 0; font-size: 14px; color: #cdd4d8; transition: color .2s, transform .2s; }
+.azf-col li a:hover { color: #dcc48a; }
+.azf-footer a:focus-visible, .azf-cta a:focus-visible { outline: 2px solid #dcc48a; outline-offset: 3px; }
+.azf-tagline { margin: 22px 0 8px; font-size: 13px; letter-spacing: .16em; font-weight: 700; color: #d6bf84; }
+[dir="rtl"] .azf-tagline { text-align: right; }
+.azf-lead { margin: 0 0 12px; font: 500 18px/1.35 var(--app-font-serif); color: #f3f0e7; }
+.azf-copy { margin: 0 0 16px; font-size: 14px; line-height: 1.7; color: #aebac1; }
+.azf-place { display: flex; align-items: center; gap: 8px; margin: 0; font-size: 14px; color: #d6bf84; }
+.azf-division-logo { height: auto; margin-bottom: 20px; }
+.azf-division-logo.brand-logo-logistics { width: 190px; aspect-ratio: 412 / 112; }
+.azf-division-logo.brand-logo-travel { width: 84px; aspect-ratio: 196 / 162; }
+.azf-heading { margin: 0 0 20px; font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: #d6bf84; font-weight: 700; }
+.azf-contact-block { margin-bottom: 24px; }
+.azf-contact-logo { display: block; margin-bottom: 12px; height: auto; }
+.azf-contact-logo.brand-logo-logistics { width: 160px; aspect-ratio: 412 / 112; }
+.azf-contact-logo.brand-logo-travel { width: 60px; aspect-ratio: 196 / 162; }
+.azf-contact-block h4 { margin: 0 0 10px; font-size: 12px; letter-spacing: .12em; color: #f3f0e7; font-weight: 700; }
+.azf-contact-block li a { display: flex; align-items: flex-start; gap: 9px; overflow-wrap: anywhere; word-break: break-word; }
+.azf-contact-block li svg { margin-top: 3px; flex-shrink: 0; color: #cbb06f; }
+.azf-addr { margin: 0 0 10px; font-size: 14px; line-height: 1.6; color: #cdd4d8; }
+.azf-map { display: inline-flex; align-items: center; gap: 8px; font-size: 14px; color: #dcc48a; padding: 6px 0; border-bottom: 1px solid rgba(220,196,138,.4); }
+.azf-map:hover { color: #f0dba5; }
+.azf-social { display: flex; gap: 14px; margin-top: 8px; font-size: 13px; }
+.azf-social a { display: inline-flex; align-items: center; justify-content: center; min-width: 40px; min-height: 40px; color: #dcc48a; transition: color .2s; }
+.azf-social a:hover { color: #f4f1e8; }
+.azf-office-actions { display: flex; flex-direction: column; align-items: flex-start; gap: 12px; }
+.azf-textlink { font-size: 14px; color: #cdd4d8; border-bottom: 1px solid rgba(255,255,255,.3); padding-bottom: 2px; }
+.azf-textlink:hover { color: #dcc48a; }
+.azf-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.azf-bottom { max-width: 1280px; margin: 56px auto 0; padding: 22px 0; border-top: 1px solid rgba(255,255,255,.14); display: flex; flex-wrap: wrap; gap: 16px 28px; justify-content: space-between; align-items: center; font-size: 13px; color: #aebac1; }
+.azf-bottom nav { display: flex; flex-wrap: wrap; gap: 8px 24px; }
+.azf-bottom nav a { padding: 6px 0; }
+.azf-bottom a:hover { color: #dcc48a; }
+.azf-footer .language-switch button { color: #cdd4d8; font-size: 13px; }
+@media (max-width: 1100px) {
+  .azf-grid { grid-template-columns: 1fr 1fr 1fr; row-gap: 44px; }
+  .azf-col:nth-child(4) { border-inline-start: 0; padding-inline-start: 0; }
+  .azf-brand-col { grid-column: 1 / -1; max-width: 560px; }
+  .azf-col:nth-child(2) { padding-inline-start: 0; border: 0; }
+  .azf-office { grid-column: 1 / -1; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px 28px; padding: 28px 0 0; border: 0; border-top: 1px solid rgba(255,255,255,.12); }
+  .azf-office .azf-heading { grid-column: 1 / -1; margin-bottom: 0; }
+  .azf-office .azf-contact-block { margin-bottom: 0; }
+}
+@media (max-width: 760px) {
+  .azf-cta { padding: 52px 6%; }
+  .azf-cta-inner { grid-template-columns: 1fr; gap: 28px; }
+  .azf-footer { padding-top: 52px; }
+  .azf-grid { grid-template-columns: 1fr; row-gap: 0; }
+  .azf-col, .azf-col:nth-child(4), .azf-col:nth-child(2) { padding: 32px 0; border: 0; border-top: 1px solid rgba(255,255,255,.12); }
+  .azf-col:first-child { padding-top: 0; border: 0; }
+  .azf-brand-col { max-width: none; }
+  .azf-office { display: block; grid-column: auto; }
+  .azf-office .azf-heading { margin-bottom: 20px; }
+  .azf-office .azf-contact-block { margin-bottom: 24px; }
+  .azf-bottom { margin-top: 0; padding-bottom: 88px; flex-direction: column; align-items: flex-start; }
+  .azf-btn { width: 100%; }
+}

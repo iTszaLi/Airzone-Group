@@ -1,1 +1,3 @@
 - [Airzone brand hierarchy](brand-authority.md) — master corporate identity vs division logos; supplied artwork must remain authentic.
+- [Footer contact boundaries](footer-contact-boundaries.md) — division ownership must stay separate; office, phone, WhatsApp and social details require confirmation.
+- [Nested route coverage](nested-routing.md) — Wouter catch-all patterns must admit enquiry and Arabic URLs, not only top-level pages.

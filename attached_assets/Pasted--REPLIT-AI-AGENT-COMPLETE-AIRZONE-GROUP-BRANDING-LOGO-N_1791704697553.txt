@@ -1,0 +1,306 @@
+# REPLIT AI AGENT — COMPLETE AIRZONE GROUP BRANDING, LOGO & NAVIGATION REDESIGN
+
+Act as a senior brand identity designer, UI/UX specialist, image optimization expert, and senior frontend engineer.
+
+I need you to directly improve my existing Airzone Group website. I have provided screenshots showing the current header, leadership section, footer, and brand logos.
+
+**Do not just explain what should be changed. Inspect the existing codebase, find the actual logo assets, implement the improvements, and test the finished website.**
+
+The website contains three related brands:
+
+1. Airzone Group
+2. Airzone Logistics
+3. Airzone Travels / Airzone Travel & Tourism
+
+The website already uses a premium navy blue, warm cream, white, and muted gold design. Preserve this overall visual identity, but improve the branding consistency, image quality, alignment, spacing, and professional finish.
+
+## PRIORITY 1 — REBUILD AND OPTIMIZE THE THREE EXISTING LOGO ASSETS
+
+The current logos look low-resolution, inconsistently cropped, and poorly integrated into the website.
+
+The Group logo has a visible white rectangular background against the cream navigation bar. The Logistics logo is extremely wide and short. The Travel logo has a much more compact, nearly square composition. In the footer, these logos appear in different sizes and visual proportions, making the overall layout look unfinished.
+
+### A. Find and inspect the original logos
+
+Search the entire existing project, including public assets, imported images, components, and any available original logo files.
+
+Identify the official artwork for:
+- Airzone Group
+- Airzone Logistics
+- Airzone Travels / Airzone Travel & Tourism
+
+Determine the correct aspect ratio of each logo from its original artwork. Do not assume that the three original logos have identical aspect ratios.
+
+### B. Improve the actual logo image quality
+
+Create optimized, high-quality assets for all three brands.
+
+For each logo:
+
+- Use the highest-quality original source available.
+- Remove unnecessary white canvas space around the artwork.
+- Correct poor cropping and uneven margins.
+- Remove white backgrounds where appropriate and technically possible.
+- Preserve the original colors, typography, lettering, globe, swooshes, icons, and brand identity.
+- Avoid jagged edges, blurry lettering, pixelation, compression artifacts, and visible white halos.
+- Preserve the full logo without cutting off any letters, symbols, or decorative elements.
+- Use transparency where suitable so each logo blends naturally into both cream and navy backgrounds.
+- Prefer faithful vector artwork where it can be recreated accurately; otherwise use high-resolution transparent PNG assets.
+- Export appropriately optimized versions for website use.
+
+**Important:** Do not simply enlarge a small, blurry image and call it high quality. Do not use AI to invent a replacement logo, fabricate lettering, or change the official brand artwork. Use the original files as the source of truth. If the original artwork is insufficient, improve it as far as possible without misrepresenting the brand.
+
+### C. Create consistent presentation containers
+
+The three logos have different natural aspect ratios. Keep their artwork proportions intact while making their website presentation consistent.
+
+Implement reusable logo components or shared CSS rules where practical.
+
+Requirements:
+- Use `object-fit: contain` for logo images.
+- Never use `object-fit: cover` for logos.
+- Never stretch or squash the original artwork.
+- Use consistent container dimensions, alignment, internal padding, and spacing.
+- Normalize perceived visual height, not just image width.
+- Use `max-width: 100%` and `height: auto` where appropriate.
+- Set suitable maximum widths for each placement.
+- Avoid oversized empty image canvases.
+- Ensure all three logos appear balanced when displayed side by side.
+- Prevent logos from becoming too small or unreadable on mobile devices.
+
+The three logos should feel like members of the same corporate group while retaining their individual identities.
+
+## PRIORITY 2 — FIX THE TOP NAVIGATION LOGO AND BACKGROUND MISMATCH
+
+The current navigation bar has a warm cream background, but the Airzone Group logo is displayed on a white rectangular background. This makes the logo look like a pasted image instead of a naturally integrated brand element.
+
+Fix this professionally.
+
+### Preferred solution
+
+1. Use a clean, transparent-background version of the official Airzone Group logo.
+2. Place it directly on the existing cream navigation background.
+3. Remove the visible white rectangle if it is part of the image rather than an intentional design element.
+4. Preserve the correct original logo colors and proportions.
+5. Match its visual size to the height of the navigation bar.
+6. Vertically center the logo.
+7. Give it consistent spacing from the left edge and the navigation links.
+8. Ensure the logo is crisp on desktop, tablet, and mobile.
+9. Make the logo clickable and link it to the homepage if it does not already do so.
+
+If the original Group logo genuinely requires a white background to remain legible, do not damage the artwork to force transparency. Instead, design a deliberate, polished logo treatment that looks intentional against the cream header.
+
+### Improve the whole navigation bar
+
+The current header feels slightly disconnected from the rest of the page. Improve the complete navigation system while preserving its existing content and functionality.
+
+Keep:
+- Airzone Group branding
+- Home
+- Our Businesses and its dropdown
+- Destinations
+- Corporate Travel
+- Insights
+- About Us
+- Contact
+- Track a Shipment
+- Request a Quote
+- Language selector
+- Get in Touch
+
+Requirements:
+- Establish consistent vertical alignment for every navigation item.
+- Balance the logo area against the navigation links and action buttons.
+- Refine spacing between menu items.
+- Keep the shipment tracking button in navy and the quote button in muted gold, consistent with the established palette.
+- Use consistent button heights, padding, typography, and alignment.
+- Keep the thin upper information bar visually integrated with the main header.
+- Refine borders, shadows, and separators so the header feels elegant rather than heavy.
+- Avoid excessive shadows, unnecessary gradients, and oversized elements.
+- Maintain clear hover, focus, and active states.
+- Ensure dropdown menus open correctly and are not clipped.
+- Keep the header responsive, with an appropriate mobile navigation menu.
+- Prevent overlapping, wrapping, or horizontal overflow at common desktop, tablet, and mobile widths.
+
+The final header should look like a premium international logistics and travel group website, not a generic template.
+
+## PRIORITY 3 — REDESIGN THE FOOTER LOGO PRESENTATION
+
+The footer currently uses a navy background and displays the Group, Logistics, and Travel logos with inconsistent white rectangular canvases and uneven visual sizing.
+
+The footer itself uses a good navy-and-gold direction, so preserve that design.
+
+### Group logo column
+
+- Use a clean, high-quality Airzone Group logo.
+- Remove the obvious white rectangle if the artwork can be made transparent safely.
+- Align the logo with the content below it.
+- Set an appropriate maximum width and consistent spacing.
+- Maintain strong contrast against the navy background.
+
+### Logistics column
+
+- Improve the quality and crop of the Airzone Logistics logo.
+- Remove excessive empty space around the original artwork.
+- Preserve its wide aspect ratio.
+- Display it within a consistent logo presentation area without stretching it.
+- Make the brand immediately recognizable at footer viewing size.
+
+### Travel column
+
+- Improve the quality and crop of the Airzone Travels / Travel & Tourism logo.
+- Preserve its original aspect ratio.
+- Scale it so that its perceived visual size is balanced with the Logistics logo.
+- Do not enlarge it so much that its artwork becomes blurry.
+
+### Contact Our Businesses column
+
+The same Logistics and Travel logos appear again above their contact details.
+
+Use the same optimized logo files and consistent presentation rules here.
+
+Ensure:
+- The same logo does not appear blurry in one column and sharp in another.
+- Logo heights and alignment feel consistent.
+- The contact details remain readable.
+- Brand names, email addresses, phone numbers, and existing links remain intact.
+- No logo looks like an unrelated white sticker on the navy background.
+
+### Footer layout
+
+Refine the footer grid, column widths, dividers, spacing, and alignment.
+
+Keep the existing content, including:
+- Group description
+- Logistics service links
+- Travel service links
+- Business contact details
+- Office information
+- Call-to-action button
+- Copyright
+- Privacy Policy
+- Terms & Conditions
+- Admin Access
+- Language selector
+
+Do not delete useful content or replace working links with placeholders.
+
+Make sure the footer columns align cleanly on desktop and stack naturally on mobile.
+
+## PRIORITY 4 — FIX THE LEADERSHIP SECTION LOGO PRESENTATION
+
+In the leadership section, a large navy rectangular panel contains the Airzone Group logo on a white rectangle.
+
+Improve this composition without unnecessarily redesigning the entire page.
+
+Requirements:
+- Keep the existing navy panel, thin gold border, and cream page background if they remain visually appropriate.
+- Use the optimized Group logo asset.
+- Remove the conspicuous white image rectangle where possible.
+- Center the logo horizontally and vertically.
+- Adjust the logo's maximum dimensions and surrounding negative space.
+- Keep the logo visually balanced inside the panel.
+- Ensure the logo is sharp and correctly proportioned.
+- Preserve the headline, body text, leadership label, and section layout.
+- Maintain a premium editorial appearance with generous whitespace.
+
+If transparency makes the logo difficult to read against navy, create or use an appropriate official light-background or reverse-logo treatment only if it can be done faithfully. Do not arbitrarily recolor the logo.
+
+## PRIORITY 5 — ESTABLISH A REUSABLE BRAND ASSET SYSTEM
+
+Avoid solving each image separately with unrelated CSS hacks.
+
+Create a consistent asset and styling system for the three brands.
+
+Suggested asset naming, adapted to the existing project conventions:
+
+- `airzone-group-logo`
+- `airzone-logistics-logo`
+- `airzone-travels-logo`
+
+Use suitable file formats and extensions based on the assets you actually create.
+
+Create shared reusable styling or a logo component with placement-specific sizing options, such as:
+- Header
+- Footer
+- Business contact
+- Leadership section
+
+Each placement may use different dimensions, but all should preserve the same underlying artwork, proportions, and quality.
+
+If the project uses React, follow its existing component structure. If it uses another framework, follow the project's established architecture instead.
+
+Avoid duplicating the same logo asset unnecessarily or introducing a new image library without a genuine need.
+
+## PRIORITY 6 — RESPONSIVE DESIGN AND IMAGE QUALITY
+
+Test the website at the following viewport sizes:
+
+- Desktop: 1440 × 900
+- Desktop: 1920 × 1080
+- Tablet: 768 × 1024
+- Mobile: 390 × 844
+- Mobile: 360 × 800
+
+Verify that:
+- The header logo remains clear and proportional.
+- The navigation does not collide with the logo or action buttons.
+- The mobile menu is usable.
+- The footer logos remain legible.
+- The three logos have consistent visual presentation.
+- The leadership image panel remains balanced.
+- There is no horizontal scrolling caused by the header or footer.
+- No text or images overlap.
+- All existing navigation, dropdowns, language controls, and CTA buttons continue to work.
+
+Use responsive CSS rather than hardcoding one desktop layout.
+
+## PRIORITY 7 — PRESERVE THE EXISTING WEBSITE AND BRAND IDENTITY
+
+This is an improvement to the existing website, not a request to build a new website from scratch.
+
+Do not:
+- Replace the website with a generic template.
+- Remove existing pages or sections.
+- Change business contact details.
+- Change the established brand colors unnecessarily.
+- Alter the original logo artwork without a clear reason.
+- Break existing routing, forms, shipment tracking, quote requests, dropdowns, or language switching.
+- Add fake functionality.
+- Introduce unnecessary dependencies.
+- Leave old and new logo assets mixed throughout the site.
+- Make unrelated backend or database changes.
+
+Reuse the current technology stack and design system.
+
+## PRIORITY 8 — VERIFY THE IMPLEMENTATION
+
+After making the changes:
+
+1. Run the existing build and type checks.
+2. Resolve any errors introduced by your changes.
+3. Search the project for every usage of the three logos and replace outdated asset references where appropriate.
+4. Confirm that the correct logos are used in the header, leadership section, footer, and business contact area.
+5. Inspect the actual rendered pages at desktop and mobile widths.
+6. Verify that transparency works correctly on both cream and navy backgrounds.
+7. Confirm that no image is distorted or cropped.
+8. Check browser console errors and missing assets.
+9. Make sure the website still runs and is ready for deployment using its existing deployment setup.
+
+Do not claim that visual testing was completed if you have only inspected the code. If browser preview or screenshot tools are available, use them to verify the actual rendered result.
+
+## FINAL DESIGN DIRECTION
+
+The finished website should communicate:
+
+- Professional international business
+- Trust and reliability
+- A unified corporate group
+- Premium logistics and travel services
+- Consistent branding across all touchpoints
+
+Keep the existing navy, cream, white, and muted gold palette. Make the logos crisp, naturally integrated, correctly proportioned, and consistent in presentation.
+
+**Most important:** Fix the white Group logo background against the cream navigation bar, improve the actual quality of all three logos, and make the footer logos look like a coordinated professional brand family.
+
+Implement the changes directly, test the website, and provide a concise summary of the files changed, assets created, tests performed, and anything that could not be completed.

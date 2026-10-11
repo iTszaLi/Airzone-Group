@@ -1,0 +1,250 @@
+AIRZONE GROUP — PREMIUM WEBSITE VISUAL UPGRADE & GSAP SCROLL EXPERIENCE
+I have reviewed the current Airzone Group website. The content structure is good, but I want you to take the visual quality, storytelling, motion design and overall user experience to the next level.
+The goal is a world-class, premium corporate website combining the visual sophistication of leading global logistics companies with the immersive storytelling of luxury travel brands.
+Do not rebuild the website from scratch. Improve the existing implementation, preserve all working routes, forms, backend functionality, authentication, admin dashboard, bilingual support and existing business information.
+1. OVERALL CREATIVE DIRECTION
+Create an elegant, cinematic and sophisticated experience for Airzone Group, which has two specialist businesses:
+- Airzone Logistics — customs clearance, freight and cargo coordination.
+- Airzone Travel & Tourism — personal, corporate and leisure travel assistance.
+The website should communicate trust, precision, movement, international connectivity and premium service.
+Visual inspiration: the polish and restraint of Apple product pages, the strong imagery of premium travel brands, and the confident corporate presentation of international logistics companies.
+Use these references for design direction only. Do not copy their layouts, assets or branding.
+Visual style
+- Deep navy as the primary corporate colour.
+- Warm ivory and clean white for breathing room.
+- Muted gold accents used sparingly.
+- High-quality, cinematic photography.
+- Strong typography with editorial-style headlines.
+- Asymmetric layouts and generous whitespace.
+- Beautiful image cropping and carefully controlled contrast.
+- Refined transitions and subtle interactive details.
+Avoid a generic template appearance, excessive cards, colourful gradients, oversized rounded boxes, unnecessary icons and repetitive sections.
+The final result should feel custom-designed for Airzone Group.
+2. TRANSFORM THE HERO SECTION
+The current hero uses strong copy but needs a more memorable visual identity.
+Retain the core message:
+AIRZONE GROUP · LOGISTICS & TRAVEL
+Moving business.
+Creating journeys.
+Supporting text:
+"Two specialist businesses. One commitment to moving your world forward — through practical logistics support and thoughtfully planned travel."
+Create a cinematic hero with a carefully art-directed visual composition.
+Use one of these approaches, depending on the available assets:
+- A premium, full-width logistics photograph featuring a modern cargo port, container vessel, aircraft or freight operation.
+- A sophisticated split composition combining cargo logistics on one side and an inspiring travel destination on the other.
+- A layered image composition with a subtle transition between the Logistics and Travel divisions.
+The two businesses must be immediately understandable without making the hero visually cluttered.
+Use a dark navy overlay only where necessary for text readability. Keep the overall website balanced with light sections rather than making every section dark.
+Hero animation
+Use GSAP to animate the hero on initial load:
+1. A restrained background image reveal.
+2. A subtle image scale-down or parallax movement.
+3. The eyebrow appearing first.
+4. The headline revealing line by line.
+5. Supporting text fading and moving into place.
+6. CTA buttons appearing last.
+Keep animations smooth, premium and relatively quick. Do not delay access to the main content.
+Buttons:
+- Explore our businesses
+- Talk to our team
+Both must retain their existing working destinations.
+3. ADD PREMIUM LOGISTICS AND TRAVEL VISUAL STORYTELLING
+Improve the existing "Our businesses" section.
+Instead of relying on plain text and small numbered labels, create two substantial visual panels with high-quality photography.
+Panel 01 — Airzone Logistics
+Use a premium image showing modern freight logistics, container shipping, air cargo, a customs or warehouse operation.
+Headline:
+Moving business forward.
+Description:
+"Logistics and customs support for cargo movements, documentation, transportation and shipment coordination."
+CTA:
+DISCOVER LOGISTICS
+Use the actual Airzone Logistics logo where appropriate.
+Panel 02 — Airzone Travel & Tourism
+Use an inspiring, premium travel image featuring a destination, sophisticated airport environment or exceptional landscape.
+Headline:
+Journeys, made personal.
+Description:
+"Travel assistance for holidays, flights, accommodation, group travel and business journeys."
+CTA:
+DISCOVER TRAVEL
+Use the actual Airzone Travel & Tourism logo where appropriate.
+Interaction
+On desktop, subtle image movement or a carefully controlled hover reveal can add depth.
+On mobile, keep the experience simple, fast and touch-friendly.
+Do not use exaggerated 3D effects, spinning cards or flashy animations.
+4. GSAP SCROLLTRIGGER — CINEMATIC SCROLL STORYTELLING
+Use GSAP and ScrollTrigger where they materially improve the experience.
+First inspect the existing package configuration. If GSAP is not installed, add it using the package manager appropriate to the existing project.
+Create a reusable animation system instead of scattering unrelated animation code across components.
+A. Section entrance animations
+Animate important sections as they enter the viewport:
+- Eyebrow labels fade in.
+- Headlines reveal with a restrained vertical movement.
+- Body copy fades in smoothly.
+- Images reveal through clean clipping or masking.
+- CTAs appear after the main content.
+Keep the movement subtle, typically around 16–32 pixels, with approximately 0.5–0.9-second transitions.
+Avoid animating every individual word or element.
+B. Business showcase
+For the Logistics and Travel showcase, use an elegant image reveal and a subtle background-image scale transition as the section enters the viewport.
+If a pinned sequence is used on desktop, keep it short, intuitive and easy to navigate. Disable or simplify pinning on mobile.
+C. Numbered storytelling sections
+The current numbered sections "01 — 03" can become a refined editorial storytelling experience.
+Use them to introduce:
+- A group built around two specialist businesses.
+- Practical coordination and dependable service.
+- A clear next step for customers.
+Use a subtle progress indicator or understated line animation if it enhances navigation.
+Do not let decorative numbers take up excessive space.
+D. Scroll progress
+Optionally add a very thin, restrained progress indicator near the top of the page.
+It must not obstruct the navigation or distract visitors.
+E. Navigation
+Make the header feel premium and stable:
+- Transparent or visually integrated over the hero where appropriate.
+- Transition into a solid background when scrolling.
+- Subtle shadow or border after scrolling, if necessary.
+- Smooth mobile menu transitions.
+- Clear active navigation states.
+Preserve every existing navigation route and CTA.
+5. MAKE THE PAGE FEEL LESS REPETITIVE
+The current homepage repeats the same ideas across several sections.
+Keep the best existing content but give each section a distinct purpose and visual treatment.
+Recommended sequence:
+1. Cinematic hero.
+2. Short Airzone Group introduction.
+3. Large Logistics and Travel visual showcase.
+4. How Airzone Group works.
+5. Logistics and customs capabilities.
+6. Travel and corporate travel capabilities.
+7. A carefully designed trust and service-quality section.
+8. Shipment tracking, quote request and trip-planning shortcuts.
+9. CEO message and portrait, when genuine approved details are supplied.
+10. Final contact CTA.
+11. Premium corporate footer.
+Avoid unnecessary filler sections.
+6. ADD A CEO MESSAGE SECTION
+Create a premium editorial section near the lower part of the homepage, before the final CTA.
+Use an authentic portrait of the CEO only when the image has been supplied or approved.
+Do not invent the CEO's name, photograph, title, career history or quotation.
+Suggested layout:
+- CEO portrait on one side.
+- A short message on the other.
+- Restrained typography.
+- A subtle divider or small gold accent.
+- A professional, personal tone.
+Use this placeholder structure until the actual information is provided:
+Eyebrow:
+A MESSAGE FROM OUR LEADERSHIP
+Headline:
+Built on trust. Focused on what comes next.
+Message:
+"At Airzone Group, our aim is to make important journeys and business movements easier to navigate. Through our specialist Logistics and Travel & Tourism businesses, we focus on understanding each customer's needs, coordinating the details carefully and building relationships that last."
+Attribution:
+Airzone Group Leadership
+Do not attribute this message to a named CEO unless the name and approval have been confirmed.
+Make the portrait, message and attribution editable through the existing admin system if possible.
+7. UPGRADE THE TYPOGRAPHY
+Establish a consistent typography system.
+Use:
+- Large, elegant headlines with deliberate line breaks.
+- Clear hierarchy between headings, descriptions and metadata.
+- Comfortable paragraph widths.
+- Consistent letter spacing for uppercase labels.
+- Readable body text on desktop and mobile.
+Use a refined, modern sans-serif or a restrained editorial pairing, provided it loads efficiently and supports Arabic correctly.
+Avoid excessive all-caps text and very small body copy.
+Make the Arabic typography equally polished, with proper right-to-left layout.
+8. IMPROVE PHOTOGRAPHY AND IMAGE QUALITY
+Use high-quality, relevant imagery throughout the website.
+Logistics imagery should be credible and relevant to freight, cargo, transportation and customs operations.
+Travel imagery should be aspirational, authentic-looking and relevant to destinations, accommodation and travel experiences.
+Requirements:
+- Use suitable wide images for hero backgrounds.
+- Use consistent image treatment across related sections.
+- Avoid random stock photos that do not match the text.
+- Avoid blurry or stretched images.
+- Avoid repetitive use of the same photograph.
+- Use appropriate aspect ratios and responsive image sizes.
+- Use lazy loading below the fold.
+- Preload only the genuinely critical hero image.
+- Provide descriptive alt text.
+- Do not invent photos of Airzone offices, employees, clients or shipments.
+Use the official logos already attached to the project. Keep the Airzone Group logo as the primary group identity, and use the separate division logos in their respective sections.
+9. MICRO-INTERACTIONS
+Introduce a small number of polished interactions:
+- Underlined navigation links that animate subtly on hover.
+- Buttons with restrained arrow movement.
+- Image zoom that is barely perceptible.
+- Smooth anchor navigation.
+- Clear form success and error states.
+- Subtle loading feedback where appropriate.
+Respect keyboard navigation and touch devices.
+Do not make important information dependent on hover.
+10. PERFORMANCE, ACCESSIBILITY AND MOTION SAFETY
+Premium motion must not compromise performance.
+Requirements:
+- Respect prefers-reduced-motion.
+- Disable or simplify parallax and scroll pinning when reduced motion is requested.
+- Avoid layout shifts during animation.
+- Avoid unnecessary JavaScript and oversized bundles.
+- Clean up GSAP timelines and ScrollTrigger instances when components unmount.
+- Prevent duplicate triggers during route changes or React Strict Mode.
+- Ensure smooth scrolling works with keyboard and assistive technology.
+- Maintain sufficient colour contrast.
+- Keep forms accessible.
+- Test on mid-range mobile devices.
+- Ensure the website remains usable if animations fail to load.
+Do not use smooth-scroll libraries that interfere with native browser scrolling unless they provide a clear benefit and are integrated correctly.
+11. PRESERVE FUNCTIONALITY AND CONTENT ACCURACY
+Do not break or remove:
+- English and Arabic language switching.
+- RTL layout.
+- Contact forms.
+- Logistics quote forms.
+- Shipment tracking.
+- Travel enquiries.
+- Callback requests.
+- Google Maps directions.
+- Clickable email addresses and phone links.
+- Admin authentication.
+- Existing admin settings.
+- Privacy and terms pages.
+- Existing backend APIs and database functionality.
+Do not introduce fake statistics, customer logos, testimonials, awards, accreditations or partnerships.
+Keep existing verified contact details and business information intact.
+12. IMPLEMENTATION AND TESTING
+Please implement the improvements directly in the existing codebase.
+Before making changes, inspect the existing frontend structure, styling system, installed dependencies and routes.
+Then:
+1. Refine the design system.
+2. Upgrade the hero and business showcase.
+3. Add reusable GSAP and ScrollTrigger animations.
+4. Improve image presentation and typography.
+5. Add the CEO message section with appropriate placeholder handling.
+6. Refine navigation and section transitions.
+7. Test desktop, tablet and mobile layouts.
+8. Test Arabic RTL layout.
+9. Verify all existing links, forms and CTAs.
+10. Run the existing build and fix any errors caused by the changes.
+Do not stop after producing a visual mockup. Implement the working website.
+FINAL DESIGN GOAL
+The finished Airzone Group website should feel cinematic, confident, refined and distinctly premium.
+It should combine:
+- The precision of a logistics company.
+- The aspiration of a travel brand.
+- The trustworthiness of an established corporate group.
+- The fluidity of a carefully art-directed modern website.
+Use GSAP and ScrollTrigger to create a memorable experience through restraint, timing and elegant movement — not through excessive animation.
+Make every section look intentional, every transition feel natural, and every business enquiry easy to initiate.
+
+
+
+
+My recommendation, bro
+Prioritize these three changes first:
+1. Hero photography: a visually strong opening image will make the biggest immediate difference.
+2. Logistics and Travel showcase: large, elegant image-led sections will distinguish the two businesses instantly.
+3. GSAP ScrollTrigger: subtle, coordinated animation will make the website feel polished without sacrificing performance.
+One important detail: the CEO message above is proposed copy, not a verified quotation from the actual CEO. Keep it unattributed until the real CEO's name, portrait and approval are available

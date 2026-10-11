@@ -4,6 +4,7 @@ import tailwindcss from '@tailwindcss/vite';
 import { defineConfig } from 'vite';
 
 import runtimeErrorOverlay from '@replit/vite-plugin-runtime-error-modal';
+import { seoPlugin } from './seo-vite';
 
 const rawPort = process.env.PORT;
 
@@ -30,6 +31,7 @@ if (!basePath) {
 export default defineConfig({
   base: basePath,
   plugins: [
+    seoPlugin(),
     react(),
     tailwindcss(),
     runtimeErrorOverlay(),
@@ -59,6 +61,7 @@ export default defineConfig({
     },
     dedupe: ['react', 'react-dom'],
   },
+  ssr: { noExternal: ['@workspace/api-client-react'] },
   root: path.resolve(import.meta.dirname),
   build: {
     outDir: path.resolve(import.meta.dirname, 'dist/public'),

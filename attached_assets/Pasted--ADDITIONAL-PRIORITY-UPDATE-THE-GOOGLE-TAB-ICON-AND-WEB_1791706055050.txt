@@ -1,0 +1,19 @@
+## ADDITIONAL PRIORITY — UPDATE THE GOOGLE TAB ICON AND WEBSITE FAVICON
+
+Use the newly supplied **`airzone logo.png`** as the official website favicon and browser tab icon for the Airzone Group website.
+
+### Requirements
+
+1. **Use the new logo:** Locate `airzone logo.png` in the project assets and use this exact new logo, not any old or low-resolution version.
+2. **Google Chrome tab icon:** Make sure the new Airzone logo appears clearly in the browser tab next to the website title.
+3. **Favicon:** Update all relevant favicon references in the HTML document or framework metadata so the new logo is used consistently.
+4. **Circular appearance:** Make the favicon appear clean, centered, and circular. If necessary, create a separate circular favicon asset using the supplied logo, with carefully adjusted transparent padding and a circular crop or mask where appropriate. Do not distort the original logo or change its brand colors.
+5. **Clarity at small sizes:** Optimize the favicon for visibility at 16×16, 32×32, and 48×48 pixels. Ensure the logo remains recognizable at these sizes.
+6. **Compatibility:** Generate suitable favicon formats and sizes according to the existing framework, such as PNG and ICO, and update the appropriate HTML or framework metadata.
+7. **High-resolution source:** Preserve the original `airzone logo.png` unchanged. Create separate favicon files for browser use instead of overwriting the source image.
+8. **Remove outdated icons:** Replace old favicon references and remove conflicting references that could cause the browser to display the previous logo.
+9. **Verify the result:** Check the website's HTML metadata, asset paths, and rendered browser tab using the available preview tools. Account for browser favicon caching when verifying the update.
+
+**Important:** The circular appearance should come from the favicon presentation, not from stretching or deforming the logo. Keep the logo centered, sharp, and professionally presented. If a circular background is needed for visibility, use the existing Airzone brand colors and preserve the original artwork.
+
+Implement the changes directly in the existing project without affecting the website's other branding, pages, or functionality. Report the favicon files created and the checks completed.

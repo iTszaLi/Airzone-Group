@@ -1,0 +1,89 @@
+# AIRZONE GROUP — GSAP SCROLLTRIGGER AVIATION WEBSITE ANIMATION
+
+Use the HTML, CSS, JavaScript, Three.js, and GSAP ScrollTrigger reference code provided above as the foundation for a scroll-controlled 3D aviation experience on the AIRZONE GROUP website.
+
+Implement this directly into the existing project. Adapt the content to AIRZONE GROUP and its aviation, travel, logistics, and cargo businesses.
+
+## 1. HERO SECTION
+
+- **AIRZONE GROUP**
+- **Beyond Every Destination.**
+- Aviation. Travel. Logistics.
+- Scroll to Explore
+
+## 2. AVIATION SECTION
+
+- **Connecting the World, One Journey at a Time.**
+- Commercial Aviation
+- Global Destinations
+- Seamless Travel Experiences
+
+## 3. AIRZONE LOGISTICS SECTION
+
+- **Moving Business Beyond Borders.**
+- Air Freight & Cargo
+- Customs Clearance
+- Exhibition & Event Logistics
+- Project Cargo & Freight Forwarding
+
+## 4. ENGINEERING & PERFORMANCE SECTION
+
+Replace the humorous airplane facts and figures with professional aviation-inspired content.
+
+- **Precision in Every Detail.**
+- Aircraft Design & Engineering
+- Flight Performance
+- Global Cargo Connectivity
+- Operational Excellence
+
+Use elegant technical blueprint graphics, animated SVG measurement lines, aircraft silhouettes, and subtle engineering details. Do not display fictional aircraft specifications or unsupported performance statistics.
+
+## 5. FINAL SECTION
+
+- **AIRZONE GROUP**
+- One Group. Multiple Possibilities. Global Reach.
+- Explore Our Businesses
+- Airzone Logistics
+- Airzone Travels
+
+The final business section must link to the existing business pages or sections. Preserve the current website's actual navigation and routing.
+
+## ANIMATION REQUIREMENTS
+
+1. Recreate the reference's scroll-driven animation using GSAP and ScrollTrigger.
+2. Use a high-quality 3D aircraft model with Three.js if technically compatible with the existing project.
+3. Animate the aircraft's position, rotation, banking, and perspective progressively as the user scrolls.
+4. Keep the aircraft visually connected to the storytelling across the hero, aviation, logistics, technical blueprint, and final sections.
+5. Add layered cloud, sky, ground, and atmospheric parallax effects where appropriate.
+6. Animate SVG blueprint measurements and technical outlines in sync with the relevant sections.
+7. Use pinned or scrubbed scroll sequences where appropriate, with smooth transitions and natural scroll progression.
+8. Display a sophisticated loading state only while essential 3D assets load. Handle loading errors gracefully.
+9. Optimize animations for desktop, tablet, and mobile. Respect reduced-motion preferences and provide a lightweight fallback if WebGL or the 3D model is unavailable.
+10. Ensure the experience works with normal browser scrolling, touch gestures, and trackpads.
+
+## DESIGN DIRECTION
+
+Maintain AIRZONE GROUP's existing premium corporate identity:
+
+- Navy blue, white, Toronto red, and restrained gold accents.
+- Bright, spacious aviation photography and cinematic skies.
+- Premium international aviation and logistics aesthetic.
+- Elegant typography, clean composition, and confident corporate messaging.
+- Realistic aircraft proportions, natural lighting, subtle motion, and professional transitions.
+
+Avoid cartoonish visuals, playful copy, excessive gradients, flashy effects, and unnecessary UI cards.
+
+## TECHNICAL INSTRUCTIONS
+
+- Treat the supplied code as a reference for the animation concept, not as code to paste blindly.
+- Inspect the existing application framework, routing, components, dependencies, and styling before implementation.
+- Adapt the code to the project's actual framework, whether React, Vite, or another existing setup.
+- Use compatible versions of Three.js, GSAP, and ScrollTrigger. Register plugins correctly.
+- Do not assume that `OBJLoader`, `DrawSVGPlugin`, or other premium GSAP plugins are available. Use supported alternatives or install only compatible dependencies when needed.
+- Do not append duplicate canvases or create multiple animation instances during React re-renders.
+- Clean up ScrollTriggers, animation timelines, event listeners, WebGL renderers, and other resources when components unmount.
+- Avoid horizontal overflow, layout shifts, scroll locking, broken navigation, and conflicts with existing page animations.
+- Lazy-load heavy 3D assets where appropriate and optimize model complexity, texture sizes, rendering resolution, and frame rates.
+- Preserve all existing AIRZONE GROUP functionality, business information, contact details, SEO metadata, and responsive layouts. Change only the content and components required for this experience.
+
+**Final objective:** Deliver a polished, production-ready AIRZONE GROUP website experience in which scrolling drives a cinematic aircraft journey, transitions into technical aviation visuals, introduces the logistics business, and concludes with a premium corporate brand presentation. Test the complete scroll sequence and fix all runtime, console, responsive, and animation issues before finishing.

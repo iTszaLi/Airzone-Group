@@ -1,0 +1,200 @@
+# REPLIT AI AGENT — AIRZONE GROUP WEBSITE BRANDING & LOGO INTEGRATION
+
+Act as a senior frontend engineer, UI/UX designer, and brand identity implementation specialist.
+
+I have now attached the **newly enhanced, high-quality official Airzone logos directly in this Replit AI conversation**. These are the updated logos that must be used throughout my existing Airzone Group website.
+
+Your task is to inspect the existing project, identify the attached logo files, integrate them correctly, improve the website's branding presentation, and test the implementation.
+
+**IMPORTANT: The logos I have attached are the final approved artwork. Use these exact logo images. Do not recreate, redraw, regenerate, recolor, redesign, distort, or modify their lettering, symbols, proportions, or brand colors.**
+
+## PRIORITY 1 — USE THE NEWLY ATTACHED LOGOS
+
+Use the supplied high-quality logo artwork for these three brands:
+
+1. Airzone Group
+2. Airzone Logistics
+3. Airzone Travels / Airzone Travel & Tourism
+
+### Mandatory instructions
+
+- First, inspect the files attached to this Replit AI conversation and determine which image corresponds to each brand.
+- If the attachments are not directly accessible to the agent, inspect the project's available files and ask for the missing files only if necessary. Do not pretend an inaccessible attachment has been imported.
+- Copy or import the actual supplied logo files into the appropriate existing public assets directory.
+- Use clear, consistent filenames following the project's existing conventions. For example:
+  - `airzone-group-logo`
+  - `airzone-logistics-logo`
+  - `airzone-travels-logo`
+- Preserve the original image quality, colors, artwork, and aspect ratios.
+- Do not replace the new logos with the old, low-resolution versions.
+- Do not use an AI-generated logo, a stock image, a text-based imitation, or a substitute logo.
+- Do not introduce unnecessary white backgrounds, borders, shadows, or colored containers around the logos.
+- If an attached file has a white background, do not automatically remove it if doing so could damage the official artwork. Inspect it first and use a faithful transparent version only if one is already supplied or can be produced without altering the logo itself.
+- Do not enlarge or recompress the supplied files unnecessarily.
+- If the attached images are already optimized and suitable for the website, use them as they are.
+
+**The attached logo artwork is the source of truth. Your job is to integrate it professionally, not redesign it.**
+
+## PRIORITY 2 — FIX THE HEADER AND NAVIGATION
+
+The main navigation currently uses a warm cream background, and the Group logo has previously appeared on an unwanted white rectangular background.
+
+Use the newly supplied Airzone Group logo in the header.
+
+Requirements:
+
+- Remove the visible white rectangle if the supplied artwork supports clean transparency.
+- Otherwise, preserve the logo and implement an intentional, visually polished presentation that matches the cream header.
+- Maintain the original logo proportions and colors.
+- Keep the logo sharp, properly sized, and vertically centered.
+- Make the logo clickable and link it to the homepage if it does not already do so.
+- Improve spacing and alignment between the logo, navigation links, and action buttons.
+- Preserve the existing premium navy blue, warm cream, white, and muted gold palette.
+- Keep the existing thin upper information bar and integrate it visually with the main navigation.
+
+Preserve all existing navigation items and functionality:
+
+- Home
+- Our Businesses and dropdown
+- Destinations
+- Corporate Travel
+- Insights
+- About Us
+- Contact
+- Track a Shipment
+- Request a Quote
+- Language selector
+- Get in Touch
+
+Keep the shipment tracking action navy and the quote action muted gold, consistent with the existing design.
+
+Ensure dropdowns, language controls, navigation links, and mobile navigation continue working.
+
+Do not remove or rename existing routes or links.
+
+## PRIORITY 3 — STANDARDIZE THE FOOTER LOGOS
+
+Replace the old logo references throughout the footer with the newly supplied assets.
+
+The footer must retain its existing navy background and gold accents.
+
+Requirements:
+
+- Use the new Airzone Group logo in the Group column.
+- Use the new Airzone Logistics logo in the Logistics column.
+- Use the new Airzone Travels logo in the Travel column.
+- Reuse the same optimized assets in the business contact area.
+- Remove outdated logo references wherever they have been superseded.
+- Keep each logo's natural aspect ratio.
+- Use `object-fit: contain`, never `object-fit: cover`.
+- Avoid stretching, squashing, clipping, or cropping the artwork.
+- Normalize the perceived visual size of the logos, rather than forcing every image to have identical dimensions.
+- Use consistent alignment, spacing, and presentation containers.
+- Ensure the logos remain clear and recognizable against the navy background.
+
+Preserve all existing footer content, including descriptions, service links, business contact information, email addresses, phone numbers, office details, call-to-action buttons, copyright information, Privacy Policy, Terms & Conditions, Admin Access, and the language selector.
+
+Do not alter business contact details or replace working links with placeholders.
+
+## PRIORITY 4 — IMPROVE THE LEADERSHIP SECTION
+
+Locate the existing leadership section containing the navy rectangular panel with a gold border and the Airzone Group logo.
+
+Use the newly supplied Airzone Group logo.
+
+- Keep the existing navy panel, gold border, and cream page background.
+- Remove the conspicuous white rectangle only if the supplied artwork supports doing so without damaging the logo.
+- Center the logo horizontally and vertically.
+- Adjust its maximum width and height to create a balanced composition.
+- Preserve the logo's exact proportions and artwork.
+- Maintain generous whitespace and a premium editorial appearance.
+- Preserve the existing headline, body text, leadership label, and section layout.
+
+Do not unnecessarily redesign the entire section or change unrelated page content.
+
+## PRIORITY 5 — CREATE A CONSISTENT LOGO SYSTEM
+
+Inspect the current framework and follow the existing project architecture.
+
+Where appropriate, create a reusable logo component or shared styling system with placement-specific sizing for:
+
+- Header
+- Footer
+- Business contact area
+- Leadership section
+
+Use the same underlying supplied logo assets throughout the website.
+
+Different placements may have different display dimensions, but the artwork must remain identical and correctly proportioned.
+
+Use appropriate image dimensions, responsive CSS, and existing project conventions. Avoid unnecessary dependencies or duplicate logo files.
+
+## PRIORITY 6 — RESPONSIVE DESIGN
+
+Verify the logo presentation and website layout at these viewport sizes:
+
+- Desktop: 1440 × 900
+- Desktop: 1920 × 1080
+- Tablet: 768 × 1024
+- Mobile: 390 × 844
+- Mobile: 360 × 800
+
+Check that:
+
+- All three logos remain sharp and correctly proportioned.
+- The header logo does not collide with navigation links or action buttons.
+- The mobile menu remains usable.
+- Footer logos remain legible and balanced.
+- The leadership panel remains visually centered.
+- No horizontal overflow or unintended scrolling is introduced.
+- No images or text overlap.
+- All navigation links, dropdowns, forms, shipment tracking, quote requests, and language controls continue working.
+
+Use responsive layouts rather than a desktop-only implementation.
+
+## PRIORITY 7 — PRESERVE THE EXISTING WEBSITE
+
+This is an improvement to the existing website, not a request to rebuild it from scratch.
+
+Do not:
+
+- Replace the website with a generic template.
+- Delete existing pages, sections, or useful content.
+- Change business contact information.
+- Change established brand colors unnecessarily.
+- Modify the attached official logo artwork.
+- Break existing routing, forms, shipment tracking, quote requests, or language switching.
+- Add fake functionality.
+- Introduce unnecessary dependencies.
+- Make unrelated backend, database, or authentication changes.
+
+Reuse the existing technology stack, components, design system, and deployment configuration.
+
+## PRIORITY 8 — TEST THE IMPLEMENTATION
+
+After implementing the changes:
+
+1. Confirm that the supplied logo files have been imported into the project successfully.
+2. Search the entire project for references to the old Group, Logistics, and Travels logos.
+3. Replace outdated references in the header, footer, business contact area, and leadership section.
+4. Run the project's existing build and type checks.
+5. Resolve any errors introduced by the changes.
+6. Inspect the rendered website at desktop, tablet, and mobile widths using available preview or browser tools.
+7. Check logo rendering against both cream and navy backgrounds.
+8. Check for distorted images, incorrect paths, missing assets, and horizontal overflow.
+9. Confirm that existing navigation and interactive features still work.
+10. Report which checks were actually performed and identify any remaining issues.
+
+Do not claim to have completed visual or browser testing unless you actually performed it.
+
+## FINAL DESIGN DIRECTION
+
+The finished website should communicate premium international business, trust, reliability, and a unified corporate identity.
+
+Maintain the existing navy blue, warm cream, white, and muted gold visual identity.
+
+The new supplied logos must appear crisp, professional, correctly proportioned, and naturally integrated into the existing website.
+
+### Final instruction
+
+**Start by inspecting the attached logo images and the existing codebase. Then implement the changes directly in the project. Do not stop after providing recommendations or a plan. Do not recreate the logos. Use the exact newly supplied logo artwork, replace outdated references, preserve existing functionality, run the available tests, and provide a concise summary of the files changed, assets integrated, tests performed, and anything that remains incomplete.**

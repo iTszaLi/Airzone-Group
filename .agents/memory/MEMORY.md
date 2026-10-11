@@ -1,3 +1,7 @@
 - [Airzone brand hierarchy](brand-authority.md) — master corporate identity vs division logos; supplied artwork must remain authentic.
 - [Footer contact boundaries](footer-contact-boundaries.md) — division ownership must stay separate; office, phone, WhatsApp and social details require confirmation.
 - [Nested route coverage](nested-routing.md) — Wouter catch-all patterns must admit enquiry and Arabic URLs, not only top-level pages.
+- [Corporate content approvals](content-approval.md) — leadership copy is a draft, not a verified CEO quote; company claims and personal imagery need approval.
+- [Business menu interactions](navigation-interactions.md) — persistent click-only disclosure; consume nested Escape and restore focus without hiding the parent menu.
+- [SEO business priorities](seo-business-priorities.md) — Logistics-first Saudi/Riyadh lead generation; existing legacy copy does not prove service authority or coverage.
+- [Browser runtime checks](browser-runtime-checks.md) — a Chromium launcher may exist without usable local browser access; do not infer measured performance from screenshots.

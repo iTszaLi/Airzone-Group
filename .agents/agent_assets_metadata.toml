@@ -1,0 +1,30 @@
+uploads = []
+generated = []
+
+[[outputs]]
+id = "ehMp8ldQclSqG3Yn0c1AS"
+uri = "file://artifacts/airzone-group/docs/seo-implementation.md"
+type = "text"
+title = "SEO implementation report"
+description = "Completed changes, verified checks, and remaining domain, analytics and account-access requirements."
+logical_id = "977d192a-cf92-45b0-8997-d1bdb1e0e3d5"
+content_hash = "sha256:90cea1db2d93cdabf0e8f9fbd8ed0911390845199d2c11bc2c697e033e059c97"
+size = 11616
+mtime_ms = 1791704376893
+storage_uri = "gcs://replit-rams-assets-sisko/rams/assets/repl:f95a7bdb-0faa-4733-af21-fb6873615e95/977d192a-cf92-45b0-8997-d1bdb1e0e3d5/eef467c7-2347-430f-a91b-6997906d660a"
+storage_version_token = "1791704801177874"
+content_type = "text/markdown"
+
+[[outputs]]
+id = "y5sFOmOuypwTvKfdPgUEo"
+uri = "file://artifacts/airzone-group/docs/seo-keyword-map.csv"
+type = "table"
+title = "SEO keyword map"
+description = "Logistics-first search priorities, target pages, enquiry goals and verification boundaries."
+logical_id = "b12a0f26-62da-4772-b085-1013fc9f2631"
+content_hash = "sha256:aaddc1c83a893fafee1454e9db1b459d4ede4d9682af81b959659676440307a9"
+size = 3244
+mtime_ms = 1791702172087
+storage_uri = "gcs://replit-rams-assets-sisko/rams/assets/repl:f95a7bdb-0faa-4733-af21-fb6873615e95/b12a0f26-62da-4772-b085-1013fc9f2631/bf89eec3-b466-464d-9bf4-f0c75779c5ce"
+storage_version_token = "1791704802483425"
+content_type = "text/csv"

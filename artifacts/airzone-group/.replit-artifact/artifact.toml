@@ -16,12 +16,7 @@ run = "pnpm --filter @workspace/airzone-group run dev"
 
 [services.production]
 build = [ "pnpm", "--filter", "@workspace/airzone-group", "run", "build" ]
-serve = "static"
-publicDir = "artifacts/airzone-group/dist/public"
-
-[[services.production.rewrites]]
-from = "/*"
-to = "/index.html"
+run = "pnpm --filter @workspace/airzone-group run serve"
 
 [services.env]
 PORT = "21365"

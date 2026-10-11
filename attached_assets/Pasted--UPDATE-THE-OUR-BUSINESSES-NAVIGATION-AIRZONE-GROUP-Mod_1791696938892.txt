@@ -1,0 +1,70 @@
+## UPDATE THE “OUR BUSINESSES” NAVIGATION — AIRZONE GROUP
+
+Modify the existing Airzone Group website navigation professionally. Do not redesign the entire website or change unrelated functionality.
+
+### 1. Our Businesses dropdown
+
+When a user clicks **Our Businesses** in the main navigation, open a premium, elegant dropdown menu displaying exactly two business options side by side on desktop:
+
+**01 — AIRZONE LOGISTICS**
+- Display the official Airzone Logistics logo that I have attached/provided.
+- Business name: Airzone Logistics.
+- Short description: Customs clearance, ATA Carnet assistance, exhibition and event logistics, freight forwarding, import/export support and cargo coordination.
+- CTA: **Explore Logistics**
+- Link to the existing Logistics overview page.
+
+**02 — AIRZONE TRAVEL & TOURISM**
+- Display the official Airzone Travel & Tourism logo that I have attached/provided.
+- Business name: Airzone Travel & Tourism.
+- Short description: Flight assistance, holiday planning, hotel arrangements, destination experiences, group travel and corporate travel.
+- CTA: **Explore Travel & Tourism**
+- Link to the existing Travel overview page.
+
+### 2. Dropdown behaviour
+
+- Clicking **Our Businesses** opens the dropdown without navigating away from the current page.
+- Clicking it again closes the dropdown.
+- Keep the dropdown open while the user moves the cursor into it or interacts with its contents.
+- Do not close it immediately after opening.
+- Clicking a business card navigates to that business's correct page.
+- Clicking outside the dropdown closes it.
+- Pressing Escape closes it.
+- Support keyboard navigation, focus states and accessible ARIA attributes.
+- On mobile, display the two businesses as a clean expandable accordion or stacked menu.
+- Prevent the dropdown from being clipped by the navigation container or viewport.
+- Ensure it works correctly in both English and Arabic, including RTL layouts.
+
+If the navigation currently has a chevron beside Our Businesses, rotate it appropriately when the dropdown opens and closes.
+
+### 3. Premium visual design
+
+Create a refined corporate mega-menu consistent with the existing Airzone Group design.
+
+- Use a clean white or warm off-white background.
+- Use the existing navy-blue typography and subtle gold accents.
+- Display both business logos at a consistent visual height while preserving their original aspect ratios.
+- Use transparent or carefully fitted logo containers so the logos blend naturally into the website.
+- Do not stretch, distort, recolour or replace the official logos.
+- Make each business card distinct through subtle borders, spacing and restrained hover effects.
+- Use elegant transitions for opening, closing and hover states.
+- Avoid flashy gradients, excessive shadows, bright colours and oversized cards.
+- Ensure the dropdown fits comfortably within the desktop viewport.
+- Make the business names immediately readable and visually prominent.
+
+### 4. Logo handling
+
+Use the actual Airzone Logistics and Airzone Travel & Tourism logo assets already supplied in the project or attached in the conversation. Do not generate substitute logos or use generic icons in their place.
+
+If the current logo files are low resolution, improve their rendering quality where possible. Use the original high-quality source files when available, preserve transparency, and size them appropriately for the dropdown.
+
+### 5. Navigation and functionality checks
+
+- Keep the existing Airzone Group parent logo in the main site header.
+- Keep Our Businesses as a navigation dropdown, not a new standalone page.
+- Preserve all existing navigation links, language switching, animations and responsive behaviour.
+- Ensure the correct business-specific contact details and enquiry forms remain available on each destination page.
+- Verify that the dropdown works on desktop, tablet and mobile.
+- Test both English and Arabic.
+- Do not break existing routes or create duplicate business pages.
+
+**Expected result:** Clicking Our Businesses reveals a polished menu containing the two official business logos, their names, concise service descriptions and clear links to their respective pages. The menu remains open until the user selects a destination, clicks outside, or closes it with the keyboard.

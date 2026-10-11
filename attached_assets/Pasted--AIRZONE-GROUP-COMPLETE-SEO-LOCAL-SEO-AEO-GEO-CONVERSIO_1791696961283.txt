@@ -1,0 +1,911 @@
+# AIRZONE GROUP — COMPLETE SEO, LOCAL SEO, AEO, GEO & CONVERSION OPTIMIZATION IMPLEMENTATION
+
+## PROJECT OBJECTIVE
+
+Upgrade the existing Airzone Group website at **airzonegroup.com** into a technically sound, search-optimized, high-converting corporate website for its two specialist businesses:
+
+1. **Airzone Logistics** — customs clearance, ATA Carnet assistance, exhibition and event logistics, import/export support, freight forwarding and cargo coordination in Riyadh, Saudi Arabia and relevant GCC markets.
+2. **Airzone Travel & Tourism** — domestic and international travel assistance, holiday planning and corporate travel services.
+
+The immediate commercial priority is the Logistics division.
+
+The website must be discoverable by traditional search engines and easier for AI-powered search systems to understand, retrieve and accurately reference.
+
+Target platforms include Google Search, Bing, ChatGPT search, Google Gemini and Perplexity, without promising guaranteed rankings, citations or AI mentions.
+
+**Implement these improvements directly in the existing codebase. Do not just produce an SEO audit or a list of recommendations.**
+
+Preserve the existing design, GSAP animations, bilingual English/Arabic experience, business logos, forms, database, authentication, admin panel and existing functionality.
+
+---
+
+# PHASE 1 — COMPLETE TECHNICAL SEO AUDIT
+
+Before modifying the code, inspect the existing project and run a technical audit.
+
+Check:
+
+- Homepage HTTP status.
+- Important service page HTTP statuses.
+- Redirect chains and redirect loops.
+- HTTPS configuration.
+- Canonical URLs.
+- Robots.txt.
+- XML sitemap.
+- Sitemap indexability and valid URLs.
+- Duplicate titles and descriptions.
+- Missing or duplicated H1 headings.
+- Broken internal links.
+- Broken images.
+- Unintended noindex directives.
+- Incorrect canonical destinations.
+- JavaScript-rendered content accessibility.
+- Mobile usability.
+- Image sizes and loading behaviour.
+- Core Web Vitals opportunities.
+- Structured data validity.
+- Security headers.
+- Analytics and conversion events.
+
+Create an actionable report documenting each confirmed issue, its severity, the fix implemented and any issue that requires hosting or DNS access.
+
+Do not invent audit results. Distinguish verified defects from items that could not be tested.
+
+## HTTP response verification
+
+The previous audit reported that no HTTP response was resolved.
+
+Investigate whether the issue is caused by:
+
+- Temporary crawler failure.
+- DNS configuration.
+- TLS or certificate problems.
+- Redirect behaviour.
+- Hosting restrictions.
+- Firewall or bot protection.
+- Server availability.
+- Incorrect domain configuration.
+
+Test the apex domain and `www` version separately.
+
+Select one preferred canonical hostname and redirect the other to it with a single permanent redirect.
+
+Ensure the homepage and all important public pages return the appropriate successful HTTP status.
+
+Do not use a catch-all fallback that returns HTTP 200 for nonexistent pages.
+
+Implement a proper 404 page with a real HTTP 404 response where the hosting architecture supports it.
+
+Verify production behaviour on the deployed domain, not just the development preview.
+
+---
+
+# PHASE 2 — KEYWORD STRATEGY AND COMMERCIAL SEARCH INTENT
+
+Prioritize keywords that indicate a business is actively looking for logistics support.
+
+Focus initially on Saudi Arabia, particularly Riyadh, while supporting relevant GCC opportunities where Airzone genuinely operates.
+
+Build a keyword-to-page mapping system. Each important search intent should have one primary landing page rather than many near-identical pages competing against each other.
+
+## Priority keyword clusters
+
+### A. Customs clearance
+
+Target relevant variations such as:
+
+- Customs clearance Riyadh.
+- Customs clearance Saudi Arabia.
+- Customs clearance services in Riyadh.
+- Customs clearance agent Saudi Arabia.
+- Import customs clearance Saudi Arabia.
+- Export customs clearance Saudi Arabia.
+- Cargo clearance Riyadh.
+- Air cargo customs clearance Saudi Arabia.
+- Customs documentation assistance Saudi Arabia.
+
+Use these naturally where relevant. Validate demand and competition using keyword research before making volume claims.
+
+### B. ATA Carnet services
+
+Create a dedicated page targeting:
+
+- ATA Carnet Saudi Arabia.
+- ATA Carnet assistance Riyadh.
+- Temporary import documentation Saudi Arabia.
+- Exhibition equipment temporary import support.
+- Customs assistance for exhibition materials.
+- Temporary export and re-import documentation support.
+
+Clearly explain what ATA Carnet is, when it may be relevant, the general process, typical documents to discuss with the team and the limitations of the service.
+
+Do not imply Airzone is an issuing authority or an authorized guaranteeing association unless that status has been verified.
+
+Distinguish between ATA Carnet handling assistance and other temporary import procedures.
+
+### C. Exhibition, events and trade show logistics
+
+Create a strong dedicated commercial landing page for:
+
+- Exhibition logistics Saudi Arabia.
+- Exhibition logistics Riyadh.
+- Trade show logistics Riyadh.
+- Event logistics Saudi Arabia.
+- Exhibition freight forwarding.
+- Trade fair cargo transportation.
+- Exhibition customs clearance.
+- Stand materials and event equipment logistics.
+- Temporary import support for exhibitions.
+- On-site delivery coordination for exhibitions.
+
+Address the needs of:
+- Exhibition organizers.
+- International exhibitors.
+- Trade show contractors.
+- Stand builders.
+- Event production companies.
+- Marketing agencies.
+- Overseas suppliers shipping exhibition materials into Saudi Arabia.
+
+Explain the end-to-end process, shipment planning, documentation, customs coordination, delivery scheduling and return-shipment planning where these services are actually offered.
+
+Do not claim specific event partnerships or past client projects without evidence.
+
+### D. Import, export and freight forwarding
+
+Create distinct service content for:
+
+- Import and export logistics Saudi Arabia.
+- Freight forwarding Riyadh.
+- Air freight Saudi Arabia.
+- Sea freight Saudi Arabia.
+- Road freight Saudi Arabia and GCC, if offered.
+- International cargo coordination.
+- Import documentation assistance.
+- Export documentation assistance.
+- Shipment planning and cargo coordination.
+
+Clearly explain which services Airzone performs directly and which are arranged through third-party partners.
+
+Do not suggest that Airzone owns aircraft, vessels, trucks or customs facilities unless verified.
+
+### E. Travel and corporate travel
+
+Keep the Travel & Tourism division distinct from Logistics.
+
+Build appropriate pages for:
+- Travel agency Riyadh.
+- Corporate travel management Riyadh.
+- Business travel assistance Saudi Arabia.
+- Holiday and destination planning.
+- Flight and accommodation assistance.
+
+Only target and publish services the business actually provides.
+
+## Keyword mapping deliverable
+
+Create a central keyword map containing:
+
+- Target keyword cluster.
+- Intended landing page.
+- Search intent.
+- Target geography.
+- Supporting keywords.
+- Relevant internal links.
+- Primary conversion action.
+
+Avoid keyword stuffing and repetitive city-name insertion.
+
+---
+
+# PHASE 3 — CREATE HIGH-QUALITY SERVICE LANDING PAGES
+
+Create or improve these routes using the existing routing architecture.
+
+Priority order:
+
+1. `/logistics/customs-clearance-saudi-arabia`
+2. `/logistics/ata-carnet`
+3. `/logistics/exhibition-event-logistics`
+4. `/logistics/freight-forwarding`
+5. `/logistics/import-export`
+6. `/logistics/air-freight`
+7. `/logistics/sea-freight`
+8. `/logistics/road-transportation` — only if confirmed.
+9. `/travel`
+10. `/travel/corporate-travel`
+
+Use a consistent, readable URL structure. If equivalent routes already exist, improve those pages rather than creating duplicates.
+
+Create an additional `/logistics/customs-clearance-riyadh` landing page only if it serves a genuinely distinct local intent and offers useful, original local information. Otherwise, incorporate Riyadh naturally into the main Saudi customs clearance page.
+
+## Required content structure for each important service page
+
+1. Clear H1 explaining the service and relevant geography.
+2. Concise introduction describing the customer problem.
+3. Primary CTA to request a quotation.
+4. Specific services included.
+5. Typical customer types.
+6. A clear explanation of the process.
+7. Relevant documentation and preparation checklist.
+8. Geographic service coverage, limited to verified markets.
+9. Common questions and practical answers.
+10. Links to closely related services.
+11. Contact details and relevant business identity.
+12. A final enquiry CTA.
+
+Add a small, useful FAQ section to answer genuine customer questions.
+
+Do not create hundreds of words of generic filler simply to meet a word count.
+
+Use original, specific, accurate content. Explain real workflows and common documentation issues instead of repeating the same copy across pages.
+
+Do not invent prices, processing times, guaranteed clearance, licenses, certifications or service-level agreements.
+
+## Customs clearance content
+
+Explain, in plain English:
+
+- How a business begins a customs clearance enquiry.
+- What shipment information is useful for an initial assessment.
+- Why accurate commercial invoices and packing lists matter.
+- How commodity descriptions, origin, classification and applicable restrictions may affect requirements.
+- How duties, VAT, government charges and third-party fees are assessed or confirmed.
+- Why actual documentation requirements depend on the shipment and applicable regulations.
+- What information customers should prepare before contacting Airzone.
+
+Do not give definitive legal or regulatory advice where a shipment-specific assessment is necessary.
+
+## ATA Carnet content
+
+Explain:
+
+- What an ATA Carnet is.
+- Typical use cases for eligible goods temporarily entering or leaving a country.
+- How eligibility and participating-country rules affect availability.
+- What the customer should discuss with the team.
+- How customs procedures and carnet conditions may affect the shipment.
+- Why the customer should verify current requirements before shipping.
+
+Do not state that every type of exhibition cargo qualifies for an ATA Carnet.
+
+## Exhibition logistics content
+
+Create useful content around:
+
+- Advance shipment planning.
+- Exhibition dates and venue delivery deadlines.
+- Cargo dimensions and weights.
+- Temporary import documentation.
+- Customs coordination.
+- Delivery and collection scheduling.
+- Return freight planning.
+- Communication among exhibitors, freight partners and event organizers.
+
+Add a downloadable exhibition shipment preparation checklist only if it can be created accurately and maintained.
+
+---
+
+# PHASE 4 — ON-PAGE SEO FOR EVERY PUBLIC PAGE
+
+Implement dynamic, unique metadata for every important indexable route.
+
+Every page should have:
+
+- Unique SEO title.
+- Unique meta description.
+- One clear primary H1.
+- Logical H2 and H3 hierarchy.
+- Relevant descriptive image alt text.
+- Appropriate canonical URL.
+- Open Graph title and description.
+- Appropriate social sharing image.
+- Indexability settings.
+- Relevant internal links.
+
+Avoid multiple competing H1 headings.
+
+Use semantic HTML and ensure important content is available to search crawlers even when animations or JavaScript interactions are not executed.
+
+## Suggested homepage metadata
+
+SEO title:
+
+**Airzone Group | Customs Clearance & Logistics in Saudi Arabia**
+
+Meta description:
+
+**Airzone Group connects specialist logistics and travel services. Explore customs clearance, ATA Carnet assistance, exhibition logistics and freight support in Saudi Arabia.**
+
+Adjust these after reviewing the complete homepage and available title length.
+
+Do not stuff every keyword into the homepage title.
+
+## Suggested customs clearance metadata
+
+Title:
+
+**Customs Clearance in Riyadh & Saudi Arabia | Airzone Logistics**
+
+Description:
+
+**Need customs clearance support in Saudi Arabia? Contact Airzone Logistics for shipment documentation assistance, customs coordination and cargo movement enquiries.**
+
+## Suggested ATA Carnet metadata
+
+Title:
+
+**ATA Carnet Assistance in Saudi Arabia | Airzone Logistics**
+
+Description:
+
+**Planning a temporary shipment for an exhibition or trade event? Discuss ATA Carnet requirements and shipment documentation with Airzone Logistics.**
+
+## Suggested exhibition logistics metadata
+
+Title:
+
+**Exhibition & Trade Show Logistics in Saudi Arabia | Airzone**
+
+Description:
+
+**Plan exhibition freight, customs coordination, event delivery and return-shipment logistics in Saudi Arabia with Airzone Logistics.**
+
+## Metadata implementation
+
+Use the existing framework's supported metadata mechanism.
+
+Ensure dynamic page titles are present in the initial HTML response where practical.
+
+Prevent duplicate metadata when navigating between routes.
+
+Add a fallback title and description for pages without configured metadata.
+
+---
+
+# PHASE 5 — INTERNAL LINKING AND WEBSITE ARCHITECTURE
+
+Create a clear topic structure.
+
+Homepage
+→ Logistics
+→ Customs Clearance
+→ ATA Carnet
+→ Exhibition & Event Logistics
+→ Freight Forwarding
+→ Import & Export
+→ Air Freight
+→ Sea Freight
+
+Homepage
+→ Travel & Tourism
+→ Corporate Travel
+→ Destinations
+→ Travel Enquiry
+
+Link related pages contextually within useful content.
+
+Examples:
+
+- The ATA Carnet page should link to exhibition logistics.
+- The exhibition logistics page should link to customs clearance and freight forwarding.
+- The import/export page should link to relevant freight services.
+- The customs clearance page should link to documentation guidance and quote requests.
+- The Travel page should link to corporate travel and appropriate destination pages.
+
+Add breadcrumbs on service detail pages.
+
+Use meaningful anchor text rather than repeating "click here."
+
+Keep the primary navigation concise. Important service pages should remain accessible within a few meaningful navigation steps.
+
+Create an HTML sitemap if it genuinely helps users navigate the growing service library.
+
+Remove broken links and links to unpublished or nonexistent pages.
+
+---
+
+# PHASE 6 — TECHNICAL PERFORMANCE AND CORE WEB VITALS
+
+Review the actual production page payload and rendering performance before making optimizations.
+
+Measure mobile and desktop performance separately.
+
+Targets to work toward at the 75th percentile of real-user visits:
+
+- Largest Contentful Paint: 2.5 seconds or less.
+- Interaction to Next Paint: 200 milliseconds or less.
+- Cumulative Layout Shift: 0.1 or less.
+
+These are optimization goals, not guaranteed results.
+
+## Implement improvements where needed
+
+- Convert suitable photographs to WebP or AVIF.
+- Generate responsive image sizes.
+- Add image dimensions to prevent layout shifts.
+- Lazy-load below-the-fold images.
+- Avoid lazy-loading the main LCP hero image.
+- Preload only critical assets.
+- Subset fonts where possible.
+- Remove unused JavaScript and CSS.
+- Split heavy page bundles where appropriate.
+- Review third-party scripts.
+- Avoid unnecessary animation libraries or duplicate GSAP initialization.
+- Optimize React rendering where profiling identifies real problems.
+- Cache static assets efficiently.
+- Use appropriate compression.
+- Prevent layout shifts caused by image reveals and font loading.
+
+Preserve the quality of the existing cinematic imagery and GSAP ScrollTrigger experience.
+
+Use transform- and opacity-based animations where possible. Do not animate large layout properties unnecessarily.
+
+Do not sacrifice readability, accessibility or image quality solely to improve a performance score.
+
+---
+
+# PHASE 7 — ROBOTS.TXT, XML SITEMAP AND CRAWLER ACCESS
+
+Generate a valid XML sitemap containing canonical, public, indexable URLs only.
+
+Include the homepage, service pages, relevant Travel pages and useful editorial pages.
+
+Exclude:
+
+- Admin routes.
+- Login pages.
+- Private dashboards.
+- Search-result URLs with no independent value.
+- Internal API endpoints.
+- Duplicate URLs.
+- Pages intentionally marked noindex.
+- Development and preview hostnames.
+
+Use the actual production domain and canonical hostname.
+
+Update `lastmod` only when meaningful page content changes. Do not generate misleading dates.
+
+Create or update `robots.txt` to reference the sitemap and block crawling of appropriate private or internal paths.
+
+Remember that robots.txt is not an access-control mechanism. Private pages must remain protected by authentication and server-side authorization.
+
+Verify that important public content is not accidentally blocked.
+
+Submit the sitemap through Google Search Console and Bing Webmaster Tools when account access is available.
+
+Do not claim submission has occurred if credentials or access are unavailable.
+
+---
+
+# PHASE 8 — STRUCTURED DATA / SCHEMA MARKUP
+
+Implement accurate JSON-LD structured data using a shared, maintainable schema utility.
+
+Use appropriate types when the page content supports them:
+
+- Organization.
+- WebSite.
+- BreadcrumbList.
+- Service.
+- TravelAgency for the Travel division only if the classification accurately represents the business.
+- LocalBusiness or a more specific applicable type only when the relevant real-world business details are verified.
+- Article or BlogPosting for genuine editorial content.
+
+For the Logistics division, select a suitable business or service representation based on the actual operation. Do not force TravelAgency onto Logistics pages.
+
+Include verified information only:
+- Official business name.
+- Canonical website URL.
+- Official logo.
+- Real contact details.
+- Actual office address for the relevant division.
+- Valid sameAs links for official profiles.
+
+Do not invent:
+- Ratings.
+- Aggregate review counts.
+- Reviews.
+- Awards.
+- Certifications.
+- Founding dates.
+- Employee counts.
+- Office locations.
+- Geographic coordinates.
+
+Do not add FAQ structured data merely to seek a rich result. If FAQs are implemented, make sure the visible questions and answers match the structured data and comply with current search-engine eligibility policies.
+
+Validate the generated markup and resolve errors.
+
+---
+
+# PHASE 9 — LOCAL SEO FOR SAUDI ARABIA
+
+Build strong, accurate location signals.
+
+Prioritize Riyadh where the actual business presence is confirmed.
+
+Use the Travel division's verified address consistently on the Travel contact page:
+
+Prince Fahad Bin Ibrahim Al Saud, Al Malaz, Riyadh 12642, Saudi Arabia.
+
+Do not represent this as the Logistics office address unless separately confirmed.
+
+Keep Logistics and Travel business identities distinct where they have different contact information.
+
+Create a dedicated location page only when it provides meaningful information about a real office or service location.
+
+Add:
+- Clear business contact details.
+- Accurate Google Maps directions.
+- Consistent business naming.
+- Useful service-area information.
+- Relevant local internal links.
+- A clear enquiry CTA.
+
+Do not create fake offices or doorway pages for every Saudi city.
+
+If Airzone serves clients in additional cities without physical offices, explain the actual service coverage accurately instead of presenting those cities as office locations.
+
+Review the relevant Google Business Profiles. Keep official names, categories, addresses and contact details accurate.
+
+Use the official Google review link for the Travel division when available. Never fabricate a direct review link or testimonials.
+
+---
+
+# PHASE 10 — ENGLISH AND ARABIC SEO
+
+The website already supports English and Arabic. Improve this without breaking the current language switcher or RTL design.
+
+Requirements:
+
+- Separate indexable English and Arabic URLs.
+- Correct `lang` attributes.
+- Correct RTL presentation for Arabic.
+- Reciprocal `hreflang` annotations for equivalent language versions.
+- Appropriate `x-default` annotation if there is a genuine language-selection landing page.
+- Self-referencing canonical URLs.
+- Canonicals pointing to the correct language-specific pages.
+- Translated titles and meta descriptions.
+- Natural Arabic keyword targeting.
+- Correct translated internal links.
+- Correct translated navigation and breadcrumbs.
+- Localized Open Graph metadata where appropriate.
+
+Do not translate the English URL into a misleading Arabic slug unless the route system explicitly supports it.
+
+Do not set an English and Arabic page as canonicals of each other. Equivalent translated pages should generally have their own canonical URLs and reciprocal language annotations.
+
+Have Arabic copy reviewed for professional terminology used in the Saudi market.
+
+---
+
+# PHASE 11 — GENERATIVE ENGINE OPTIMIZATION (GEO) AND ANSWER ENGINE OPTIMIZATION (AEO)
+
+Improve the website's usefulness and machine-readable clarity for AI-assisted search.
+
+Do not treat GEO as a guaranteed ranking trick. Focus on making the company, its services, its location and its expertise clear, factual and easy to reference.
+
+## A. Establish clear business identity
+
+Use consistent naming:
+
+- Airzone Group — parent corporate identity.
+- Airzone Logistics — logistics division.
+- Airzone Travel & Tourism — travel division.
+
+Make the relationship between the group and its specialist businesses clear on the About page, relevant service pages and structured data.
+
+Use accurate contact details and link to genuine official profiles.
+
+## B. Write answer-first service content
+
+For every important service page:
+
+- Answer the primary customer question in the opening section.
+- Explain what the service covers.
+- Explain who may need it.
+- Explain how the process works.
+- List the information a customer should prepare.
+- Identify important limitations or dependencies.
+- Link to related services.
+- Provide a clear next step.
+
+Write content that can answer questions independently without forcing users to read the entire page.
+
+## C. Create genuinely useful question-and-answer content
+
+Develop useful FAQ content around real commercial questions, including:
+
+Customs clearance:
+- What information is needed for a customs clearance quotation in Saudi Arabia?
+- Which documents may be required for an import shipment?
+- How are duties, VAT and other charges handled?
+- What factors affect the customs clearance process?
+- How can an importer prepare for an incoming shipment?
+
+ATA Carnet:
+- What is an ATA Carnet?
+- When might an ATA Carnet be suitable for exhibition equipment?
+- Which goods and destinations may be eligible?
+- What should an exhibitor check before dispatching goods?
+- What happens when goods need to return after an event?
+
+Exhibition logistics:
+- How should exhibitors plan freight for a trade show in Riyadh?
+- What shipment information should be shared before an exhibition?
+- Why do venue delivery deadlines matter?
+- How should return freight be planned?
+- Which teams need to coordinate an international exhibition shipment?
+
+Freight forwarding:
+- What information is required for an international freight quotation?
+- How do air, sea and road freight differ?
+- Which shipment details affect the choice of transport mode?
+- How can importers prepare commercial invoices and packing lists?
+
+Answer each question accurately and concisely. Distinguish general information from shipment-specific advice.
+
+## D. Build original expertise
+
+Where possible, publish genuinely useful materials such as:
+
+- Saudi exhibition shipment preparation guide.
+- ATA Carnet planning checklist for eligible temporary movements.
+- Customs clearance document preparation guide.
+- Importer and exporter shipment information checklist.
+- Exhibition freight planning timeline.
+- Air freight versus sea freight comparison.
+- Common commercial invoice and packing list errors.
+
+Include authorship or editorial responsibility where genuine, publication and update dates, relevant sources and appropriate disclaimers.
+
+Use primary government or official sources for regulatory claims. Review such content whenever requirements change.
+
+Do not generate large volumes of near-identical AI-written city pages.
+
+## E. Make content easy to retrieve
+
+Use:
+- Descriptive page titles.
+- Clear headings.
+- Semantic HTML.
+- Meaningful link text.
+- Descriptive image alt text.
+- Accurate structured data.
+- Stable canonical URLs.
+- Clear contact and company information.
+
+Keep important content available in server-rendered HTML or another reliably crawlable form.
+
+Do not assume that adding an `llms.txt` file or special AI metadata automatically increases AI visibility. If an optional AI crawler guidance file is added, treat it as supplementary documentation rather than a substitute for useful content, accessible pages and proper indexing.
+
+Do not block legitimate search crawlers unintentionally. Respect applicable security and content-access policies.
+
+## F. Measure actual AI visibility
+
+Create a baseline and recurring evaluation process for a representative set of questions, such as:
+
+- Who provides customs clearance support in Riyadh?
+- Where can a business find ATA Carnet assistance in Saudi Arabia?
+- Which companies assist with exhibition logistics in Riyadh?
+- How can an exhibitor arrange freight and customs coordination for a Saudi trade show?
+- What information is needed to request a freight forwarding quotation in Saudi Arabia?
+
+Track mentions and citations across available AI search platforms where monitoring is technically and contractually permitted.
+
+Treat these results as variable observations, not guaranteed rankings.
+
+Record the query, platform, date, cited URL and whether Airzone was mentioned accurately.
+
+Do not claim that the website is visible in AI answers until this has been verified.
+
+---
+
+# PHASE 12 — GOOGLE ANALYTICS 4 AND CONVERSION TRACKING
+
+Inspect the live website to determine whether Google Analytics 4 is already configured.
+
+If present, verify that it is installed correctly and does not fire duplicate page views.
+
+If absent, prepare the integration using an environment variable or admin configuration for the real GA4 Measurement ID.
+
+Do not invent a Measurement ID.
+
+Preserve applicable privacy and consent requirements. If a consent mechanism is needed for the target jurisdiction and implementation, implement it appropriately rather than silently activating every marketing script.
+
+## Track meaningful business events
+
+Use descriptive GA4 event names and parameters.
+
+Track:
+
+- `generate_lead` for successful enquiry submissions.
+- `form_start` for form engagement.
+- `form_submit` only when the form actually submits successfully.
+- `click_to_call` for phone link clicks.
+- `email_click` for email link clicks.
+- `whatsapp_click` if an official WhatsApp link is configured.
+- `request_quote_click` for quote CTA clicks.
+- `shipment_tracking_start` when a visitor begins a tracking enquiry.
+- `travel_enquiry_submit` after successful Travel enquiry submission.
+- `callback_request_submit` after successful callback request submission.
+- `google_maps_directions_click` for directions clicks.
+
+Include appropriate parameters such as:
+- Business division.
+- Form type.
+- Page category.
+- CTA location.
+- Service category.
+
+Do not send sensitive form values, passport numbers, shipment documents, personal email addresses or other personal information to analytics.
+
+Ensure failed form submissions do not trigger successful lead events.
+
+Prevent duplicate events caused by multiple event listeners or SPA route transitions.
+
+## Conversion reporting
+
+Separate conversions by business division:
+
+**Logistics**
+- Quote requests.
+- Customs clearance enquiries.
+- ATA Carnet enquiries.
+- Exhibition logistics enquiries.
+- Freight enquiries.
+
+**Travel**
+- Travel planning enquiries.
+- Corporate travel enquiries.
+- Callback requests.
+
+Set up useful reporting for landing pages, traffic sources, device types and conversion paths.
+
+Provide a setup guide for GA4 and Google Search Console if the required account access is unavailable.
+
+---
+
+# PHASE 13 — SECURITY HEADERS AND HTTPS
+
+The earlier audit reported that the HSTS header was missing. Verify the deployed response before changing production configuration.
+
+Once HTTPS works correctly across the canonical domain and all required subdomains, configure HSTS at the appropriate hosting or CDN layer.
+
+Use an initial policy appropriate to the verified deployment. For example:
+
+`Strict-Transport-Security: max-age=31536000`
+
+Do not add `includeSubDomains` or `preload` until every affected subdomain and deployment dependency has been reviewed.
+
+Implement or verify other appropriate headers:
+
+- Content-Security-Policy.
+- X-Content-Type-Options: nosniff.
+- Referrer-Policy.
+- Permissions-Policy.
+- Frame restrictions through CSP `frame-ancestors` or an appropriate alternative.
+
+Build a CSP that matches the actual application. Account for necessary analytics, fonts, maps and other approved third-party resources.
+
+Do not use a restrictive policy that breaks the website.
+
+Do not add contradictory `X-Frame-Options` and CSP settings.
+
+Verify headers on the live canonical domain after deployment.
+
+Do not confuse security headers with SEO ranking guarantees.
+
+---
+
+# PHASE 14 — BACKLINK QUALITY AND BRAND AUTHORITY
+
+Review the existing backlink profile if verified data is available.
+
+Do not treat a third-party Authority Score as a direct Google ranking metric.
+
+Prioritize legitimate, relevant references from:
+- Trade associations.
+- Event and exhibition industry resources.
+- Verified business directories.
+- Real partners and suppliers.
+- Relevant professional publications.
+- Genuine company profiles.
+
+Identify suspicious links for investigation, but do not automatically disavow links based only on a third-party toxicity score.
+
+Do not buy bulk backlinks, create fake directories, generate fake reviews or publish mass-produced guest posts.
+
+Develop useful assets that can earn genuine references, including exhibition planning guides and practical Saudi shipment documentation resources.
+
+---
+
+# PHASE 15 — CONTENT MANAGEMENT AND ADMIN EXPERIENCE
+
+Where practical, make SEO settings editable through the existing admin dashboard.
+
+Support:
+- SEO title.
+- Meta description.
+- Canonical URL override with validation.
+- Index/noindex control.
+- Open Graph image.
+- Page heading and content.
+- English and Arabic SEO fields.
+- FAQ entries.
+- Breadcrumb labels.
+- Article author and publication dates where applicable.
+
+Add safeguards against accidentally noindexing the entire website or canonicalizing multiple unrelated pages to one URL.
+
+Only authorized administrators may edit these settings.
+
+Do not expose admin-only configuration publicly.
+
+---
+
+# PHASE 16 — SEO AND CONVERSION DASHBOARD
+
+If it fits the existing admin architecture without unnecessary complexity, create an SEO performance section that summarizes:
+
+- Indexed pages.
+- Sitemap status.
+- Broken links.
+- Missing metadata.
+- Pages with duplicate titles.
+- Organic clicks and impressions when Search Console integration is available.
+- Landing page enquiries when analytics data is available.
+- Logistics versus Travel conversion totals.
+- Current technical issues and their resolution status.
+
+Clearly label data that requires external integrations.
+
+Do not fabricate ranking positions, organic traffic, indexed page counts or AI visibility.
+
+Avoid storing external API credentials in client-side code.
+
+---
+
+# PHASE 17 — TESTING AND DELIVERY
+
+Before finishing:
+
+1. Run the production build.
+2. Resolve build errors and regressions.
+3. Test all important public routes.
+4. Verify metadata on the rendered pages.
+5. Validate canonical URLs and language annotations.
+6. Validate XML sitemap and robots.txt.
+7. Validate JSON-LD.
+8. Test forms and conversion events.
+9. Test mobile performance.
+10. Test English and Arabic layouts.
+11. Verify HTTPS and production security headers.
+12. Verify the preferred hostname and redirects.
+13. Confirm that no private admin pages are publicly indexable.
+14. Document any tasks requiring Google account access, DNS access or external verification.
+
+Create a concise implementation report with:
+
+- Issues found.
+- Fixes completed.
+- Pages created or improved.
+- SEO metadata implemented.
+- Technical checks passed or failed.
+- Integrations still requiring credentials.
+- Recommended next steps.
+
+Do not claim rankings improved immediately after code changes. Search performance must be measured over time using verified data.
+
+## FINAL OBJECTIVE
+
+Build a technically reliable, conversion-focused and search-friendly Airzone Group website that helps real businesses discover its services.
+
+The first priority is to make Airzone discoverable for high-intent searches involving customs clearance, ATA Carnet, exhibition and trade show logistics, import/export and freight forwarding in Riyadh and Saudi Arabia.
+
+The second priority is to strengthen the company's credibility and topical relevance through original service content, accurate local business information, accessible technical implementation and measurable enquiry tracking.
+
+The third priority is to improve the website's chances of being understood and referenced by AI-powered search platforms through clear answers, trustworthy information, structured data and a consistent company identity.
+
+**Implement the work, verify the results, and clearly distinguish completed improvements from recommendations that still require external account access or real-world verification.**

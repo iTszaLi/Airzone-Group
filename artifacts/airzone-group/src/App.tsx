@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState } from 'react';
+import { createContext, useContext, useEffect, useRef, useState } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Link as WouterLink, Router, useLocation } from 'wouter';
 import {
@@ -22,6 +22,17 @@ import type {
 } from '@workspace/api-client-react';
 import { t, pageDirection, type Locale } from './lib/i18n';
 import { businessContacts, corporateTagline } from './config/business-contacts';
+import { photos, photoUrl } from './config/photography';
+import { BusinessesMenu } from './components/BusinessesMenu';
+import { logisticsOverviewAr, travelOverviewAr } from './config/page-localization';
+import { TravelGuide } from './components/TravelGuide';
+import { ServiceContent } from './components/ServiceContent';
+import { logisticsContent } from './config/logistics-content';
+import { HomeExperience } from './components/home/HomeExperience';
+import { Seo } from './seo/Seo';
+import { AnalyticsRuntime, analyticsEvent, recordLead } from './analytics/runtime';
+import { departmentDivision } from './analytics/events';
+import { ConsentUi, PrivacyChoicesButton } from './analytics/ConsentUi';
 import './index.css';
 
 const client = new QueryClient();
@@ -85,11 +96,14 @@ function whatsappHref(phone: string | null | undefined, message: string) {
 }
 
 function trackEvent(event: string, division?: string) {
-  const tracker = (window as Window & { gtag?: (...args: unknown[]) => void }).gtag;
-  tracker?.('event', event, division ? { division } : {});
+  // Link interactions are tracked once by the consent-aware delegated listener.
+  if (event === 'google_review_click') analyticsEvent(event, { business_division: division || 'group' });
 }
 
 const services = [
+  ['ATA Carnet assistance', '/logistics/ata-carnet', 'Shipment support for temporary imports under an ATA Carnet.', FileText],
+  ['Exhibition and event logistics', '/logistics/exhibition-event-logistics', 'Freight and customs planned around event dates.', Compass],
+  ['Import and export support', '/logistics/import-export', 'Documents, customs and freight in one plan.', Globe2],
   ['Customs clearance', '/logistics/customs-clearance', 'A clear path through import and export requirements.', Landmark],
   ['Freight forwarding', '/logistics/freight-forwarding', 'Coordinated movement from origin to destination.', Boxes],
   ['Air freight', '/logistics/air-freight', 'Time-conscious cargo movement by air.', Plane],
@@ -148,34 +162,52 @@ function MobileConversionBar() {
 }
 
 function AnalyticsConsent() {
-  return null;
+  const { locale } = useLocale();
+  return <ConsentUi locale={locale}/>;
 }
 
 function Header() {
   const [open, setOpen] = useState(false);
-  const [active, setActive] = useState('');
+  const mobileToggle = useRef<HTMLButtonElement>(null);
   const { locale } = useLocale();
   const copy = (key: string) => t(locale, key);
-  return <header className="site-header">
+  const [rawLoc] = useLocation();
+  const path = rawLoc.replace(/^\/ar(?=\/|$)/, '').replace(/\/+$/, '') || '/';
+  const [scrolled, setScrolled] = useState(false);
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 24);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && !e.defaultPrevented) {
+        setOpen(false);
+        mobileToggle.current?.focus();
+      }
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [open]);
+  const cur = (p: string) => (p === '/' ? path === '/' : path === p || path.startsWith(`${p}/`)) ? 'page' as const : undefined;
+  const isHome = path === '/';
+  const solid = !isHome || scrolled || open;
+  return <header className={`site-header ${isHome ? 'header-home' : ''} ${solid ? 'header-solid' : 'header-clear'}`}>
     <div className="topline"><span>{locale === 'ar' ? 'مجموعة إيرزون · أعمال متخصصة' : 'AIRZONE GROUP · SPECIALIST BUSINESSES'}</span><span className="top-right"><LanguageSwitcher/><span className="top-dot" /><Link href="/contact">{copy('nav.getInTouch')} <ArrowUpRight size={12}/></Link></span></div>
     <div className="nav-wrap">
       <Brand />
-      <button className="mobile-toggle" aria-label={open ? 'Close navigation' : 'Open navigation'} aria-expanded={open} onClick={() => setOpen(!open)} data-testid="button-menu">{open ? <X/> : <Menu/>}</button>
-      <nav className={`main-nav ${open ? 'nav-open' : ''}`}>
-        <Link onClick={() => setOpen(false)} href="/" className="nav-link">{copy('nav.home')}</Link>
-        <div className="nav-group" onMouseEnter={() => setActive('business')} onMouseLeave={() => setActive('')}>
-          <button className="nav-link nav-trigger" aria-expanded={active === 'business'} onClick={() => setActive(active === 'business' ? '' : 'business')}>{copy('nav.businesses')} <ChevronRight size={14}/></button>
-          <div className={`nav-dropdown ${active === 'business' ? 'dropdown-open' : ''}`}>
-            <Link href="/logistics" onClick={() => setOpen(false)}><span className="drop-icon"><Boxes size={18}/></span><span><b>{locale === 'ar' ? 'الخدمات اللوجستية' : 'Logistics'}</b><small>{locale === 'ar' ? 'نُسهم في تقدّم الأعمال' : 'Move business forward'}</small></span><ArrowUpRight size={15}/></Link>
-            <Link href="/travel" onClick={() => setOpen(false)}><span className="drop-icon travel-drop"><Compass size={18}/></span><span><b>{locale === 'ar' ? 'السفر والسياحة' : 'Travel & tourism'}</b><small>{locale === 'ar' ? 'نجعل كل رحلة تجربة مميزة' : 'Make every journey count'}</small></span><ArrowUpRight size={15}/></Link>
-          </div>
-        </div>
-        <Link onClick={() => setOpen(false)} href="/destinations" className="nav-link">{copy('nav.destinations')}</Link>
-        <Link onClick={() => setOpen(false)} href="/travel/corporate-travel" className="nav-link">{copy('nav.corporate')}</Link>
-        <Link onClick={() => setOpen(false)} href="/insights" className="nav-link">{copy('nav.insights')}</Link>
-        <Link onClick={() => setOpen(false)} href="/about" className="nav-link">{copy('nav.about')}</Link>
-        <Link onClick={() => setOpen(false)} href="/contact" className="nav-link">{copy('nav.contact')}</Link>
-        <Link onClick={() => setOpen(false)} href="/track" className="nav-track"><PackageCheck size={15}/> {copy('nav.track')}</Link>
+      <button ref={mobileToggle} className="mobile-toggle" aria-label={locale === 'ar' ? (open ? 'أغلق قائمة التنقل' : 'افتح قائمة التنقل') : (open ? 'Close navigation' : 'Open navigation')} aria-expanded={open} aria-controls="airzone-main-nav" onClick={() => setOpen(!open)} data-testid="button-menu">{open ? <X/> : <Menu/>}</button>
+      <nav id="airzone-main-nav" className={`main-nav ${open ? 'nav-open' : ''}`}>
+        <Link onClick={() => setOpen(false)} href="/" aria-current={cur('/')} className="nav-link">{copy('nav.home')}</Link>
+        <BusinessesMenu locale={locale} path={rawLoc} Link={Link} BrandLogo={BrandLogo} active={!!(cur('/logistics') || cur('/travel'))} onNavigate={() => setOpen(false)} />
+        <Link onClick={() => setOpen(false)} href="/destinations" aria-current={cur('/destinations')} className="nav-link">{copy('nav.destinations')}</Link>
+        <Link onClick={() => setOpen(false)} href="/travel/corporate-travel" aria-current={cur('/travel/corporate-travel')} className="nav-link">{copy('nav.corporate')}</Link>
+        <Link onClick={() => setOpen(false)} href="/insights" aria-current={cur('/insights')} className="nav-link">{copy('nav.insights')}</Link>
+        <Link onClick={() => setOpen(false)} href="/about" aria-current={cur('/about')} className="nav-link">{copy('nav.about')}</Link>
+        <Link onClick={() => setOpen(false)} href="/contact" aria-current={cur('/contact')} className="nav-link">{copy('nav.contact')}</Link>
+        <Link onClick={() => setOpen(false)} href="/track" aria-current={cur('/track')} className="nav-track"><PackageCheck size={15}/> {copy('nav.track')}</Link>
         <Link onClick={() => setOpen(false)} href="/logistics/request-quote" className="nav-quote">{copy('common.quote')}</Link>
       </nav>
     </div>
@@ -188,9 +220,11 @@ function FooterContactBlock({ division }: { division: 'logistics' | 'travel' }) 
   const c = businessContacts[division];
   return <div className="azf-contact-block">
     <BrandLogo division={division} className="azf-contact-logo"/>
-    <h4>{division === 'logistics' ? (ar ? 'إيرزون للخدمات اللوجستية' : 'AIRZONE LOGISTICS') : (ar ? 'إيرزون للسفر والسياحة' : 'AIRZONE TRAVEL & TOURISM')}</h4>
+    <h4>{division === 'logistics' ? (ar ? 'إيرزون للخدمات اللوجستية' : 'AIRZONE LOGISTICS') : (ar ? 'إيرزون للسفر والسياحة' : 'AIRZONE TRAVELS & TOURISM')}</h4>
     <ul>
+      {division === 'travel' && <li>Yahya Mal</li>}
       {c.emails.map(e => <li key={e}><a href={`mailto:${e}`} dir="ltr"><Mail size={14} aria-hidden="true"/><span>{e.slice(0, e.indexOf('@') + 1)}<wbr/>{e.slice(e.indexOf('@') + 1)}</span></a></li>)}
+      {division === 'travel' && <li><a href="mailto:Ticketing@airzonetravel.net" dir="ltr"><Mail size={14} aria-hidden="true"/><span>Ticketing<br/>Ticketing@<wbr/>airzonetravel.net</span></a></li>}
       {c.phone && <li><a href={c.phone.href} dir="ltr"><Phone size={14} aria-hidden="true"/><span>{c.phone.label}</span></a></li>}
     </ul>
     {c.whatsappNumber && <a className="azf-map" href={`https://wa.me/${c.whatsappNumber.replace(/\D/g, '')}`} target="_blank" rel="noopener noreferrer"><MessageCircle size={15} aria-hidden="true"/>{ar ? 'واتساب' : 'WhatsApp'}<span className="azf-sr">{ar ? ' (يفتح في نافذة جديدة)' : ' (opens in a new tab)'}</span></a>}
@@ -292,52 +326,16 @@ function Eyebrow({ children, gold = false }: { children: React.ReactNode; gold?:
 
 function Home() {
   const { locale } = useLocale();
-  const copy = (key: string) => t(locale, key);
-  const settings = useSiteSettings().data;
   return <Layout>
-    <section className="hero">
-      <div className="hero-image" />
-      <div className="hero-shade" />
-      <div className="hero-grid">
-        <div className="hero-copy">
-          <Eyebrow gold>{copy('home.eyebrow')}</Eyebrow>
-          <h1>{locale === 'ar' ? <>نحرّك الأعمال.<br/><em>ونصنع الرحلات.</em></> : <>Moving business.<br/><em>Creating journeys.</em></>}</h1>
-          <p>{copy('home.intro')}</p>
-          <div className="hero-actions"><Link href="/logistics" className="button button-gold">{copy('home.explore')} <ArrowRight size={17}/></Link><Link href="/contact" className="text-link light-link">{copy('home.team')} <ArrowUpRight size={15}/></Link></div>
-          <div className="hero-note"><span className="note-rule"/><span>{locale === 'ar' ? <>نبدأ بفهم احتياجك،<br/>ونعمل على خطوتك التالية.</> : <>Built around what<br/>moves you forward.</>}</span></div>
-        </div>
-        <div className="hero-side"><div className="hero-index">01 <span>/</span> 02</div><div className="vertical-label">CONNECTED BY CARE</div></div>
-      </div>
-      <div className="hero-bottom"><span>01 / {locale === 'ar' ? 'مجموعة تتحرك معك' : 'A GROUP THAT MOVES WITH YOU'}</span><a href="#businesses">{copy('home.scroll')} <ArrowDown size={14}/></a><span className="hero-coordinate">{locale === 'ar' ? 'الخدمات اللوجستية · السفر والسياحة' : 'LOGISTICS · TRAVEL & TOURISM'}</span></div>
-    </section>
-    <section className="intro-section">
-      <div className="intro-aside"><BrandLogo className="page-brand-logo"/><Eyebrow>{copy('home.introEyebrow')}</Eyebrow><span className="section-number">01 — 03</span></div>
-      <div className="intro-body"><h2>{locale === 'ar' ? <>رحلات مختلفة.<br/><span>رؤية واضحة.</span></> : <>Different journeys.<br/><span>One clear point of view.</span></>}</h2><p>{copy('home.introBody')}</p><Link href="/about" className="under-link">{copy('home.approach')} <ArrowRight size={16}/></Link></div>
-    </section>
-    <section className="businesses-section" id="businesses">
-      <div className="section-heading"><div><Eyebrow>{copy('home.businessEyebrow')}</Eyebrow><h2>{locale === 'ar' ? <>خبرات متنوعة<br/>بمعيار مشترك.</> : <>Expertise with<br/>a shared standard.</>}</h2></div><p>{copy('home.businessIntro')}</p></div>
-      <div className="business-grid">
-        <Link href="/logistics" className="business-card logistics-card"><div className="business-card-top"><span>01 / LOGISTICS</span><ArrowUpRight size={20}/></div><div className="business-card-image logistics-image" role="img" aria-label="Abstract route illustration for logistics"/><div className="business-card-copy"><div className="business-icon"><Boxes size={20}/></div><h3>{copy('home.logisticsTitle')}</h3><p>{copy('home.logisticsBody')}</p><span className="card-link">{copy('home.discoverLogistics')} <ArrowRight size={15}/></span></div></Link>
-        <Link href="/travel" className="business-card travel-card"><div className="business-card-top"><span>02 / TRAVEL & TOURISM</span><ArrowUpRight size={20}/></div><div className="business-card-image travel-image" role="img" aria-label="Abstract destination illustration"><div className="sun-disc"/><div className="travel-arch"/></div><div className="business-card-copy"><div className="business-icon"><Compass size={20}/></div><h3>{copy('home.travelTitle')}</h3><p>{copy('home.travelBody')}</p><span className="card-link">{copy('home.discoverTravel')} <ArrowRight size={15}/></span></div></Link>
-      </div>
-    </section>
-    <section className="manifesto">
-      <div className="manifesto-side"><Eyebrow gold>{locale === 'ar' ? 'نهج مدروس للمضي قدماً' : 'A considered way forward'}</Eyebrow><span>02 — 03</span></div><div className="manifesto-copy"><h2>{locale === 'ar' ? <>وضوح في الرؤية.<br/><i>تنسيق بعناية.</i><br/>وخطوة أفضل.</> : <>Clear thinking.<br/><i>Careful coordination.</i><br/>A better next step.</>}</h2><Link href="/contact" className="button button-outline">{copy('home.team')} <ArrowRight size={16}/></Link></div>
-    </section>
-    <section className="pathways">
-      <div className="pathways-intro"><Eyebrow>{copy('home.pathwayEyebrow')}</Eyebrow><h2>{locale === 'ar' ? <>ابدأ من<br/>احتياجك.</> : <>Start where<br/>you are.</>}</h2><p>{copy('home.pathwayBody')}</p></div>
-      <Link href="/track" className="pathway-row"><span className="pathway-icon"><PackageCheck/></span><span><small>FOR SHIPMENTS</small><b>{copy('home.track')}</b><em>{copy('home.trackDesc')}</em></span><ArrowUpRight className="pathway-arrow"/></Link>
-      <Link href="/logistics/request-quote" className="pathway-row"><span className="pathway-icon"><FileText/></span><span><small>FOR BUSINESSES</small><b>{copy('home.quote')}</b><em>{copy('home.quoteDesc')}</em></span><ArrowUpRight className="pathway-arrow"/></Link>
-      <Link href="/travel/enquiry" className="pathway-row"><span className="pathway-icon"><CalendarDays/></span><span><small>FOR TRAVELLERS</small><b>{copy('home.plan')}</b><em>{copy('home.planDesc')}</em></span><ArrowUpRight className="pathway-arrow"/></Link>
-    </section>
+    <HomeExperience locale={locale} Link={Link} BrandLogo={BrandLogo} />
     <ReviewInvitation division="group"/>
-    {settings?.googleReviewUrl && <section className="closing-band"><div><BrandLogo className="page-brand-logo"/><div><Eyebrow gold>{locale === 'ar' ? 'مجموعة إيرزون' : 'Airzone Group'}</Eyebrow><h2>{copy('home.closeTitle')}<br/>{copy('home.closeBody')}</h2></div></div><Link className="button button-gold" href="/contact">{copy('common.contact')} <ArrowRight size={16}/></Link></section>}
-    <section className="callback-strip"><div><Eyebrow>{locale === 'ar' ? 'نحن هنا للمساعدة' : 'Need help?'}</Eyebrow><h2>{copy('home.callback')}</h2></div><Link href="/callback" className="button button-navy">{copy('common.callback')} <ArrowRight size={16}/></Link><WhatsAppLink department="logistics" className="button button-outline-dark" message="Hello Airzone Logistics, I would like assistance with a logistics or customs clearance requirement." label={locale === 'ar' ? 'تحدث إلى فريق الخدمات اللوجستية' : 'Talk to Logistics'} />
-    </section>
   </Layout>;
 }
 
 const logisticsOverview = {
+  '/logistics/ata-carnet': ['ATA Carnet assistance', 'Support for the shipment side of temporary imports under an ATA Carnet.', 'Tell us about your goods, event and dates.'],
+  '/logistics/exhibition-event-logistics': ['Exhibition and event logistics', 'Freight, customs and delivery planned around fixed event dates.', 'Share your event, venue and delivery deadline.'],
+  '/logistics/import-export': ['Import and export support', 'Documents, customs and freight brought together for one shipment.', 'Share what you are moving and where.'],
   '/logistics': ['Logistics that keep business moving', 'A considered approach to cargo movement, customs and the details that connect them.', 'Move your next shipment with a team focused on clear communication and practical coordination.'],
   '/logistics/customs-clearance': ['Customs clearance', 'Support through the formalities that keep goods moving across borders.', 'Clearance requirements can vary by shipment. Share the details and our team can understand what support you need.'],
   '/logistics/freight-forwarding': ['Freight forwarding', 'A coordinated approach to moving cargo from origin to destination.', 'Explore freight options with a team that considers the complete movement, not just one leg of the journey.'],
@@ -364,44 +362,83 @@ function SectionTitle({ label, title, text }: { label: string; title: string; te
   return <div className="page-title"><Eyebrow>{label}</Eyebrow><h1>{title}</h1><p>{text}</p></div>;
 }
 
+const serviceLabelsAr: Record<string, [string, string]> = {
+  '/logistics/ata-carnet': ['المساعدة في دفتر ATA Carnet', 'دعم الشحنة للاستيراد المؤقت بموجب دفتر ATA Carnet.'],
+  '/logistics/exhibition-event-logistics': ['لوجستيات المعارض والفعاليات', 'شحن وجمارك مخططان وفق مواعيد الفعالية.'],
+  '/logistics/import-export': ['دعم الاستيراد والتصدير', 'المستندات والجمارك والشحن في خطة واحدة.'],
+  '/logistics/customs-clearance': ['التخليص الجمركي', 'مسار واضح عبر متطلبات الاستيراد والتصدير.'],
+  '/logistics/freight-forwarding': ['الشحن والتوريد', 'حركة منسقة من المنشأ إلى الوجهة.'],
+  '/logistics/air-freight': ['الشحن الجوي', 'نقل بضائع جواً بمراعاة الوقت.'],
+  '/logistics/sea-freight': ['الشحن البحري', 'شحن بحري مرن لبضائع بأحجام مختلفة.'],
+  '/logistics/road-transportation': ['النقل البري', 'ترتيبات برية على المسارات المحلية والإقليمية.'],
+  '/logistics/warehousing': ['التخزين', 'مساحة ومناولة لدعم سلسلة الإمداد.'],
+  '/logistics/project-cargo': ['شحنات المشاريع', 'تنسيق مدروس لحركة البضائع المعقدة.'],
+};
+const travelLinkNamesAr: Record<string, string> = {
+  '/travel/flights': 'الطيران', '/travel/holiday-packages': 'باقات العطلات', '/travel/international-tours': 'الجولات الدولية',
+  '/travel/domestic-tours': 'الجولات الداخلية', '/travel/hotels': 'الفنادق', '/travel/visa-assistance': 'مساعدة التأشيرات',
+  '/travel/umrah': 'العمرة', '/travel/airport-transfers': 'خدمات المطار',
+};
+
 function LogisticsPage({ path }: { path: string }) {
-  const item = logisticsOverview[path as keyof typeof logisticsOverview] ?? logisticsOverview['/logistics'];
   const isLanding = path === '/logistics';
+  const { locale } = useLocale();
+  const T = <V,>(en: V, ar: V): V => locale === 'ar' ? ar : en;
+  const base = logisticsOverview[path as keyof typeof logisticsOverview] ?? logisticsOverview['/logistics'];
+  const item: readonly string[] = locale === 'ar' ? (logisticsOverviewAr[path] ?? logisticsOverviewAr['/logistics']) : base;
+  const rich = logisticsContent[path];
+  const richLang = rich?.[locale];
   return <Layout>
-    <div className="subhero subhero-logistics"><div className="subhero-bg logistics-page-bg"/><div className="subhero-inner"><DivisionLogo division="logistics"/><div className="crumb"><Link href="/">Home</Link><ChevronRight size={13}/><Link href="/logistics">Logistics</Link>{!isLanding && <><ChevronRight size={13}/><span>{item[0]}</span></>}</div><Eyebrow gold>{isLanding ? 'AIRZONE LOGISTICS' : 'LOGISTICS SERVICES'}</Eyebrow><h1>{item[0]}</h1><p>{item[1]}</p><div className="subhero-actions"><Link className="button button-gold" href="/logistics/request-quote">Request a quote <ArrowRight size={16}/></Link><Link className="text-link light-link" href="/track">Track a shipment <ArrowUpRight size={15}/></Link></div></div><span className="subhero-numeral">A / 01</span></div>
-    <section className="split-intro"><div><Eyebrow>{isLanding ? 'The logistics business' : 'A clearer way to move'}</Eyebrow><h2>{isLanding ? <>Practical expertise.<br/><i>Connected thinking.</i></> : item[0]}</h2></div><div><p>{item[2]}</p><Link href="/logistics/request-quote" className="under-link">Tell us what you need <ArrowRight size={15}/></Link></div></section>
-    {isLanding ? <section className="service-section"><div className="section-heading"><div><Eyebrow>Specialist services</Eyebrow><h2>Find the right<br/>kind of support.</h2></div><p>Choose a service to learn more, or tell us about your shipment.</p></div><div className="service-list">{services.map(([title, href, description, Icon], i) => <Link href={href} className="service-row" key={href} data-testid={`link-service-${i}`}><span className="service-index">0{i + 1}</span><span className="service-symbol"><Icon size={20}/></span><span className="service-copy"><b>{title}</b><small>{description}</small></span><ArrowUpRight size={18}/></Link>)}</div></section> :
-      <section className="service-detail"><div className="detail-left"><span className="detail-icon"><Boxes size={23}/></span><span className="detail-label">SERVICE OVERVIEW</span><h2>Every move<br/>starts with<br/><i>the details.</i></h2></div><div className="detail-right"><p>{item[2]}</p><p>Share your shipment information through our enquiry form. Include what you know about the cargo, route and expected timing so the team can review your request.</p><div className="detail-points"><span><Check size={15}/> Origin and destination</span><span><Check size={15}/> Cargo and shipment details</span><span><Check size={15}/> Timing and preferred mode</span></div><Link href="/logistics/request-quote" className="button button-navy">Request a quote <ArrowRight size={16}/></Link></div></section>}
-    <section className="cross-link"><div><Eyebrow gold>Keep things moving</Eyebrow><h2>Have a shipment<br/>to discuss?</h2><p>Give us the details and our team can take a closer look.</p></div><Link href="/logistics/request-quote" className="button button-gold">Start a quote request <ArrowRight size={16}/></Link></section>
+    <div className="subhero subhero-logistics"><div className="subhero-bg logistics-page-bg"/><div className="subhero-inner"><DivisionLogo division="logistics"/><nav className="crumb" aria-label={locale === 'ar' ? 'مسار التنقل' : 'Breadcrumb'}><Link href="/">{T('Home','الرئيسية')}</Link><ChevronRight size={13}/><Link href="/logistics">{T('Logistics','الخدمات اللوجستية')}</Link>{!isLanding && <><ChevronRight size={13}/><span aria-current="page">{richLang?.title ?? item[0]}</span></>}</nav><Eyebrow gold>{isLanding ? T('AIRZONE LOGISTICS','إيرزون للخدمات اللوجستية') : T('LOGISTICS SERVICES','الخدمات اللوجستية')}</Eyebrow><h1>{richLang?.title ?? item[0]}</h1><p>{richLang?.intro ?? item[1]}</p><div className="subhero-actions"><Link className="button button-gold" href="/logistics/request-quote">{T('Request a quote','اطلب عرض سعر')} <ArrowRight size={16}/></Link><Link className="text-link light-link" href="/track">{T('Track a shipment','تتبع شحنة')} <ArrowUpRight size={15}/></Link></div></div><span className="subhero-numeral">A / 01</span></div>
+    <section className="split-intro"><div><Eyebrow>{isLanding ? T('The logistics business','نشاط الخدمات اللوجستية') : T('A clearer way to move','طريقة أوضح للنقل')}</Eyebrow><h2>{isLanding ? <>{T('Practical expertise.','خبرة عملية.')}<br/><i>{T('Connected thinking.','وتفكير متكامل.')}</i></> : (richLang?.title ?? item[0])}</h2></div><div><p>{item[2]}</p><Link href="/logistics/request-quote" className="under-link">{T('Tell us what you need','أخبرنا بما تحتاجه')} <ArrowRight size={15}/></Link></div></section>
+    {isLanding ? <section className="service-section"><div className="section-heading"><div><Eyebrow>{T('Specialist services','خدمات متخصصة')}</Eyebrow><h2>{T(<>Find the right<br/>kind of support.</>,<>اعثر على الدعم<br/>المناسب لك.</>)}</h2></div><p>{T('Choose a service to learn more, or tell us about your shipment.','اختر خدمة لتعرف المزيد، أو أخبرنا عن شحنتك.')}</p></div><div className="service-list">{services.map(([title, href, description, Icon], i) => { const sv = locale === 'ar' ? serviceLabelsAr[href] : undefined; return <Link href={href} className="service-row" key={href} data-testid={`link-service-${i}`}><span className="service-index">0{i + 1}</span><span className="service-symbol"><Icon size={20}/></span><span className="service-copy"><b>{sv?.[0] ?? title}</b><small>{sv?.[1] ?? description}</small></span><ArrowUpRight size={18}/></Link>; })}</div></section> : rich ? null :
+      <section className="service-detail"><div className="detail-left"><span className="detail-icon"><Boxes size={23}/></span><span className="detail-label">{T('SERVICE OVERVIEW','نظرة على الخدمة')}</span><h2>{T(<>Every move<br/>starts with<br/><i>the details.</i></>,<>كل شحنة<br/>تبدأ<br/><i>بالتفاصيل.</i></>)}</h2></div><div className="detail-right"><p>{item[2]}</p><p>{T('Share your shipment information through our enquiry form. Include what you know about the cargo, route and expected timing so the team can review your request.','شارك بيانات شحنتك عبر نموذج الاستفسار. أضف ما تعرفه عن البضاعة والمسار والتوقيت المتوقع ليراجع الفريق طلبك.')}</p><div className="detail-points"><span><Check size={15}/> {T('Origin and destination','نقطة الانطلاق والوجهة')}</span><span><Check size={15}/> {T('Cargo and shipment details','تفاصيل البضاعة والشحنة')}</span><span><Check size={15}/> {T('Timing and preferred mode','التوقيت ووسيلة النقل المفضلة')}</span></div><Link href="/logistics/request-quote" className="button button-navy">{T('Request a quote','اطلب عرض سعر')} <ArrowRight size={16}/></Link></div></section>}
+    {rich && <ServiceContent locale={locale} data={rich} Link={Link} />}
+    <section className="cross-link"><div><Eyebrow gold>{T('Keep things moving','لتبقى الأمور في حركة')}</Eyebrow><h2>{T(<>Have a shipment<br/>to discuss?</>,<>لديك شحنة<br/>للنقاش؟</>)}</h2><p>{T('Give us the details and our team can take a closer look.','أعطنا التفاصيل ويطلع عليها فريقنا عن قرب.')}</p></div><Link href="/logistics/request-quote" className="button button-gold">{T('Start a quote request','ابدأ طلب عرض السعر')} <ArrowRight size={16}/></Link></section>
   </Layout>;
 }
 
 function TravelPage({ path }: { path: string }) {
-  const data = travelOverview[path] ?? travelOverview['/travel'];
   const isLanding = path === '/travel';
+  const { locale: tl } = useLocale();
+  const T = <V,>(en: V, ar: V): V => tl === 'ar' ? ar : en;
+  const data: readonly string[] = tl === 'ar' ? (travelOverviewAr[path] ?? travelOverviewAr['/travel']) : (travelOverview[path] ?? travelOverview['/travel']);
+  const travelPhoto = path === '/travel/corporate-travel' ? photos.riyadh : photos.maldives;
   return <Layout>
-    <div className="subhero subhero-travel"><div className="subhero-bg travel-page-bg"/><div className="subhero-inner"><DivisionLogo division="travel"/><div className="crumb"><Link href="/">Home</Link><ChevronRight size={13}/><Link href="/travel">Travel & tourism</Link>{!isLanding && <><ChevronRight size={13}/><span>{data[0]}</span></>}</div><Eyebrow gold>AIRZONE TRAVEL & TOURISM</Eyebrow><h1>{data[0]}</h1><p>{data[1]}</p><div className="subhero-actions"><Link className="button button-gold" href="/travel/enquiry">Plan a journey <ArrowRight size={16}/></Link><Link className="text-link light-link" href="/destinations">Explore destinations <ArrowUpRight size={15}/></Link></div></div><span className="subhero-numeral">B / 02</span></div>
-    <section className="split-intro"><div><Eyebrow>{isLanding ? 'Travel & tourism' : 'Travel planning'}</Eyebrow><h2>{isLanding ? <>More than a place.<br/><i>A whole experience.</i></> : data[0]}</h2></div><div><p>{data[2]}</p><Link href="/travel/enquiry" className="under-link">Tell us about your trip <ArrowRight size={15}/></Link></div></section>
-    {isLanding ? <section className="travel-services"><div className="travel-service-lead"><Eyebrow>What can we help plan?</Eyebrow><h2>One itinerary.<br/><i>Your way of seeing.</i></h2><p>Start with one part of your trip or bring the full picture. We are here to help with the planning.</p><Link href="/travel/enquiry" className="button button-navy">Make a travel enquiry <ArrowRight size={16}/></Link></div><div className="travel-link-grid">{travelLinks.map(([name, href], i) => <Link href={href} className="travel-link-row" key={href}><span>0{i + 1}</span><b>{name}</b><ArrowUpRight size={16}/></Link>)}</div></section> :
-      <section className="service-detail travel-detail"><div className="detail-left"><span className="detail-icon"><Compass size={23}/></span><span className="detail-label">TRAVEL PLANNING</span><h2>A trip that<br/>fits <i>you.</i></h2></div><div className="detail-right"><p>{data[2]}</p><p>Travel needs are personal. Share the dates, places and arrangements you are considering and our team can help you understand the options.</p><div className="detail-points"><span><Check size={15}/> A clear starting point</span><span><Check size={15}/> Planning around your dates</span><span><Check size={15}/> Help bringing trip details together</span></div><Link href="/travel/enquiry" className="button button-navy">Make a travel enquiry <ArrowRight size={16}/></Link></div></section>}
-    <section className="travel-note"><span><MapPin size={19}/></span><div><Eyebrow>Travel, considered</Eyebrow><h3>Good planning leaves room<br/>for the moments that matter.</h3></div><Link href="/destinations">Browse destinations <ArrowRight size={15}/></Link></section>
+    <div className="subhero subhero-travel"><div className="subhero-bg travel-page-bg" style={{ '--tbg': `url(${photoUrl(travelPhoto, 1920)})` } as React.CSSProperties}/><a className="subhero-credit" href={travelPhoto.source} target="_blank" rel="noopener noreferrer">Photo: {travelPhoto.credit}, {travelPhoto.license}</a><div className="subhero-inner"><DivisionLogo division="travel"/><nav className="crumb" aria-label={T('Breadcrumb','مسار التنقل')}><Link href="/">{T('Home','الرئيسية')}</Link><ChevronRight size={13}/><Link href="/travel">{T('Travel & tourism','السفر والسياحة')}</Link>{!isLanding && <><ChevronRight size={13}/><span aria-current="page">{data[0]}</span></>}</nav><Eyebrow gold>{T('AIRZONE TRAVEL & TOURISM','إيرزون للسفر والسياحة')}</Eyebrow><h1>{data[0]}</h1><p>{data[1]}</p><div className="subhero-actions"><Link className="button button-gold" href="/travel/enquiry">{T('Plan a journey','خطط لرحلة')} <ArrowRight size={16}/></Link><Link className="text-link light-link" href="/destinations">{T('Explore destinations','استكشف الوجهات')} <ArrowUpRight size={15}/></Link></div></div><span className="subhero-numeral">B / 02</span></div>
+    <section className="split-intro"><div><Eyebrow>{isLanding ? T('Travel & tourism','السفر والسياحة') : T('Travel planning','تخطيط السفر')}</Eyebrow><h2>{isLanding ? <>{T('More than a place.','أكثر من مكان.')}<br/><i>{T('A whole experience.','تجربة متكاملة.')}</i></> : data[0]}</h2></div><div><p>{data[2]}</p><Link href="/travel/enquiry" className="under-link">{T('Tell us about your trip','أخبرنا عن رحلتك')} <ArrowRight size={15}/></Link></div></section>
+    {isLanding ? <section className="travel-services"><div className="travel-service-lead"><Eyebrow>{T('What can we help plan?','ماذا يمكننا أن نخطط معك؟')}</Eyebrow><h2>{T(<>One itinerary.<br/><i>Your way of seeing.</i></>,<>برنامج واحد.<br/><i>بطريقتك في الاكتشاف.</i></>)}</h2><p>{T('Start with one part of your trip or bring the full picture. We are here to help with the planning.','ابدأ بجزء من رحلتك أو أحضر الصورة كاملة. نحن هنا للمساعدة في التخطيط.')}</p><Link href="/travel/enquiry" className="button button-navy">{T('Make a travel enquiry','أرسل استفسار سفر')} <ArrowRight size={16}/></Link></div><div className="travel-link-grid">{travelLinks.map(([name, href], i) => <Link href={href} className="travel-link-row" key={href}><span>0{i + 1}</span><b>{tl === 'ar' ? (travelLinkNamesAr[href] ?? name) : name}</b><ArrowUpRight size={16}/></Link>)}</div></section> :
+      <section className="service-detail travel-detail"><div className="detail-left"><span className="detail-icon"><Compass size={23}/></span><span className="detail-label">{T('TRAVEL PLANNING','تخطيط السفر')}</span><h2>{T(<>A trip that<br/>fits <i>you.</i></>,<>رحلة<br/>تناسبك <i>أنت.</i></>)}</h2></div><div className="detail-right"><p>{data[2]}</p><p>{T('Travel needs are personal. Share the dates, places and arrangements you are considering and our team can help you understand the options.','احتياجات السفر شخصية. شارك التواريخ والأماكن والترتيبات التي تفكر بها ويساعدك فريقنا على فهم الخيارات.')}</p><div className="detail-points"><span><Check size={15}/> {T('A clear starting point','بداية واضحة')}</span><span><Check size={15}/> {T('Planning around your dates','تخطيط وفق مواعيدك')}</span><span><Check size={15}/> {T('Help bringing trip details together','مساعدة في جمع تفاصيل الرحلة')}</span></div><Link href="/travel/enquiry" className="button button-navy">{T('Make a travel enquiry','أرسل استفسار سفر')} <ArrowRight size={16}/></Link></div></section>}
+    {(isLanding || path === '/travel/corporate-travel') && <TravelGuide locale={tl} corporate={path === '/travel/corporate-travel'} Link={Link} />}
+    <section className="travel-note"><span><MapPin size={19}/></span><div><Eyebrow>{T('Travel, considered','سفر مدروس')}</Eyebrow><h3>{T(<>Good planning leaves room<br/>for the moments that matter.</>,<>التخطيط الجيد يترك مساحة<br/>للحظات التي تهمك.</>)}</h3></div><Link href="/destinations">{T('Browse destinations','تصفح الوجهات')} <ArrowRight size={15}/></Link></section>
   </Layout>;
 }
 
 function Destinations() {
-  return <Layout><div className="page-hero simple-hero"><div className="crumb"><Link href="/">Home</Link><ChevronRight size={13}/><span>Destinations</span></div><DivisionLogo division="travel"/><Eyebrow>TRAVEL & TOURISM</Eyebrow><h1>Where will<br/><i>you go next?</i></h1><p>Start with a place in mind, or tell us the kind of journey you want to take.</p><Link href="/travel/enquiry" className="button button-navy">Plan your journey <ArrowRight size={16}/></Link><div className="destination-art"><div className="globe-lines"/><Globe2 size={150}/><span>THE WORLD, OPEN</span></div></div><section className="destinations-copy"><Eyebrow>A personal starting point</Eyebrow><h2>Every itinerary begins<br/>with a conversation.</h2><p>Tell us where you would like to go, when you are thinking of travelling, and what matters most. Our team can help you explore the next steps.</p><div className="destination-steps"><span><b>01</b><small>Share your destination</small></span><span><b>02</b><small>Tell us what you need</small></span><span><b>03</b><small>Plan with our team</small></span></div><Link href="/travel/enquiry" className="under-link">Start planning <ArrowRight size={16}/></Link></section></Layout>;
+  const { locale } = useLocale();
+  const T = <V,>(en: V, ar: V): V => locale === 'ar' ? ar : en;
+  return <Layout><div className="page-hero simple-hero"><div className="crumb"><Link href="/">{T('Home','الرئيسية')}</Link><ChevronRight size={13}/><span>{T('Destinations','الوجهات')}</span></div><DivisionLogo division="travel"/><Eyebrow>{T('TRAVEL & TOURISM','السفر والسياحة')}</Eyebrow><h1>{T(<>Where will<br/><i>you go next?</i></>,<>إلى أين<br/><i>ستسافر تالياً؟</i></>)}</h1><p>{T('Start with a place in mind, or tell us the kind of journey you want to take.','ابدأ بمكان في ذهنك، أو أخبرنا بنوع الرحلة التي ترغب بها.')}</p><Link href="/travel/enquiry" className="button button-navy">{T('Plan your journey','خطط لرحلتك')} <ArrowRight size={16}/></Link><div className="destination-art"><div className="globe-lines"/><Globe2 size={150}/><span>{T('THE WORLD, OPEN','العالم مفتوح')}</span></div></div><section className="destinations-copy"><Eyebrow>{T('A personal starting point','بداية شخصية')}</Eyebrow><h2>{T(<>Every itinerary begins<br/>with a conversation.</>,<>كل برنامج سفر<br/>يبدأ بحوار.</>)}</h2><p>{T('Tell us where you would like to go, when you are thinking of travelling, and what matters most. Our team can help you explore the next steps.','أخبرنا إلى أين تود الذهاب، ومتى تفكر بالسفر، وما الأهم بالنسبة لك. يساعدك فريقنا على استكشاف الخطوات التالية.')}</p><div className="destination-steps"><span><b>01</b><small>{T('Share your destination','شارك وجهتك')}</small></span><span><b>02</b><small>{T('Tell us what you need','أخبرنا بما تحتاجه')}</small></span><span><b>03</b><small>{T('Plan with our team','خطط مع فريقنا')}</small></span></div><Link href="/travel/enquiry" className="under-link">{T('Start planning','ابدأ التخطيط')} <ArrowRight size={16}/></Link></section></Layout>;
 }
 
 function About() {
-  return <Layout><div className="page-hero about-hero"><div className="crumb"><Link href="/">Home</Link><ChevronRight size={13}/><span>About Airzone</span></div><BrandLogo className="page-brand-logo"/><Eyebrow>ABOUT AIRZONE GROUP</Eyebrow><h1>One group.<br/><i>Two ways forward.</i></h1><p>Airzone Group brings together distinct specialist businesses with a shared commitment to dependable service.</p><div className="about-hero-art"><div className="art-lines"/><span>CONNECTION IS OUR COMMON GROUND</span></div></div><section className="about-story"><div className="story-label"><Eyebrow>Our point of view</Eyebrow><span>01 / 03</span></div><div><h2>Clarity is a service<br/><i>in its own right.</i></h2><p>Good service starts by understanding the need. Airzone Group brings a thoughtful, attentive approach to logistics and travel planning—two different disciplines, connected by the way we work with people.</p><p>We believe the experience should feel clear from the first conversation, with the right specialist focused on the details that matter to you.</p></div></section><section className="about-businesses"><Eyebrow>Our businesses</Eyebrow><h2>Focused teams.<br/>One shared standard.</h2><div className="about-business-grid"><Link href="/logistics"><span>01 / LOGISTICS</span><Boxes size={24}/><h3>Movement of goods,<br/><i>made clearer.</i></h3><ArrowUpRight/></Link><Link href="/travel"><span>02 / TRAVEL & TOURISM</span><Compass size={24}/><h3>Journeys shaped<br/><i>around you.</i></h3><ArrowUpRight/></Link></div></section><section className="about-end"><h2>Let’s make the<br/>next step a clear one.</h2><Link href="/contact" className="button button-gold">Get in touch <ArrowRight size={16}/></Link></section></Layout>;
+  const { locale } = useLocale();
+  const T = <V,>(en: V, ar: V): V => locale === 'ar' ? ar : en;
+  return <Layout><div className="page-hero about-hero"><div className="crumb"><Link href="/">{T('Home','الرئيسية')}</Link><ChevronRight size={13}/><span>{T('About Airzone','عن إيرزون')}</span></div><BrandLogo className="page-brand-logo"/><Eyebrow>{T('ABOUT AIRZONE GROUP','عن مجموعة إيرزون')}</Eyebrow><h1>{T(<>One group.<br/><i>Two ways forward.</i></>,<>مجموعة واحدة.<br/><i>مساران للمضي قدماً.</i></>)}</h1><p>{T('Airzone Group brings together distinct specialist businesses with a shared commitment to dependable service.','تجمع مجموعة إيرزون أعمالاً متخصصة متمايزة يجمعها التزام مشترك بخدمة يُعتمد عليها.')}</p><div className="about-hero-art"><div className="art-lines"/><span>{T('CONNECTION IS OUR COMMON GROUND','التواصل أرضيتنا المشتركة')}</span></div></div><section className="about-story"><div className="story-label"><Eyebrow>{T('Our point of view','وجهة نظرنا')}</Eyebrow><span>01 / 03</span></div><div><h2>{T(<>Clarity is a service<br/><i>in its own right.</i></>,<>الوضوح خدمة<br/><i>قائمة بذاتها.</i></>)}</h2><p>{T('Good service starts by understanding the need. Airzone Group brings a thoughtful, attentive approach to logistics and travel planning—two different disciplines, connected by the way we work with people.','تبدأ الخدمة الجيدة بفهم الحاجة. تعتمد مجموعة إيرزون نهجاً مدروساً ومنتبهاً في الخدمات اللوجستية وتخطيط السفر، وهما تخصصان مختلفان يجمعهما أسلوبنا في التعامل مع الناس.')}</p><p>{T('We believe the experience should feel clear from the first conversation, with the right specialist focused on the details that matter to you.','نؤمن بأن التجربة ينبغي أن تكون واضحة منذ المحادثة الأولى، مع متخصص مناسب يركز على التفاصيل التي تهمك.')}</p></div></section><section className="about-businesses"><Eyebrow>{T('Our businesses','أعمالنا')}</Eyebrow><h2>{T(<>Focused teams.<br/>One shared standard.</>,<>فرق متخصصة.<br/>ومعيار مشترك واحد.</>)}</h2><div className="about-business-grid"><Link href="/logistics"><span>{T('01 / LOGISTICS','01 / الخدمات اللوجستية')}</span><Boxes size={24}/><h3>{T(<>Movement of goods,<br/><i>made clearer.</i></>,<>حركة البضائع،<br/><i>بوضوح أكبر.</i></>)}</h3><ArrowUpRight/></Link><Link href="/travel"><span>{T('02 / TRAVEL & TOURISM','02 / السفر والسياحة')}</span><Compass size={24}/><h3>{T(<>Journeys shaped<br/><i>around you.</i></>,<>رحلات تُصاغ<br/><i>حولك.</i></>)}</h3><ArrowUpRight/></Link></div></section><section className="about-end"><h2>{T(<>Let’s make the<br/>next step a clear one.</>,<>لنجعل الخطوة<br/>التالية واضحة.</>)}</h2><Link href="/contact" className="button button-gold">{T('Get in touch','تواصل معنا')} <ArrowRight size={16}/></Link></section></Layout>;
 }
 
 function Field({ label, name, type = 'text', required = false, placeholder = '', options }: {label: string; name: string; type?: string; required?: boolean; placeholder?: string; options?: string[]}) {
   return <label className="field"><span>{label}{required && <i> *</i>}</span>{options ? <select name={name} required={required} defaultValue=""><option value="" disabled>Select an option</option>{options.map(o => <option key={o}>{o}</option>)}</select> : <input name={name} type={type} required={required} placeholder={placeholder} />}</label>;
 }
 function FormShell({ title, intro, children, pending, success, error, onSubmit }: { title: string; intro: string; children: React.ReactNode; pending: boolean; success?: string; error?: string; onSubmit?: (e: React.FormEvent<HTMLFormElement>) => void }) {
-  if (success) return <div className="form-success">{title.startsWith('LOGISTICS') ? <DivisionLogo division="logistics"/> : title.startsWith('TRAVEL') ? <DivisionLogo division="travel"/> : <BrandLogo className="page-brand-logo"/>}<span><Check size={23}/></span><Eyebrow>Request received</Eyebrow><h2>Thank you.<br/><i>We have your details.</i></h2><p>{success}</p><Link href="/" className="under-link">Return to Airzone Group <ArrowRight size={16}/></Link></div>;
-  return <form className="enquiry-form" onSubmit={onSubmit}><div className="form-heading"><Eyebrow>{title}</Eyebrow><p>{intro}</p></div>{children}{error && <div className="form-error"><CircleAlert size={16}/>{error}</div>}<button type="submit" className="button button-navy form-submit" disabled={pending}>{pending ? <><LoaderCircle className="spin" size={16}/> Sending request</> : <>Send your enquiry <Send size={16}/></>}</button><small className="form-privacy">Your information is used to respond to this enquiry. See our <Link href="/privacy">privacy notice</Link>.</small></form>;
+  const { locale } = useLocale();
+  const successRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (!success || !successRef.current) return;
+    successRef.current.focus({ preventScroll: true });
+    successRef.current.scrollIntoView({ block: 'center', behavior: 'instant' });
+  }, [success]);
+  if (success) return <div className="form-success" ref={successRef} tabIndex={-1} role="status" aria-live="polite">{title.startsWith('LOGISTICS') ? <DivisionLogo division="logistics"/> : title.startsWith('TRAVEL') ? <DivisionLogo division="travel"/> : <BrandLogo className="page-brand-logo"/>}<span><Check size={23}/></span><Eyebrow>{locale === 'ar' ? 'تم استلام طلبك' : 'Request received'}</Eyebrow><h2>{locale === 'ar' ? 'شكراً لك.' : 'Thank you.'}<br/><i>{locale === 'ar' ? 'لقد استلمنا بياناتك.' : 'We have your details.'}</i></h2><p>{success}</p><Link href="/" className="under-link">{locale === 'ar' ? 'العودة إلى مجموعة إيرزون' : 'Return to Airzone Group'} <ArrowRight size={16}/></Link></div>;
+  return <form className="enquiry-form" onSubmit={onSubmit}><div className="form-heading"><Eyebrow>{title}</Eyebrow><p>{intro}</p></div>{children}{error && <div className="form-error" role="alert"><CircleAlert size={16}/>{error}</div>}<button type="submit" className="button button-navy form-submit" disabled={pending}>{pending ? <><LoaderCircle className="spin" size={16}/> {locale === 'ar' ? 'جارٍ إرسال الطلب' : 'Sending request'}</> : <>{locale === 'ar' ? 'أرسل استفسارك' : 'Send your enquiry'} <Send size={16}/></>}</button><small className="form-privacy">{locale === 'ar' ? 'تُستخدم معلوماتك للرد على هذا الاستفسار. راجع ' : 'Your information is used to respond to this enquiry. See our '}<Link href="/privacy">{locale === 'ar' ? 'إشعار الخصوصية' : 'privacy notice'}</Link>.</small></form>;
 }
 
 function LogisticsEnquiry() {
@@ -419,7 +456,7 @@ function LogisticsEnquiry() {
       mode: (String(f.get('mode') || '') || undefined) as LogisticsEnquiryInput['mode'],
       service: String(f.get('service')), expectedDate: String(f.get('expectedDate') || '') || null, details: String(f.get('details') || '') || undefined
     };
-    setError(''); mutation.mutate({data}, {onSuccess: r => setReceipt(`${r.message} Reference: ${r.reference}.`), onError: () => setError('We could not send your request. Please try again.')});
+    setError(''); mutation.mutate({data}, {onSuccess: r => { recordLead('logistics', r.reference, 'logistics', data.service); setReceipt(`${r.message} Reference: ${r.reference}.`); }, onError: () => setError('We could not send your request. Please try again.')});
   };
   return <EnquiryPage label="LOGISTICS ENQUIRY" title={<>Tell us about<br/><i>your shipment.</i></>} intro="Share what you know so far. Our logistics team will review the details." onSubmit={submit} pending={mutation.isPending} error={error} success={receipt}>
     <div className="form-section-title">Your details</div><div className="form-grid"><Field label="Full name" name="fullName" required/><Field label="Company" name="company"/><Field label="Work email" name="email" type="email" required/><Field label="Mobile" name="mobile" type="tel" required/></div>
@@ -432,7 +469,7 @@ function TravelEnquiry() {
   const mutation = useCreateTravelEnquiry(); const [receipt, setReceipt] = useState(''); const [error,setError] = useState('');
   const submit = (e: React.FormEvent<HTMLFormElement>) => { e.preventDefault(); const f=new FormData(e.currentTarget);
     const data: TravelEnquiryInput = {name:String(f.get('name')),mobile:String(f.get('mobile')),email:String(f.get('email')),departureCity:String(f.get('departureCity')),destination:String(f.get('destination')),departureDate:String(f.get('departureDate')||'')||null,returnDate:String(f.get('returnDate')||'')||null,adults:Number(f.get('adults')||1),children:Number(f.get('children')||0),travelType:String(f.get('travelType')),accommodationRequired:f.has('accommodationRequired'),flightRequired:f.has('flightRequired'),visaAssistanceRequired:f.has('visaAssistanceRequired'),airportTransferRequired:f.has('airportTransferRequired'),budget:String(f.get('budget')||'')||undefined,preferredPackage:String(f.get('preferredPackage')||'')||undefined,message:String(f.get('message')||'')||undefined};
-    setError(''); mutation.mutate({data},{onSuccess:r=>setReceipt(`${r.message} Reference: ${r.reference}.`),onError:()=>setError('We could not send your enquiry. Please try again.')}); };
+    setError(''); mutation.mutate({data},{onSuccess:r=>{recordLead('travel',r.reference,'travel');setReceipt(`${r.message} Reference: ${r.reference}.`);},onError:()=>setError('We could not send your enquiry. Please try again.')}); };
   return <EnquiryPage label="TRAVEL ENQUIRY" title={<>Let's plan<br/><i>your journey.</i></>} intro="Tell us a little about your trip and what would make it right for you." onSubmit={submit} pending={mutation.isPending} error={error} success={receipt}>
     <div className="form-section-title">Your details</div><div className="form-grid"><Field label="Full name" name="name" required/><Field label="Mobile" name="mobile" type="tel" required/><Field label="Email" name="email" type="email" required/></div><div className="form-section-title">Your trip</div><div className="form-grid"><Field label="Departure city" name="departureCity" required/><Field label="Destination" name="destination" required/><Field label="Departure date" name="departureDate" type="date"/><Field label="Return date" name="returnDate" type="date"/><Field label="Travel type" name="travelType" required options={['Flights','Holiday package','International tour','Domestic tour','Hotel','Visa assistance','Umrah','Airport transfer','Other']}/><Field label="Adults" name="adults" type="number"/><Field label="Children" name="children" type="number"/><Field label="Budget" name="budget"/><Field label="Preferred package" name="preferredPackage"/></div>
     <div className="check-grid">{[['flightRequired','Flights'],['accommodationRequired','Accommodation'],['visaAssistanceRequired','Visa assistance'],['airportTransferRequired','Airport transfer']].map(([name,label])=><label key={name}><input type="checkbox" name={name}/><span>{label}</span></label>)}</div><label className="field"><span>Anything else?</span><textarea name="message" rows={4} placeholder="Share preferences, occasions or other details."/></label>
@@ -443,9 +480,11 @@ function EnquiryPage({label,title,intro,children,onSubmit,pending,error,success}
 }
 
 function Contact() {
+  const { locale } = useLocale();
+  const T = <V,>(en: V, ar: V): V => locale === 'ar' ? ar : en;
   const mutation=useCreateContactEnquiry(); const [receipt,setReceipt]=useState(''); const [error,setError]=useState('');
-  const submit=(e:React.FormEvent<HTMLFormElement>)=>{e.preventDefault();const f=new FormData(e.currentTarget);const data:ContactEnquiryInput={name:String(f.get('name')),company:String(f.get('company')||'')||undefined,email:String(f.get('email')),phone:String(f.get('phone')||'')||undefined,department:String(f.get('department')) as ContactEnquiryInput['department'],message:String(f.get('message'))}; setError('');mutation.mutate({data},{onSuccess:r=>setReceipt(`${r.message} Reference: ${r.reference}.`),onError:()=>setError('We could not send your message. Please try again.')});};
-  return <Layout><div className="contact-layout"><div className="contact-intro"><div className="crumb"><Link href="/">Home</Link><ChevronRight size={13}/><span>Contact</span></div><BrandLogo className="page-brand-logo"/><Eyebrow>CONTACT AIRZONE GROUP</Eyebrow><h1>Start with<br/><i>a conversation.</i></h1><p>Choose the right area and tell us how we can help. We will make sure your message reaches the right team.</p><div className="contact-ways"><div><span><Mail size={17}/></span><b>Email us</b><small>Use the form to send your message</small></div><div><span><Phone size={17}/></span><b>Call us</b><small>Phone details are not listed here</small></div><div><span><MapPin size={17}/></span><b>Saudi Arabia</b><small>Serving needs at home and abroad</small></div></div></div><div className="contact-form-wrap"><FormShell title="Send a message" intro="Fields marked with an asterisk are required." pending={mutation.isPending} error={error} success={receipt} onSubmit={submit}><div className="form-grid"><Field label="Full name" name="name" required/><Field label="Company" name="company"/><Field label="Email" name="email" type="email" required/><Field label="Phone" name="phone" type="tel"/><Field label="Department" name="department" required options={['Logistics','Customs Clearance','Travel & Tourism','Corporate Travel','General Enquiry']}/></div><label className="field"><span>How can we help? *</span><textarea name="message" rows={5} required/></label></FormShell></div></div></Layout>;
+  const submit=(e:React.FormEvent<HTMLFormElement>)=>{e.preventDefault();const f=new FormData(e.currentTarget);const data:ContactEnquiryInput={name:String(f.get('name')),company:String(f.get('company')||'')||undefined,email:String(f.get('email')),phone:String(f.get('phone')||'')||undefined,department:String(f.get('department')) as ContactEnquiryInput['department'],message:String(f.get('message'))}; setError('');mutation.mutate({data},{onSuccess:r=>{recordLead('contact',r.reference,departmentDivision(data.department));setReceipt(`${r.message} ${T('Reference','المرجع')}: ${r.reference}.`);},onError:()=>setError(T('We could not send your message. Please try again.','تعذر إرسال رسالتك. يرجى المحاولة مرة أخرى.'))});};
+  return <Layout><div className="contact-layout"><div className="contact-intro"><div className="crumb"><Link href="/">{T('Home','الرئيسية')}</Link><ChevronRight size={13}/><span>{T('Contact','اتصل بنا')}</span></div><BrandLogo className="page-brand-logo"/><Eyebrow>{T('CONTACT AIRZONE GROUP','تواصل مع مجموعة إيرزون')}</Eyebrow><h1>{T(<>Start with<br/><i>a conversation.</i></>,<>ابدأ<br/><i>بحوار.</i></>)}</h1><p>{T('Choose the right area and tell us how we can help. We will make sure your message reaches the right team.','اختر المجال المناسب وأخبرنا كيف يمكننا مساعدتك، وسنحرص على وصول رسالتك إلى الفريق المناسب.')}</p><div className="contact-ways"><div><span><Mail size={17}/></span><b>{T('Email us','راسلنا')}</b><small>{T('Use the form to send your message','استخدم النموذج لإرسال رسالتك')}</small></div><div><span><Phone size={17}/></span><b>{T('Call us','اتصل بنا')}</b><small>{T('Phone details are not listed here','لا تُعرض تفاصيل الهاتف هنا')}</small></div><div><span><MapPin size={17}/></span><b>{T('Saudi Arabia','المملكة العربية السعودية')}</b><small>{T('Serving needs at home and abroad','نلبي الاحتياجات داخل المملكة وخارجها')}</small></div></div></div><div className="contact-form-wrap"><FormShell title={T('Send a message','أرسل رسالة')} intro={T('Fields marked with an asterisk are required.','الحقول المعلّمة بنجمة مطلوبة.')} pending={mutation.isPending} error={error} success={receipt} onSubmit={submit}><div className="form-grid"><Field label={T('Full name','الاسم الكامل')} name="name" required/><Field label={T('Company','الشركة')} name="company"/><Field label={T('Email','البريد الإلكتروني')} name="email" type="email" required/><Field label={T('Phone','الهاتف')} name="phone" type="tel"/><Field label={T('Department','القسم')} name="department" required options={['Logistics','Customs Clearance','Travel & Tourism','Corporate Travel','General Enquiry']}/></div><label className="field"><span>{T('How can we help? *','كيف يمكننا مساعدتك؟ *')}</span><textarea name="message" rows={5} required/></label></FormShell></div></div></Layout>;
 }
 
 function Tracking() {
@@ -481,7 +520,7 @@ function Callback() {
     };
     setError('');
     mutation.mutate({ data }, {
-      onSuccess: result => setReceipt(`${result.message} ${t(locale, 'form.references')}: ${result.reference}`),
+      onSuccess: result => { recordLead('callback', result.reference, departmentDivision(data.department)); setReceipt(`${result.message} ${t(locale, 'form.references')}: ${result.reference}`); },
       onError: () => setError(t(locale, 'common.tryAgain')),
     });
   };
@@ -515,9 +554,29 @@ function Portal() {
   return <Layout><section className="legal-page"><BrandLogo className="page-brand-logo"/><Eyebrow>{locale === 'ar' ? 'بوابة العملاء' : 'Client portal'}</Eyebrow><h1>{t(locale, 'portal.title')}</h1>{enquiries.isLoading ? <p>{locale === 'ar' ? 'جارٍ التحميل…' : 'Loading enquiries…'}</p> : enquiries.isError ? <><p>{locale === 'ar' ? 'يجري إعداد تسجيل الدخول الآمن للبوابة. تواصل مع فريقنا للحصول على مساعدة بشأن طلبك.' : 'Secure portal sign-in is still being configured. Contact our team for help with your enquiry.'}</p><Link href="/contact" className="under-link">{t(locale, 'common.contact')} <ArrowRight size={16}/></Link></> : enquiries.data?.length ? <div className="legal-copy">{enquiries.data.map(enquiry => <section key={enquiry.id}><FileText size={20}/><p><b>{enquiry.reference}</b><br/>{enquiry.status} · {new Date(enquiry.createdAt).toLocaleDateString(locale === 'ar' ? 'ar' : 'en')}</p></section>)}</div> : <p>{locale === 'ar' ? 'لا توجد طلبات مرتبطة ببريدك الموثق.' : 'No enquiries are linked to your verified email.'}</p>}</section></Layout>;
 }
 
-function Privacy() { return <Legal title="Privacy notice" label="PRIVACY" paragraphs={['Airzone Group respects your privacy. This notice explains how information submitted through this website may be used to respond to enquiries and provide requested services.','Information you provide in a logistics, travel or contact enquiry is used to understand and respond to your request. Please provide only information relevant to your enquiry.','This website may use technical information necessary to operate and improve its functionality. We do not publish personal contact details through this page.','For privacy-related questions, please use the contact form and select General Enquiry.']}/>; }
-function Terms() { return <Legal title="Terms of use" label="TERMS" paragraphs={['This website provides general information about Airzone Group and its logistics and travel & tourism services. Content is provided for informational purposes and does not constitute a service offer or commitment.','Service availability, applicable requirements and arrangements depend on the specific request and circumstances. Any service engagement is subject to confirmation and applicable terms.','You agree to use this website lawfully and not to interfere with its operation or attempt to access restricted areas without authorization.','Airzone Group may update this website and these terms from time to time.']}/>; }
-function Legal({title,label,paragraphs}:{title:string;label:string;paragraphs:string[]}) {return <Layout><section className="legal-page"><div className="crumb"><Link href="/">Home</Link><ChevronRight size={13}/><span>{title}</span></div><Eyebrow>{label}</Eyebrow><h1>{title}</h1><p className="legal-updated">Website information</p><div className="legal-copy">{paragraphs.map((p,i)=><section key={i}><span>0{i+1}</span><p>{p}</p></section>)}</div><Link href="/contact" className="under-link">Contact Airzone Group <ArrowRight size={15}/></Link></section></Layout>;}
+function Privacy() {
+  const { locale } = useLocale();
+  return <Legal title={locale === 'ar' ? 'إشعار الخصوصية' : 'Privacy notice'} label={locale === 'ar' ? 'الخصوصية' : 'PRIVACY'} paragraphs={locale === 'ar' ? [
+    'تُستخدم المعلومات التي تقدمها في نماذج الشحن والسفر والتواصل ومعاودة الاتصال لفهم طلبك والرد عليه. يرجى إرسال المعلومات الضرورية للاستفسار فقط.',
+    'التحليلات اختيارية. عند إعداد Google Analytics 4 لا يتم تحميله إلا بعد موافقتك. يمكنك رفض التحليلات أو تغيير اختيارك عبر زر خيارات الخصوصية أدناه.',
+    'تقيس التحليلات المشاهدات والنقرات وبدء النماذج والاستفسارات المرسلة بنجاح، دون إرسال أسماء أو عناوين بريد أو أرقام هواتف أو رسائل أو مستندات أو مراجع الطلبات. لا تُرسل معلمات روابط الصفحات إلى التحليلات، ولا نتتبع صفحات الحساب والإدارة.',
+    'تُحفظ تفضيلات التحليلات محلياً في متصفحك. عند السماح قد يستخدم Google Analytics ملفات تعريف ارتباط للتحليلات. يؤدي رفض التحليلات لاحقاً إلى إيقاف إرسال الأحداث ومحاولة حذف ملفات تعريف الارتباط التي أنشأها الموقع للتحليلات.',
+    'تعمل الإعدادات اللازمة لتقديم الخدمة بشكل منفصل عن التحليلات. للاستفسارات المتعلقة بالخصوصية استخدم نموذج التواصل واختر استفساراً عاماً. يلزم مراجعة هذه المعلومات قبل نشر الموقع.'
+  ] : [
+    'Information submitted in logistics, travel, contact and callback forms is used to understand and respond to your request. Please provide only information relevant to the enquiry.',
+    'Analytics is optional. When a real Google Analytics 4 property is configured, its script loads only after you allow analytics. You can reject analytics or change your choice using the privacy choices button below.',
+    'Analytics measures page views, contact clicks, form starts and successfully received enquiries. It does not receive names, email addresses, telephone numbers, messages, documents or enquiry references. URL query parameters are not sent in our analytics events, and account and administration pages are excluded.',
+    'Your analytics preference is stored locally in this browser. If allowed, Google Analytics may use analytics cookies. Rejecting later stops event sending and attempts to remove the first-party analytics cookies created for this site.',
+    'Settings necessary to provide the requested service operate separately from optional analytics. For privacy questions, use the contact form and select General Enquiry. This notice needs business/legal review before publishing.'
+  ]}><PrivacyChoicesButton locale={locale}/></Legal>;
+}
+function Terms() {
+  const { locale } = useLocale();
+  const en = ['This website provides general information about Airzone Group and its logistics and travel & tourism services. Content is provided for informational purposes and does not constitute a service offer or commitment.','Service availability, applicable requirements and arrangements depend on the specific request and circumstances. Any service engagement is subject to confirmation and applicable terms.','You agree to use this website lawfully and not to interfere with its operation or attempt to access restricted areas without authorization.','Airzone Group may update this website and these terms from time to time.'];
+  const ar = ['يقدم هذا الموقع معلومات عامة عن مجموعة إيرزون وخدماتها في الخدمات اللوجستية والسفر والسياحة. المحتوى مقدم لأغراض إعلامية ولا يُعد عرضاً للخدمة أو التزاماً بها.','يعتمد توفر الخدمات والمتطلبات والترتيبات المنطبقة على الطلب المحدد وظروفه. وأي ارتباط بخدمة يخضع للتأكيد وللشروط المعمول بها.','توافق على استخدام هذا الموقع بصورة مشروعة، وعدم التدخل في تشغيله أو محاولة الوصول إلى المناطق المقيدة دون تصريح.','قد تقوم مجموعة إيرزون بتحديث هذا الموقع وهذه الشروط من حين لآخر.'];
+  return locale === 'ar' ? <Legal title="شروط الاستخدام" label="الشروط" paragraphs={ar}/> : <Legal title="Terms of use" label="TERMS" paragraphs={en}/>;
+}
+function Legal({title,label,paragraphs,children}:{title:string;label:string;paragraphs:string[];children?:React.ReactNode}) {const {locale}=useLocale();return <Layout><section className="legal-page"><div className="crumb"><Link href="/">{locale === 'ar' ? 'الرئيسية' : 'Home'}</Link><ChevronRight size={13}/><span>{title}</span></div><Eyebrow>{label}</Eyebrow><h1>{title}</h1><p className="legal-updated">{locale === 'ar' ? 'معلومات الموقع' : 'Website information'}</p><div className="legal-copy">{paragraphs.map((p,i)=><section key={i}><span>0{i+1}</span><p>{p}</p></section>)}</div>{children}<Link href="/contact" className="under-link">{locale === 'ar' ? 'تواصل مع مجموعة إيرزون' : 'Contact Airzone Group'} <ArrowRight size={15}/></Link></section></Layout>;}
 
 function Admin() {
   const overview=useGetAdminOverview();const [kind,setKind]=useState('');const [status,setStatus]=useState('');const [search,setSearch]=useState('');
@@ -558,6 +617,6 @@ function Routes() {
   return <NotFound/>;
 }
 
-function App() { return <QueryClientProvider client={client}><Router base={import.meta.env.BASE_URL.replace(/\/$/, '')}><LocaleProvider><Routes/></LocaleProvider></Router></QueryClientProvider>; }
+function App({ ssrPath }: { ssrPath?: string } = {}) { return <QueryClientProvider client={client}><Router ssrPath={ssrPath} base={import.meta.env.BASE_URL.replace(/\/$/, '')}><LocaleProvider><Seo/><AnalyticsRuntime/><Routes/></LocaleProvider></Router></QueryClientProvider>; }
 
 export default App;

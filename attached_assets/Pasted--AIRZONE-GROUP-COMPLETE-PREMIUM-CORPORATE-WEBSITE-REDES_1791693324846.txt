@@ -1,0 +1,1353 @@
+# AIRZONE GROUP — COMPLETE PREMIUM CORPORATE WEBSITE REDESIGN & FULL-STACK DEVELOPMENT
+
+## PROJECT OVERVIEW
+
+Build a complete, production-quality, premium corporate website for **AIRZONE GROUP**.
+
+**Official domain:** https://airzonegroup.com
+
+Airzone Group operates two major business divisions:
+
+1. **Airzone Logistics** — primarily customs clearance, freight forwarding, cargo handling, transportation, import/export support and logistics services.
+2. **Airzone Travels & Tourism** — flight assistance, holidays, hotel arrangements, tourism, tours, visa assistance where offered, and corporate travel management.
+
+This is a complete website design and development project, not just a homepage mockup.
+
+I will attach three official logos:
+
+- Airzone Group master logo
+- Airzone Logistics division logo
+- Airzone Travels & Tourism division logo
+
+I will also provide the CEO's actual photograph and official company details when available.
+
+**You must use the actual supplied logos. Do not recreate, redraw, approximate, distort, or replace them with AI-generated logos.**
+
+The objective is to create a beautiful, trustworthy, sophisticated international corporate website that makes Airzone Group look established, capable, and professionally managed.
+
+The website should combine the credibility of a global logistics company with the elegance of a premium travel brand.
+
+---
+
+# 1. FIRST: INSPECT THE EXISTING PROJECT
+
+Before making changes:
+
+1. Inspect the existing repository, routes, framework, dependencies, components, API, database, and deployment configuration.
+2. Identify why the current preview is showing a 404 page.
+3. Determine whether the homepage route is missing, incorrectly configured, or simply not being previewed correctly.
+4. Preserve working functionality and infrastructure.
+5. Do not unnecessarily replace the existing database, backend, or project structure.
+6. Do not delete working features to simplify the redesign.
+
+The screenshot currently shows a 404-style screen with the text "This route hasn't arrived." Replace this as the main experience with the actual Airzone Group homepage.
+
+Create a proper branded 404 page only for genuinely invalid routes.
+
+Before coding, briefly explain the current issue and implementation plan, then begin building.
+
+Do not stop after presenting a plan. Implement the website.
+
+---
+
+# 2. CREATIVE DIRECTION — PREMIUM INTERNATIONAL CORPORATE
+
+The site must look like a custom-designed corporate website, not a generic AI-generated template.
+
+Reference the level of polish, image quality, typography, and interaction design found in leading international logistics, aviation, and premium travel brands. Do not copy any company's layout or branding.
+
+## Brand palette
+
+Use the supplied logos as the primary reference for the brand colors.
+
+Suggested supporting palette:
+
+- Deep midnight navy: #10243A
+- Darker navy: #0B1929
+- Warm ivory: #F7F5EF
+- White: #FFFFFF
+- Muted steel blue: #6E879B
+- Restrained champagne gold: #C5A46D
+- Charcoal: #242B32
+
+Treat these as initial design suggestions. Adapt them to the official logos.
+
+## Visual rules
+
+- Elegant typography and generous whitespace.
+- Large, high-quality photographic imagery.
+- Sophisticated dark/light section transitions.
+- Thin dividers and refined borders.
+- Strong composition and clear hierarchy.
+- Restrained gold accents.
+- Carefully designed buttons and navigation.
+- Subtle motion that feels intentional.
+- Premium editorial layouts rather than endless rounded cards.
+
+Do not use gradients everywhere.
+
+Do not make every section dark.
+
+Do not use excessive glassmorphism, neon colors, oversized floating elements, or flashy effects.
+
+Do not create a dashboard-looking public website.
+
+The result should feel established, premium, international, and trustworthy.
+
+---
+
+# 3. OFFICIAL LOGO IMPLEMENTATION
+
+Use the three supplied logos correctly.
+
+## Airzone Group master logo
+
+Use it in:
+
+- Main website header
+- Footer
+- About Airzone page
+- General contact sections
+- Appropriate loading/brand moments
+- Website favicon where a suitable supplied asset exists
+
+## Airzone Logistics logo
+
+Use it in:
+
+- Logistics landing page
+- Logistics service pages
+- Logistics enquiry forms
+- Logistics-specific CTA sections
+- Logistics-related email templates where applicable
+
+## Airzone Travels & Tourism logo
+
+Use it in:
+
+- Travel landing page
+- Travel service pages
+- Holiday package sections
+- Corporate travel pages
+- Travel enquiry forms
+- Travel-specific CTA sections
+
+### Logo rules
+
+- Preserve original aspect ratio.
+- Never stretch or crop the logo.
+- Provide correct contrast on light and dark backgrounds.
+- Use the original supplied file wherever possible.
+- If transparent variants are needed, use an appropriate treatment without modifying the logo artwork.
+- Optimize file size without degrading quality.
+- Use the correct logo for each business division.
+
+Do not substitute text styled to resemble a logo when the actual logo asset is available.
+
+---
+
+# 4. COMPLETE WEBSITE NAVIGATION
+
+Build a refined, responsive navigation system.
+
+Desktop navigation:
+
+- Home
+- Our Businesses
+- Destinations
+- Corporate Travel
+- About Us
+- Insights
+- Contact
+
+Primary navigation dropdowns:
+
+## Our Businesses
+
+**Airzone Logistics**
+- Customs Clearance
+- Freight Forwarding
+- Air Freight
+- Sea Freight
+- Road Transportation
+- Warehousing
+- Project Cargo
+- Request a Quote
+- Track Shipment
+
+**Airzone Travels & Tourism**
+- Flights
+- Holiday Packages
+- International Tours
+- Domestic Tours
+- Hotels
+- Visa Assistance
+- Umrah / Religious Travel, if offered
+- Corporate Travel
+- Plan Your Trip
+
+Header utility items:
+
+- English / العربية language selector
+- Phone/contact shortcut, if official details are configured
+- Prominent Request a Quote CTA
+
+Keep the header clean and uncluttered.
+
+Create a polished sticky header that adapts to scrolling.
+
+At the top of the page, the header may be transparent over a dark hero image. After scrolling, transition to a solid navy or ivory header with clear readability.
+
+On mobile, create a well-designed slide-out navigation menu with accessible controls.
+
+---
+
+# 5. HOMEPAGE HERO — CINEMATIC AND MEMORABLE
+
+The first screen must immediately establish Airzone Group's identity.
+
+Create a full-width, cinematic hero with a carefully composed high-resolution image or art-directed composition.
+
+Visual direction:
+
+- International cargo terminal, container port, cargo aircraft, or premium transportation imagery.
+- A subtle secondary visual reference to travel and destinations.
+- Sophisticated navy overlay where needed for readability.
+- Elegant typography.
+- Restrained animated elements.
+
+Avoid a cluttered split-screen with too many competing images.
+
+### Main headline
+
+**MOVING BUSINESS.  
+CREATING JOURNEYS.**
+
+Supporting text:
+
+"Two specialized businesses. One commitment to moving your world forward — through reliable logistics solutions and thoughtfully planned travel experiences."
+
+Primary CTA:
+
+**EXPLORE OUR BUSINESSES**
+
+Secondary CTA:
+
+**TALK TO OUR TEAM**
+
+Add a small eyebrow:
+
+AIRZONE GROUP | LOGISTICS & TRAVEL
+
+Add a subtle animated scroll indicator.
+
+The hero should feel visually impressive at 1440px desktop width and remain equally polished on mobile.
+
+Do not use an enormous hero that forces visitors to scroll excessively before understanding what Airzone does.
+
+---
+
+# 6. INTRODUCTION — ONE GROUP, TWO DIVISIONS
+
+Immediately after the hero, introduce the two divisions.
+
+Headline:
+
+**TWO EXPERTISES. ONE CONNECTED VISION.**
+
+Supporting copy:
+
+"From moving commercial cargo across borders to helping people discover new destinations, Airzone Group brings together specialized services under one professional identity."
+
+Create two large editorial panels rather than generic service cards.
+
+## PANEL A — AIRZONE LOGISTICS
+
+Use the actual Airzone Logistics logo.
+
+Use a strong image showing a container port, cargo aircraft, freight handling, or transport operation.
+
+Headline:
+
+**Precision in Every Shipment.**
+
+Description:
+
+"Practical logistics and customs clearance support designed to help businesses navigate cargo movements, documentation, transportation and shipment coordination."
+
+CTA:
+
+**DISCOVER LOGISTICS**
+
+Secondary link:
+
+**REQUEST A QUOTE**
+
+## PANEL B — AIRZONE TRAVELS & TOURISM
+
+Use the actual Airzone Travels & Tourism logo.
+
+Use beautiful destination or aviation imagery.
+
+Headline:
+
+**Every Journey, Thoughtfully Planned.**
+
+Description:
+
+"Travel assistance and tourism solutions tailored to holidays, flights, accommodation, group travel and business journeys."
+
+CTA:
+
+**DISCOVER TRAVEL**
+
+Secondary link:
+
+**PLAN YOUR TRIP**
+
+The two panels should have a shared brand identity but different visual personalities.
+
+Logistics should feel precise, confident, operational and powerful.
+
+Travel should feel inspiring, warm, aspirational and welcoming.
+
+---
+
+# 7. PREMIUM SCROLL EXPERIENCE — GSAP + SCROLLTRIGGER
+
+Use GSAP and ScrollTrigger where they materially improve the experience.
+
+The animation system must be polished, lightweight and restrained.
+
+Do not animate everything.
+
+## Hero animation
+
+- Headline reveals smoothly.
+- Supporting text follows with a subtle stagger.
+- CTA buttons appear naturally.
+- Background imagery may use a restrained, slow reveal or subtle parallax.
+
+## Business division animation
+
+- Images reveal through elegant masks or clip-path transitions.
+- Text enters with a subtle vertical movement.
+- Stagger the two divisions without making users wait to access content.
+
+## Service section animation
+
+- Headlines reveal when entering the viewport.
+- Images use restrained reveal transitions.
+- Service lists appear with subtle staggered motion.
+
+## Horizontal storytelling
+
+Where useful, create one controlled horizontal storytelling section on desktop.
+
+Do not force horizontal scrolling across the whole website.
+
+On mobile, convert horizontal interactions to natural vertical scrolling.
+
+## CEO section animation
+
+- Photograph enters with a subtle reveal.
+- The CEO message fades or slides into place.
+- Signature or name appears last, if an authentic signature asset is supplied.
+
+## Footer transition
+
+Create a graceful transition into the final CTA and footer.
+
+### Technical requirements
+
+- Use GSAP with ScrollTrigger.
+- Register plugins correctly.
+- Clean up animations when React components unmount.
+- Avoid duplicate ScrollTriggers during navigation.
+- Use transform/opacity-based animations where practical.
+- Avoid expensive continuous layout recalculations.
+- Respect prefers-reduced-motion.
+- Disable or simplify parallax on small screens and lower-powered devices.
+- Never hide critical content if an animation fails.
+- Ensure content is readable before animations run.
+- Avoid scroll hijacking.
+- Avoid pinned sections that trap users or interfere with browser scrolling.
+
+The website must remain fast and accessible even when animations are disabled.
+
+---
+
+# 8. LOGISTICS LANDING PAGE
+
+URL:
+
+/logistics
+
+Use the official Airzone Logistics logo.
+
+Hero headline:
+
+**LOGISTICS THAT KEEP BUSINESS MOVING.**
+
+Supporting copy:
+
+"Dependable customs clearance and logistics coordination for businesses that need clarity, communication and efficient cargo movement."
+
+CTA:
+
+**REQUEST A LOGISTICS QUOTE**
+
+Secondary CTA:
+
+**SPEAK TO OUR LOGISTICS TEAM**
+
+Build a dedicated page with:
+
+1. Hero
+2. Introduction to Airzone Logistics
+3. Customs clearance feature section
+4. Logistics service portfolio
+5. Shipment modes
+6. How our process works
+7. Industries served, where confirmed
+8. Documentation and customs support
+9. Request a quote
+10. Frequently asked questions
+11. Customer testimonials, if genuine and approved
+12. Final CTA
+
+## Customs clearance
+
+Give this service special prominence.
+
+Include relevant service information such as:
+
+- Import customs clearance
+- Export customs clearance
+- Documentation coordination
+- Air cargo clearance
+- Port clearance
+- Road/border clearance where offered
+- Shipment release coordination
+- Duty and tax coordination
+- Regulatory documentation support
+
+Do not imply that Airzone can guarantee customs release times or regulatory outcomes.
+
+## Freight and logistics services
+
+Create refined service layouts for:
+
+- Air Freight
+- Sea Freight
+- Road Transportation
+- GCC Transportation, if offered
+- Warehousing
+- Project Cargo
+- Import & Export Support
+- Freight Forwarding
+- Special Cargo Handling, where offered
+
+Use a combination of editorial images, concise descriptions and contextual CTAs.
+
+Do not place every service in an identical small card.
+
+Use different layouts to create visual rhythm.
+
+---
+
+# 9. LOGISTICS QUOTATION SYSTEM
+
+Build a genuinely working request-a-quote form.
+
+Fields:
+
+- Full name
+- Company name
+- Email
+- Mobile number
+- Origin
+- Destination
+- Import/export/domestic
+- Service required
+- Transport mode
+- Cargo description
+- Weight
+- Dimensions
+- Package count
+- Expected shipment date
+- Additional details
+- Supporting document uploads
+
+Allow relevant file uploads, including commercial invoices and packing lists.
+
+Validate uploads by extension, MIME type and size.
+
+Store documents privately. Never expose confidential shipping documents through public URLs.
+
+On submission:
+
+1. Validate the request on the server.
+2. Save it to PostgreSQL.
+3. Generate a unique enquiry reference.
+4. Notify the relevant administrator.
+5. Send a customer acknowledgement if email is configured.
+6. Show a polished confirmation screen.
+
+Reference example:
+
+AZL-2026-00001
+
+Do not pretend a quotation has been calculated automatically when no actual pricing engine exists.
+
+---
+
+# 10. SHIPMENT TRACKING
+
+Create a dedicated tracking page:
+
+/track
+
+Allow customers to enter their tracking number.
+
+Display:
+
+- Tracking number
+- Origin
+- Destination
+- Shipment type
+- Current status
+- Current location, when available
+- Estimated delivery, when available
+- Shipment timeline
+
+Example statuses:
+
+- Enquiry Received
+- Documents Received
+- Booking Confirmed
+- In Transit
+- Customs Processing
+- Customs Cleared
+- Out for Delivery
+- Delivered
+
+Administrators must be able to manage shipment events through the admin dashboard.
+
+Clearly distinguish manually updated information from actual carrier-supplied live tracking.
+
+Do not invent shipments, tracking data or live carrier integrations.
+
+---
+
+# 11. TRAVEL & TOURISM LANDING PAGE
+
+URL:
+
+/travel
+
+Use the actual Airzone Travels & Tourism logo.
+
+Hero headline:
+
+**YOUR NEXT JOURNEY STARTS HERE.**
+
+Supporting copy:
+
+"Discover travel solutions designed around your plans — from flights and hotels to memorable holidays and business journeys."
+
+CTA:
+
+**PLAN YOUR TRIP**
+
+Secondary CTA:
+
+**EXPLORE DESTINATIONS**
+
+Design this page with beautiful, authentic destination photography.
+
+Use more immersive photography and softer transitions than the Logistics section.
+
+Include:
+
+- Travel introduction
+- Featured services
+- Featured destinations
+- Holiday packages
+- Family travel
+- International travel
+- Domestic travel
+- Hotel arrangements
+- Flight assistance
+- Visa assistance, where offered
+- Religious travel, where offered
+- Corporate travel
+- Travel enquiry form
+- Customer testimonials, if approved
+- Final CTA
+
+Do not show invented package availability, airline inventory, hotel prices or visa guarantees.
+
+---
+
+# 12. DESTINATIONS AND HOLIDAY PACKAGES
+
+Create a premium destination explorer.
+
+URLs:
+
+/destinations
+
+/destinations/[slug]
+
+/travel/holiday-packages
+
+/travel/holiday-packages/[slug]
+
+Destination pages should support:
+
+- Destination name
+- Hero image
+- Introduction
+- Main experiences
+- Suggested duration, where appropriate
+- Gallery
+- Travel tips
+- Available packages
+- Enquiry CTA
+- SEO metadata
+
+Package pages should support:
+
+- Package title
+- Destination
+- Duration
+- Description
+- Inclusions
+- Exclusions
+- Accommodation information
+- Price, only when verified
+- Currency
+- Availability, when verified
+- Gallery
+- Enquiry CTA
+
+Administrators must be able to create and update destinations and packages without modifying code.
+
+---
+
+# 13. CORPORATE TRAVEL — DEDICATED B2B PAGE
+
+URL:
+
+/travel/corporate-travel
+
+This is important for attracting business clients.
+
+Headline:
+
+**BUSINESS TRAVEL, WITHOUT THE COMPLEXITY.**
+
+Describe Airzone's actual available services for business travel.
+
+Potential services:
+
+- Corporate flight arrangements
+- Executive travel
+- Employee travel
+- Group travel
+- Hotel arrangements
+- Airport transfers
+- Conference and event travel
+- Business trip planning
+- Travel itinerary coordination
+
+Do not claim 24/7 support or negotiated corporate rates unless confirmed.
+
+Create a dedicated corporate travel enquiry form with:
+
+- Company
+- Contact person
+- Email
+- Phone
+- Number of travellers
+- Departure city
+- Destination
+- Travel dates
+- Flight requirements
+- Accommodation requirements
+- Transfers
+- Additional requirements
+
+Generate a unique reference such as:
+
+AZC-2026-00001
+
+Store and manage the enquiry through the admin system.
+
+---
+
+# 14. ABOUT AIRZONE GROUP
+
+URL:
+
+/about
+
+This page must tell the company's story professionally.
+
+Structure:
+
+1. Premium introduction
+2. Who We Are
+3. Our Vision
+4. Our Mission
+5. Our Values
+6. Airzone Logistics
+7. Airzone Travels & Tourism
+8. Our Approach
+9. Leadership
+10. CEO message
+11. Contact CTA
+
+Do not invent the founding year, company history, workforce, operational footprint or achievements.
+
+Use verified company information when provided.
+
+Make content editable through the admin dashboard.
+
+---
+
+# 15. CEO MESSAGE — SIGNATURE SECTION NEAR THE END
+
+Create a visually striking leadership section near the end of the homepage, before the final conversion CTA and footer.
+
+This should be one of the most memorable sections of the entire website.
+
+Do not make it look like a standard testimonial card.
+
+## Layout
+
+Use a sophisticated editorial composition:
+
+- Large, authentic CEO photograph on one side.
+- Elegant navy or warm ivory background.
+- Oversized opening quotation mark, used subtly.
+- Refined typography.
+- Ample negative space.
+- CEO name and official designation.
+- Optional authentic signature image if supplied.
+
+Use the actual CEO photo I provide.
+
+Do not generate a replacement portrait.
+
+Do not invent the CEO's identity, credentials or achievements.
+
+## Suggested heading
+
+**A MESSAGE FROM OUR LEADERSHIP**
+
+## Draft message for approval
+
+"At Airzone Group, we believe that trust is built through the way we serve people, support businesses and honour our commitments.
+
+Whether we are helping a business navigate its logistics requirements or helping a traveller plan an important journey, our focus remains the same: understanding our customers, communicating clearly and delivering professional service.
+
+Our two divisions operate in different sectors, but they share one purpose — to make every interaction simpler, more dependable and more meaningful.
+
+Thank you for considering Airzone Group as your partner. We look forward to building lasting relationships and moving forward together."
+
+Signature block:
+
+[CEO NAME — TO BE PROVIDED]
+
+Chief Executive Officer
+
+Airzone Group
+
+IMPORTANT: Treat this message as draft copy requiring company approval. Store it in editable content management so the actual CEO can approve or replace it.
+
+If the CEO photograph has not yet been uploaded, build the layout using a neutral image placeholder. Do not use a random person and present them as the CEO.
+
+## Animation
+
+Use a restrained GSAP reveal:
+
+- Photograph reveals smoothly.
+- Text fades in with a slight upward movement.
+- CEO name appears last.
+- No dramatic bouncing or spinning.
+
+On mobile, stack the photograph and message naturally.
+
+---
+
+# 16. WHY CHOOSE AIRZONE
+
+Create a professional trust section.
+
+Suggested heading:
+
+**A PARTNER FOR WHAT MOVES YOU FORWARD.**
+
+Use four editorial pillars:
+
+- Customer-Focused Service
+- Practical Solutions
+- Clear Communication
+- Two Specialized Business Divisions
+
+Use only claims that the company can substantiate.
+
+Do not invent:
+
+- Shipment totals
+- Customer totals
+- Success rates
+- Years of experience
+- Global office counts
+- Industry awards
+- Certifications
+
+If real statistics are provided, create a beautiful animated statistics section that counts up once when it enters the viewport.
+
+Do not display fabricated counters.
+
+---
+
+# 17. CUSTOMER TESTIMONIALS AND GOOGLE REVIEWS
+
+Create a premium testimonial section using only authentic, approved customer feedback.
+
+Admin must be able to manage:
+
+- Customer name
+- Company name, if applicable
+- Division
+- Service
+- Testimonial
+- Rating, if verified
+- Publication approval
+- Publication status
+
+Never invent testimonials.
+
+Never generate fake customer names or company logos.
+
+Add a separate CTA:
+
+**LEAVE A GOOGLE REVIEW**
+
+It must redirect to the official Google review URL configured by an administrator.
+
+Do not build a fake Google Reviews widget or represent internal testimonials as Google reviews.
+
+If no official review URL is configured, hide the CTA or use a clearly defined admin-configurable fallback.
+
+---
+
+# 18. GOOGLE MAPS AND CONTACT
+
+Create a professional contact page:
+
+/contact
+
+Include separate enquiry options:
+
+- Logistics
+- Customs Clearance
+- Travel & Tourism
+- Corporate Travel
+- General Enquiry
+
+Display only verified company details:
+
+- Address
+- Telephone
+- Email
+- WhatsApp
+- Opening hours
+- Google Maps
+
+Allow administrators to configure office locations and map links.
+
+Do not invent office addresses or show misleading map pins.
+
+If multiple actual offices are configured, display them in a clean location layout.
+
+---
+
+# 19. REQUEST CALLBACK
+
+Add a compact callback form.
+
+Fields:
+
+- Name
+- Mobile
+- Department
+- Preferred callback time
+- Short message
+
+Departments:
+
+- Logistics
+- Travel & Tourism
+- Corporate Travel
+- General Enquiry
+
+Submit button:
+
+**REQUEST A CALLBACK**
+
+Save requests in PostgreSQL.
+
+Generate a reference ID.
+
+Notify the correct department if email is configured.
+
+Include callback requests in the admin dashboard.
+
+Do not promise a callback timeframe unless officially established.
+
+---
+
+# 20. WHATSAPP BUSINESS INTEGRATION
+
+Create separate WhatsApp CTAs.
+
+Logistics:
+
+**TALK TO LOGISTICS**
+
+Travel:
+
+**PLAN MY TRIP**
+
+Corporate Travel:
+
+**CORPORATE TRAVEL ENQUIRY**
+
+Use separate configurable numbers.
+
+Allow pre-filled messages based on the page or service being viewed.
+
+Do not hardcode unconfirmed numbers.
+
+Track clicks in GA4 when analytics is configured.
+
+---
+
+# 21. FOOTER — PREMIUM FINISH
+
+The footer should feel like a deliberate closing chapter, not an afterthought.
+
+Before the footer, create a full-width closing CTA section.
+
+Suggested headline:
+
+**LET'S MOVE WHAT MATTERS.**
+
+Supporting text:
+
+"Tell us what you need. Our team will help you find the right next step."
+
+Buttons:
+
+- REQUEST A LOGISTICS QUOTE
+- PLAN YOUR TRIP
+
+Then create a sophisticated deep-navy footer.
+
+Include:
+
+- Airzone Group logo
+- Short brand statement
+- Logistics links
+- Travel links
+- Corporate Travel
+- About
+- Insights
+- Contact
+- Official contact information
+- Social links
+- English / Arabic selector
+- Privacy Policy
+- Terms & Conditions
+- Cookie Policy
+- Google Review link when configured
+
+Use subtle divider lines and refined typography.
+
+Copyright year should update automatically.
+
+Do not clutter the footer with dozens of links.
+
+---
+
+# 22. INSIGHTS / BLOG
+
+URL:
+
+/insights
+
+Create a premium editorial blog.
+
+Categories:
+
+Logistics:
+- Customs and Documentation
+- Freight and Transportation
+- Import and Export
+- Industry Insights
+
+Travel:
+- Destination Guides
+- Travel Tips
+- Holiday Inspiration
+- Travel Information
+
+Company:
+- Airzone News
+- Announcements
+
+Each article must support:
+
+- Title
+- Slug
+- Excerpt
+- Body
+- Category
+- Featured image
+- Author
+- Publication date
+- SEO title
+- SEO description
+- Draft/published status
+
+Admin must manage articles.
+
+Do not create filler articles simply to populate the page.
+
+---
+
+# 23. MULTILINGUAL ENGLISH + ARABIC
+
+Build bilingual functionality from the beginning.
+
+Default:
+
+English.
+
+Secondary:
+
+Arabic.
+
+Visible selector:
+
+EN | العربية
+
+Arabic must use proper RTL layout.
+
+Translate navigation, forms, buttons, validation, content, footer and metadata.
+
+Use an internationalization library compatible with the existing stack.
+
+Provide language-specific routes, canonical URLs, hreflang annotations and sitemaps as appropriate.
+
+Do not simply flip the text alignment while leaving the layout broken.
+
+Test the actual Arabic layout on mobile and desktop.
+
+Keep additional languages possible in the architecture.
+
+---
+
+# 24. FULL-STACK ADMIN DASHBOARD
+
+Build a secure admin area at:
+
+/admin
+
+Use the existing database if one is already configured and suitable. Otherwise use PostgreSQL with a proper ORM and migrations.
+
+The admin should manage:
+
+- Logistics enquiries
+- Travel enquiries
+- Corporate travel enquiries
+- Callback requests
+- Shipment tracking
+- Services
+- Destinations
+- Travel packages
+- Testimonials
+- CEO message
+- Company information
+- Office locations
+- Logos and media
+- Contact details
+- WhatsApp numbers
+- Google review URL
+- Blog articles
+- SEO metadata
+- English and Arabic content
+
+Include search, filters, statuses, timestamps and appropriate permissions.
+
+Do not expose administrative functionality to ordinary visitors.
+
+Do not automatically grant admin privileges to every registered user.
+
+Create a secure bootstrap process for the initial administrator.
+
+---
+
+# 25. TECHNICAL STACK AND CODE QUALITY
+
+Inspect the current stack first and preserve it when sensible.
+
+If this is a new project, use a modern TypeScript-based architecture.
+
+Recommended:
+
+- React
+- TypeScript
+- Vite or an appropriate SEO-capable framework
+- Tailwind CSS
+- GSAP
+- ScrollTrigger
+- PostgreSQL
+- Drizzle ORM or Prisma
+- Zod
+- Secure server-side validation
+
+Use semantic HTML, reusable components and centralized configuration.
+
+Do not add packages without a reason.
+
+Keep public pages, admin routes and API responsibilities separated.
+
+---
+
+# 26. PERFORMANCE AND IMAGE QUALITY
+
+Photography is essential to this design, but it must not make the site slow.
+
+Requirements:
+
+- Use high-quality, properly licensed images.
+- Prefer WebP or AVIF where supported.
+- Generate responsive image sizes.
+- Lazy-load below-the-fold imagery.
+- Prioritize the hero image appropriately.
+- Avoid unnecessary background videos.
+- Avoid loading huge images into mobile layouts.
+- Prevent layout shifts.
+- Use code splitting where appropriate.
+- Load animation code responsibly.
+- Avoid giant JavaScript bundles.
+
+Target strong Core Web Vitals and aim for Lighthouse scores above 90 where practical, without sacrificing accessibility or real functionality.
+
+Do not use broken image URLs or random unrelated imagery.
+
+Use the provided logos and supplied company photography first.
+
+---
+
+# 27. SEO AND SEARCH VISIBILITY
+
+Implement:
+
+- Unique titles and meta descriptions
+- Canonical URLs
+- Open Graph metadata
+- XML sitemap
+- Robots.txt
+- Breadcrumbs
+- Structured data
+- Descriptive image alt text
+- Internal links
+- Search-friendly URLs
+
+Prepare Google Search Console and GA4 integration through configuration.
+
+Do not hardcode tracking IDs.
+
+Create genuinely useful, distinct landing pages for services and locations where Airzone actually operates.
+
+Potential pages include:
+
+- Customs Clearance Riyadh
+- Customs Clearance Saudi Arabia
+- Freight Forwarding Riyadh
+- Logistics Services Saudi Arabia
+- Travel Agency Riyadh
+- Holiday Packages
+- Corporate Travel Saudi Arabia
+
+Do not create fake location pages or keyword-stuffed content.
+
+Use accurate Organization, Service, TravelAgency and LocalBusiness structured data only when supported by actual business information and applicable schema definitions.
+
+---
+
+# 28. SECURITY AND PRIVACY
+
+Implement:
+
+- Server-side validation
+- Secure authentication
+- Password hashing
+- Authorization checks
+- Rate limiting
+- Secure session handling
+- CSRF protection where applicable
+- Secure file uploads
+- Private document storage
+- Safe error handling
+- Security headers
+- Database access controls
+- Audit logs for sensitive admin actions
+
+Never expose API keys or database credentials to the frontend.
+
+Do not commit secrets.
+
+Create an `.env.example` containing variable names only.
+
+---
+
+# 29. MOBILE DESIGN
+
+Design mobile layouts deliberately rather than shrinking desktop components.
+
+Test:
+
+- 360px
+- 390px
+- 414px
+- 768px
+- 1024px
+- 1280px
+- 1440px
+- 1920px
+
+Check:
+
+- Navigation
+- Hero cropping
+- Logo sizing
+- Text wrapping
+- CTA visibility
+- Forms
+- Image loading
+- RTL layouts
+- ScrollTrigger behaviour
+- Footer
+- Sticky actions
+
+Optional mobile bottom actions:
+
+Logistics: WhatsApp | Call | Quote
+
+Travel: WhatsApp | Call | Plan Trip
+
+Only show configured contact actions, and ensure the bar never obscures content.
+
+---
+
+# 30. REQUIRED URL STRUCTURE
+
+Implement appropriate routes, including:
+
+/
+ /logistics
+ /logistics/customs-clearance
+ /logistics/freight-forwarding
+ /logistics/air-freight
+ /logistics/sea-freight
+ /logistics/road-transportation
+ /logistics/warehousing
+ /logistics/project-cargo
+ /logistics/request-quote
+ /track
+ /travel
+ /travel/flights
+ /travel/holiday-packages
+ /travel/international-tours
+ /travel/domestic-tours
+ /travel/hotels
+ /travel/visa-assistance
+ /travel/corporate-travel
+ /travel/enquiry
+ /destinations
+ /about
+ /insights
+ /contact
+ /reviews
+ /privacy
+ /terms
+ /admin
+
+Support language-specific versions using the chosen bilingual URL architecture.
+
+Do not leave the main navigation pointing to unimplemented pages.
+
+Every visible CTA must lead to a working route, form or properly configured external destination.
+
+---
+
+# 31. FINAL QUALITY ASSURANCE
+
+Before declaring the website complete:
+
+1. Verify the homepage opens correctly.
+2. Verify all navigation links.
+3. Test every CTA.
+4. Test quote submission.
+5. Test travel enquiry submission.
+6. Test callback requests.
+7. Test database persistence.
+8. Test admin authentication.
+9. Test admin authorization.
+10. Test shipment tracking.
+11. Test file upload security.
+12. Test English and Arabic layouts.
+13. Test reduced-motion preferences.
+14. Test ScrollTrigger on mobile.
+15. Check for broken images.
+16. Check for console errors.
+17. Check for horizontal overflow.
+18. Check accessibility.
+19. Check SEO metadata.
+20. Check that no fictional business information is presented as fact.
+21. Check that the CEO section uses the supplied photograph only.
+22. Check that all three supplied logos are used correctly.
+
+Fix issues before reporting completion.
+
+---
+
+# FINAL CREATIVE INSTRUCTION
+
+The website should have the visual quality of a premium international corporate group, with cinematic photography, strong editorial storytelling, elegant GSAP ScrollTrigger animations, carefully designed service pages, an authentic CEO message and a sophisticated finish.
+
+The experience must feel custom-built for Airzone Group.
+
+Do not simply place a heading above a grid of generic cards.
+
+Use visual storytelling, large image compositions, asymmetric layouts, sophisticated typography, strong spacing, restrained motion and intentional transitions.
+
+The homepage should immediately explain the two business divisions, establish trust and direct visitors toward a relevant enquiry.
+
+The CEO section must provide a human, authentic closing moment before the final CTA.
+
+Use the actual supplied logos, actual company details and authentic photography.
+
+Do not invent credentials, testimonials, company statistics, addresses, partnerships or executive identities.
+
+**Build the real website, not a mockup. Complete the design, routes, responsive layouts, forms, backend, database and admin functionality.**
+
+**Quality, authenticity, performance and professionalism come first.**

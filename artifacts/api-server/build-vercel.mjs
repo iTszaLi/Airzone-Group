@@ -1,4 +1,4 @@
-// Bundles the Express app as a Vercel Node.js function at `.vercel/output/functions/api.func`
+// Bundles the Express app as a Vercel Node.js 24 function at `.vercel/output/functions/api.func`
 // (Build Output API v3). Vercel calls the default export, the Express app, for every /api request;
 // the long-running server (src/index.ts) is not used there.
 import { createRequire } from "node:module";
@@ -22,7 +22,7 @@ async function buildFunction() {
   await esbuild({
     entryPoints: { index: path.resolve(artifactDir, "src/app.ts") },
     platform: "node",
-    target: "node22",
+    target: "node24",
     bundle: true,
     format: "esm",
     outdir: funcDir,
@@ -38,7 +38,7 @@ async function buildFunction() {
   });
 
   const config = {
-    runtime: "nodejs22.x",
+    runtime: "nodejs24.x",
     handler: "index.mjs",
     launcherType: "Nodejs",
     // Express parses bodies itself; Vercel's request helpers stay off.

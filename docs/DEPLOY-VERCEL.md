@@ -9,7 +9,7 @@ The repository deploys to Vercel as one project: the prerendered website (static
 | `vercel.json` | Framework preset "Other"; build command `pnpm run vercel-build`. The install command is left to Vercel on purpose (see *pnpm* below). |
 | `pnpm run vercel-build` (root `package.json`) | Typecheck, build the website (Vite, SSR and prerender), then write the Vercel output. |
 | `artifacts/airzone-group/scripts/vercel-output.mjs` | Copies `dist/public` to `.vercel/output/static` and writes `.vercel/output/config.json`, the routing table. It reproduces `scripts/serve.mjs`: www → apex, security headers, legacy and trailing-slash redirects, every prerendered page, the 404 page, `noindex` on admin/portal/sign-in pages and on `*.vercel.app` addresses, and long-term caching for hashed assets. |
-| `artifacts/api-server/build-vercel.mjs` | Bundles the Express app (`src/app.ts`) with esbuild into `.vercel/output/functions/api.func` (Node.js 22), using the same esbuild settings as the normal server build (`build-options.mjs`). |
+| `artifacts/api-server/build-vercel.mjs` | Bundles the Express app (`src/app.ts`) with esbuild into `.vercel/output/functions/api.func` (Node.js 24), using the same esbuild settings as the normal server build (`build-options.mjs`). |
 | `artifacts/airzone-group/scripts/headers.mjs` | Security headers and Content-Security-Policy shared by both hosts. |
 | `artifacts/airzone-group/scripts/check-deploy.mjs` | Read-only smoke test for any deployed URL. |
 

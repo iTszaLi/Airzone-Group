@@ -791,7 +791,7 @@ Full guide: `docs/DEPLOY-VERCEL.md`.
 - **Build:** `vercel.json` plus `pnpm run vercel-build` write a Vercel Build Output API folder (`.vercel/output`):
   - the prerendered site as static files;
   - a routing table that reproduces `scripts/serve.mjs`;
-  - the Express API bundled as one Node.js 22 function under `/api`.
+  - the Express API bundled as one Node.js 24 function under `/api`.
 - **Shared code:** both hosts use the same security headers (`scripts/headers.mjs`); the server and function builds use the same esbuild settings (`api-server/build-options.mjs`).
 - **Rate limit fix:** the API now trusts one proxy hop (`trust proxy`), so the enquiry rate limit counts each visitor's own IP instead of the platform proxy's. This applies to Replit too.
 - **Smoke test:** `pnpm --filter @workspace/airzone-group run check:deploy -- <url>` checks a deployed site (read-only).

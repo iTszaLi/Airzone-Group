@@ -93,7 +93,83 @@ export const CreateLogisticsEnquiryBody = zod.object({
 export const CreateLogisticsEnquiryResponse = zod.object({
   "id": zod.number().int(),
   "reference": zod.string(),
-  "message": zod.string()
+  "message": zod.string(),
+  "emailed": zod.boolean().optional().describe('Travel and logistics enquiries: whether the business team was notified by email')
+})
+
+
+/**
+ * @summary Request a quotation for a specific fleet vehicle (homepage showroom)
+ */
+export const createFleetQuoteBodyVehicleMin = 2;
+export const createFleetQuoteBodyVehicleMax = 120;
+
+export const createFleetQuoteBodyFullNameMin = 2;
+export const createFleetQuoteBodyFullNameMax = 120;
+
+export const createFleetQuoteBodyCompanyMax = 160;
+
+export const createFleetQuoteBodyEmailMax = 254;
+
+export const createFleetQuoteBodyPhoneMin = 7;
+export const createFleetQuoteBodyPhoneMax = 40;
+
+export const createFleetQuoteBodyPickupMin = 2;
+export const createFleetQuoteBodyPickupMax = 180;
+
+export const createFleetQuoteBodyDestinationMin = 2;
+export const createFleetQuoteBodyDestinationMax = 180;
+
+export const createFleetQuoteBodyCargoMin = 3;
+export const createFleetQuoteBodyCargoMax = 1000;
+
+export const createFleetQuoteBodyWeightMax = 120;
+
+export const createFleetQuoteBodyRequirementsMax = 2000;
+
+export const createFleetQuoteBodyWebsiteMax = 200;
+
+export const createFleetQuoteBodySourceMax = 80;
+
+export const createFleetQuoteBodyUtmSourceMax = 160;
+
+export const createFleetQuoteBodyUtmMediumMax = 160;
+
+export const createFleetQuoteBodyUtmCampaignMax = 160;
+
+export const createFleetQuoteBodyLandingPageMax = 300;
+
+export const createFleetQuoteBodyReferrerMax = 500;
+
+
+
+export const CreateFleetQuoteBody = zod.object({
+  "vehicle": zod.string().min(createFleetQuoteBodyVehicleMin).max(createFleetQuoteBodyVehicleMax),
+  "fullName": zod.string().min(createFleetQuoteBodyFullNameMin).max(createFleetQuoteBodyFullNameMax),
+  "company": zod.string().max(createFleetQuoteBodyCompanyMax).optional(),
+  "email": zod.string().email().max(createFleetQuoteBodyEmailMax),
+  "phone": zod.string().min(createFleetQuoteBodyPhoneMin).max(createFleetQuoteBodyPhoneMax),
+  "pickup": zod.string().min(createFleetQuoteBodyPickupMin).max(createFleetQuoteBodyPickupMax),
+  "destination": zod.string().min(createFleetQuoteBodyDestinationMin).max(createFleetQuoteBodyDestinationMax),
+  "pickupDate": zod.coerce.date().nullish(),
+  "cargo": zod.string().min(createFleetQuoteBodyCargoMin).max(createFleetQuoteBodyCargoMax),
+  "weight": zod.string().max(createFleetQuoteBodyWeightMax).optional(),
+  "requirements": zod.string().max(createFleetQuoteBodyRequirementsMax).optional(),
+  "locale": zod.enum(['en', 'ar']).optional(),
+  "website": zod.string().max(createFleetQuoteBodyWebsiteMax).optional(),
+  "source": zod.string().max(createFleetQuoteBodySourceMax).optional(),
+  "utmSource": zod.string().max(createFleetQuoteBodyUtmSourceMax).optional(),
+  "utmMedium": zod.string().max(createFleetQuoteBodyUtmMediumMax).optional(),
+  "utmCampaign": zod.string().max(createFleetQuoteBodyUtmCampaignMax).optional(),
+  "landingPage": zod.string().max(createFleetQuoteBodyLandingPageMax).optional(),
+  "referrer": zod.string().max(createFleetQuoteBodyReferrerMax).optional()
+})
+
+export const CreateFleetQuoteResponse = zod.object({
+  "id": zod.number().int(),
+  "reference": zod.string(),
+  "message": zod.string(),
+  "emailed": zod.boolean()
 })
 
 
@@ -157,7 +233,7 @@ export const createTravelEnquiryBodyReferrerMax = 500;
 export const CreateTravelEnquiryBody = zod.object({
   "name": zod.string().min(createTravelEnquiryBodyNameMin).max(createTravelEnquiryBodyNameMax),
   "mobile": zod.string().min(createTravelEnquiryBodyMobileMin).max(createTravelEnquiryBodyMobileMax),
-  "email": zod.string().email().max(createTravelEnquiryBodyEmailMax),
+  "email": zod.string().email().max(createTravelEnquiryBodyEmailMax).optional(),
   "departureCity": zod.string().min(createTravelEnquiryBodyDepartureCityMin).max(createTravelEnquiryBodyDepartureCityMax),
   "destination": zod.string().min(createTravelEnquiryBodyDestinationMin).max(createTravelEnquiryBodyDestinationMax),
   "departureDate": zod.coerce.date().nullish(),
@@ -186,7 +262,8 @@ export const CreateTravelEnquiryBody = zod.object({
 export const CreateTravelEnquiryResponse = zod.object({
   "id": zod.number().int(),
   "reference": zod.string(),
-  "message": zod.string()
+  "message": zod.string(),
+  "emailed": zod.boolean().optional().describe('Travel and logistics enquiries: whether the business team was notified by email')
 })
 
 
@@ -237,7 +314,8 @@ export const CreateContactEnquiryBody = zod.object({
 export const CreateContactEnquiryResponse = zod.object({
   "id": zod.number().int(),
   "reference": zod.string(),
-  "message": zod.string()
+  "message": zod.string(),
+  "emailed": zod.boolean().optional().describe('Travel and logistics enquiries: whether the business team was notified by email')
 })
 
 
@@ -288,7 +366,8 @@ export const CreateCallbackRequestBody = zod.object({
 export const CreateCallbackRequestResponse = zod.object({
   "id": zod.number().int(),
   "reference": zod.string(),
-  "message": zod.string()
+  "message": zod.string(),
+  "emailed": zod.boolean().optional().describe('Travel and logistics enquiries: whether the business team was notified by email')
 })
 
 

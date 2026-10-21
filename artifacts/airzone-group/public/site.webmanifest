@@ -1,12 +1,14 @@
 {
   "name": "Airzone Group",
   "short_name": "Airzone",
-  "start_url": ".",
+  "description": "Logistics, transportation and warehousing in Saudi Arabia and the GCC.",
+  "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",
-  "theme_color": "#142940",
+  "theme_color": "#0b2545",
   "icons": [
-    { "src": "assets/brand/favicon-192.png", "sizes": "192x192", "type": "image/png" },
-    { "src": "assets/brand/favicon-512.png", "sizes": "512x512", "type": "image/png" }
+    { "src": "assets/brand/icon-v2-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "assets/brand/icon-v2-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "assets/brand/icon-v2-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
   ]
 }

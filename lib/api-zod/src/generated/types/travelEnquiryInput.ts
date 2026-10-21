@@ -18,7 +18,7 @@ export interface TravelEnquiryInput {
      */
   mobile: string;
   /** @maxLength 254 */
-  email: string;
+  email?: string;
   /**
      * @minLength 2
      * @maxLength 120

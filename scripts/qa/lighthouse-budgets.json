@@ -1,0 +1,14 @@
+{
+  "_comment": "Lab budgets for qa/lighthouse.mjs. Categories are Lighthouse scores (0-100, minimum). Metrics are maximums: LCP and TBT in milliseconds, CLS unitless. Mobile uses Lighthouse's default throttled phone profile; desktop uses its desktop preset. Mobile LCP and TBT limits sit at the edge of Google's 'poor' band, desktop LCP and CLS use the 'good' limit, so a failure means a real problem; the report also rates every metric good / needs improvement / poor.",
+  "categories": {
+    "performance": { "mobile": 70, "desktop": 90 },
+    "accessibility": 95,
+    "best-practices": 95,
+    "seo": 95
+  },
+  "metrics": {
+    "lcpMs": { "mobile": 4000, "desktop": 2500 },
+    "cls": 0.1,
+    "tbtMs": { "mobile": 600, "desktop": 300 }
+  }
+}

@@ -6,26 +6,19 @@ import { defineConfig } from 'vite';
 import runtimeErrorOverlay from '@replit/vite-plugin-runtime-error-modal';
 import { seoPlugin } from './seo-vite';
 
-const rawPort = process.env.PORT;
-
-if (!rawPort) {
-  throw new Error(
-    'PORT environment variable is required but was not provided.',
-  );
-}
-
+// PORT only affects the dev/preview servers; production builds do not need it.
+const rawPort = process.env.PORT ?? '5173';
 const port = Number(rawPort);
 
 if (Number.isNaN(port) || port <= 0) {
   throw new Error(`Invalid PORT value: "${rawPort}"`);
 }
 
-const basePath = process.env.BASE_PATH;
+// Public base path. The site is designed to be served from the domain root.
+const basePath = process.env.BASE_PATH || '/';
 
-if (!basePath) {
-  throw new Error(
-    'BASE_PATH environment variable is required but was not provided.',
-  );
+if (!basePath.startsWith('/')) {
+  throw new Error(`BASE_PATH must start with "/" (received "${basePath}").`);
 }
 
 export default defineConfig({
@@ -75,6 +68,8 @@ export default defineConfig({
     fs: {
       strict: true,
     },
+    // Optional: forward /api to a locally running API server (API_PROXY_TARGET=http://127.0.0.1:8080).
+    ...(process.env.API_PROXY_TARGET ? { proxy: { '/api': { target: process.env.API_PROXY_TARGET, changeOrigin: false } } } : {}),
   },
   preview: {
     port,

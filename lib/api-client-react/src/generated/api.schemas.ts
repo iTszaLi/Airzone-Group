@@ -105,7 +105,7 @@ export interface TravelEnquiryInput {
      */
   mobile: string;
   /** @maxLength 254 */
-  email: string;
+  email?: string;
   /**
      * @minLength 2
      * @maxLength 120
@@ -264,10 +264,85 @@ export interface CallbackRequestInput {
   referrer?: string;
 }
 
+export type FleetQuoteInputLocale = typeof FleetQuoteInputLocale[keyof typeof FleetQuoteInputLocale];
+
+
+export const FleetQuoteInputLocale = {
+  en: 'en',
+  ar: 'ar',
+} as const;
+
+export interface FleetQuoteInput {
+  /**
+     * @minLength 2
+     * @maxLength 120
+     */
+  vehicle: string;
+  /**
+     * @minLength 2
+     * @maxLength 120
+     */
+  fullName: string;
+  /** @maxLength 160 */
+  company?: string;
+  /** @maxLength 254 */
+  email: string;
+  /**
+     * @minLength 7
+     * @maxLength 40
+     */
+  phone: string;
+  /**
+     * @minLength 2
+     * @maxLength 180
+     */
+  pickup: string;
+  /**
+     * @minLength 2
+     * @maxLength 180
+     */
+  destination: string;
+  /** @nullable */
+  pickupDate?: string | null;
+  /**
+     * @minLength 3
+     * @maxLength 1000
+     */
+  cargo: string;
+  /** @maxLength 120 */
+  weight?: string;
+  /** @maxLength 2000 */
+  requirements?: string;
+  locale?: FleetQuoteInputLocale;
+  /** @maxLength 200 */
+  website?: string;
+  /** @maxLength 80 */
+  source?: string;
+  /** @maxLength 160 */
+  utmSource?: string;
+  /** @maxLength 160 */
+  utmMedium?: string;
+  /** @maxLength 160 */
+  utmCampaign?: string;
+  /** @maxLength 300 */
+  landingPage?: string;
+  /** @maxLength 500 */
+  referrer?: string;
+}
+
+export interface FleetQuoteReceipt {
+  id: number;
+  reference: string;
+  message: string;
+  emailed: boolean;
+}
+
 export interface EnquiryReceipt {
   id: number;
   reference: string;
   message: string;
+  /** Travel and logistics enquiries: whether the business team was notified by email */
+  emailed?: boolean;
 }
 
 export interface ShipmentEvent {

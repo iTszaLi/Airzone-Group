@@ -1,6 +1,6 @@
 export type FormType = 'logistics' | 'travel' | 'contact' | 'callback' | 'tracking';
 export type Division = 'logistics' | 'travel' | 'group';
-export const serviceCategories = ['customs-clearance', 'ata-carnet', 'exhibition-event-logistics', 'freight-forwarding', 'import-export', 'air-freight', 'sea-freight'] as const;
+export const serviceCategories = ['customs-clearance', 'ata-carnet', 'exhibition-event-logistics', 'freight-forwarding', 'import-export', 'air-freight', 'sea-freight', 'container-destuffing'] as const;
 export function serviceCategory(value: string) {
   const key = value.toLowerCase().trim().replace(/&/g, '').replace(/\s+/g, '-');
   const aliases: Record<string, typeof serviceCategories[number]> = {
@@ -8,6 +8,7 @@ export function serviceCategory(value: string) {
     'exhibition-and-event-logistics': 'exhibition-event-logistics', 'exhibition-logistics': 'exhibition-event-logistics',
     'event-logistics': 'exhibition-event-logistics', 'import-and-export': 'import-export',
     'import-and-export-support': 'import-export', 'air-freight-coordination': 'air-freight', 'sea-freight-coordination': 'sea-freight',
+    'ata-carnet-exhibition-cargo': 'ata-carnet', 'container-destuffing-cargo-handling': 'container-destuffing',
   };
   return serviceCategories.find(s => s === key) || (Object.hasOwn(aliases, key) ? aliases[key] : 'general-logistics');
 }

@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useLocation } from 'wouter';
-import { metadata, privateRoute, routeInfo } from '../seo/site';
+import { privateRoute, routeInfo } from '../seo/route-info';
 import { leadEvents, type Division, type FormType } from './events';
 import { serviceCategories } from './events';
 import { businessContacts } from '../config/business-contacts';
@@ -10,6 +10,13 @@ const id = import.meta.env.VITE_GA4_MEASUREMENT_ID || '';
 export const analyticsConfigured = /^G-[A-Z0-9]+$/.test(id);
 type GtagWindow = Window & { dataLayer?: unknown[]; gtag?: (...args: unknown[]) => void };
 let loaded = false;
+// Page metadata (titles, known routes) is a large module; it loads only once analytics is
+// configured and the visitor has consented, never for visitors who are not tracked.
+type SiteModule = typeof import('../seo/site');
+let site: SiteModule | null = null;
+let siteLoading: Promise<void> | null = null;
+const loadSite = () => (siteLoading ??= import('../seo/site').then(m => { site = m; }));
+const metadata = (path: string) => site?.metadata(path) ?? { known: false, title: '' };
 let previousPage = '';
 const receipts = new Set<string>();
 export function consent(): Consent {
@@ -29,11 +36,13 @@ export function setConsent(choice: Consent) {
 }
 function safePath() { return metadata(location.pathname).known ? location.pathname : '/404'; }
 function allowed() { return analyticsConfigured && consent() === 'granted' && !privateRoute(location.pathname) && metadata(location.pathname).known; }
+// Ids of the travel page's offers, destinations and styles (config/travel-content.ts); never names or form values.
+const TRAVEL_ITEMS = ['maldives', 'turkiye', 'bali', 'abu-dhabi', 'santorini', 'dubai', 'paris', 'tokyo', 'family', 'honeymoon', 'sports', 'medical', 'luxury', 'adventure'];
 export function analyticsEvent(name: string, parameters: Record<string, string> = {}) {
   if (!allowed() || !loaded) return;
-  if (!['page_view', 'form_start', 'form_submit', 'generate_lead', 'click_to_call', 'email_click', 'whatsapp_click', 'request_quote_click', 'shipment_tracking_start', 'travel_enquiry_submit', 'callback_request_submit', 'google_maps_directions_click', 'google_review_click'].includes(name)) return;
+  if (!['page_view', 'form_start', 'form_submit', 'generate_lead', 'click_to_call', 'email_click', 'whatsapp_click', 'request_quote_click', 'shipment_tracking_start', 'travel_enquiry_submit', 'callback_request_submit', 'google_maps_directions_click', 'google_review_click', 'travel_offer_click', 'travel_destination_click', 'travel_style_click', 'travel_planner_submit', 'travel_form_view'].includes(name)) return;
   const path = safePath();
-  const permitted: Record<string, string[]> = { business_division: ['logistics', 'travel', 'group'], form_type: ['logistics', 'travel', 'contact', 'callback', 'tracking'], cta_location: ['header', 'footer', 'page'], service_category: [...serviceCategories, 'general-logistics'] };
+  const permitted: Record<string, string[]> = { business_division: ['logistics', 'travel', 'group'], form_type: ['logistics', 'travel', 'contact', 'callback', 'tracking'], cta_location: ['header', 'footer', 'page'], service_category: [...serviceCategories, 'general-logistics'], travel_item: TRAVEL_ITEMS };
   const clean = Object.fromEntries(Object.entries(parameters).filter(([key, value]) => permitted[key]?.includes(value)));
   (window as GtagWindow).gtag?.('event', name, { ...clean, ...(name === 'page_view' ? { page_title: metadata(path).title } : {}), page_path: path, page_category: routeInfo(path).path.split('/')[1] || 'home', page_location: location.origin + path });
 }
@@ -45,6 +54,7 @@ export function recordLead(type: Exclude<FormType, 'tracking'>, reference: strin
   for (const event of leadEvents(type, division, category)) analyticsEvent(event.name, event.parameters);
 }
 function pageView() {
+  if (analyticsConfigured && consent() === 'granted' && !site) { void loadSite().then(pageView); return; }
   if (!allowed()) return;
   const win = window as GtagWindow;
   (window as unknown as Record<string, unknown>)[`ga-disable-${id}`] = false;

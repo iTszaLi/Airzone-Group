@@ -48,6 +48,24 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/EnquiryReceipt"
+  /enquiries/fleet:
+    post:
+      operationId: createFleetQuote
+      tags: [enquiries]
+      summary: Request a quotation for a specific fleet vehicle (homepage showroom)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/FleetQuoteInput"
+      responses:
+        "201":
+          description: Request stored; `emailed` says whether the logistics team was notified by email
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FleetQuoteReceipt"
   /enquiries/travel:
     post:
       operationId: createTravelEnquiry
@@ -367,7 +385,7 @@ components:
         referrer: { type: string, maxLength: 500 }
     TravelEnquiryInput:
       type: object
-      required: [name, mobile, email, departureCity, destination, travelType]
+      required: [name, mobile, departureCity, destination, travelType]
       properties:
         name: { type: string, minLength: 2, maxLength: 120 }
         mobile: { type: string, minLength: 5, maxLength: 40 }
@@ -427,6 +445,37 @@ components:
         utmCampaign: { type: string, maxLength: 160 }
         landingPage: { type: string, maxLength: 300 }
         referrer: { type: string, maxLength: 500 }
+    FleetQuoteInput:
+      type: object
+      required: [vehicle, fullName, email, phone, pickup, destination, cargo]
+      properties:
+        vehicle: { type: string, minLength: 2, maxLength: 120 }
+        fullName: { type: string, minLength: 2, maxLength: 120 }
+        company: { type: string, maxLength: 160 }
+        email: { type: string, format: email, maxLength: 254 }
+        phone: { type: string, minLength: 7, maxLength: 40 }
+        pickup: { type: string, minLength: 2, maxLength: 180 }
+        destination: { type: string, minLength: 2, maxLength: 180 }
+        pickupDate: { type: ["string", "null"], format: date }
+        cargo: { type: string, minLength: 3, maxLength: 1000 }
+        weight: { type: string, maxLength: 120 }
+        requirements: { type: string, maxLength: 2000 }
+        locale: { type: string, enum: [en, ar] }
+        website: { type: string, maxLength: 200 }
+        source: { type: string, maxLength: 80 }
+        utmSource: { type: string, maxLength: 160 }
+        utmMedium: { type: string, maxLength: 160 }
+        utmCampaign: { type: string, maxLength: 160 }
+        landingPage: { type: string, maxLength: 300 }
+        referrer: { type: string, maxLength: 500 }
+    FleetQuoteReceipt:
+      type: object
+      required: [id, reference, message, emailed]
+      properties:
+        id: { type: integer }
+        reference: { type: string }
+        message: { type: string }
+        emailed: { type: boolean }
     EnquiryReceipt:
       type: object
       required: [id, reference, message]
@@ -434,6 +483,7 @@ components:
         id: { type: integer }
         reference: { type: string }
         message: { type: string }
+        emailed: { type: boolean, description: "Travel and logistics enquiries: whether the business team was notified by email" }
     ShipmentEvent:
       type: object
       required: [status, location, occurredAt]

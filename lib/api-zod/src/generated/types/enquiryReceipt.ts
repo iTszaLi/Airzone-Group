@@ -10,4 +10,6 @@ export interface EnquiryReceipt {
   id: number;
   reference: string;
   message: string;
+  /** Travel and logistics enquiries: whether the business team was notified by email */
+  emailed?: boolean;
 }

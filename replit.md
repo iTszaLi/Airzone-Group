@@ -1,45 +1,43 @@
-# [Project name]
+# Airzone Group website
 
-_Replace the heading above with the project's name, and this line with one sentence describing what this app does for users._
+Bilingual logistics website for Airzone Group (GCC transportation, heavy transport, Dayana local delivery, temperature-controlled warehousing, customs support) plus the separate Airzone Travel & Tourism pages. See README.md.
 
 ## Run & Operate
 
-- `pnpm --filter @workspace/api-server run dev` — run the API server (port 5000)
+- `pnpm --filter @workspace/airzone-group run dev` — website dev server (PORT, default 5173)
+- `pnpm --filter @workspace/airzone-group run build` then `run serve` — production web server
+- `pnpm --filter @workspace/airzone-group run validate:seo` — checks titles, canonicals, H1s, hreflang, schema, links and sitemap of the built site
+- `pnpm --filter @workspace/api-server run dev` — run the API server
 - `pnpm run typecheck` — full typecheck across all packages
-- `pnpm run build` — typecheck + build all packages
 - `pnpm --filter @workspace/api-spec run codegen` — regenerate API hooks and Zod schemas from the OpenAPI spec
 - `pnpm --filter @workspace/db run push` — push DB schema changes (dev only)
-- Required env: `DATABASE_URL` — Postgres connection string
+- Required env (API): `DATABASE_URL`, `CLERK_PUBLISHABLE_KEY`, `CLERK_SECRET_KEY`; optional `ALLOWED_ORIGINS`. Website: optional `VITE_GA4_MEASUREMENT_ID`. See `.env.example`.
 
 ## Stack
 
 - pnpm workspaces, Node.js 24, TypeScript 5.9
-- API: Express 5
-- DB: PostgreSQL + Drizzle ORM
-- Validation: Zod (`zod/v4`), `drizzle-zod`
-- API codegen: Orval (from OpenAPI spec)
-- Build: esbuild (CJS bundle)
+- Website: React 19 + Vite 7, SSR prerender + hydration, Tailwind 4, GSAP/ScrollTrigger, Lenis, Motion, Swiper, Three.js
+- API: Express 5, PostgreSQL + Drizzle ORM, Zod (`zod/v4`), Orval codegen, Clerk admin auth
+- Build: Vite (website), esbuild (API)
 
 ## Where things live
 
-_Populate as you build — short repo map plus pointers to the source-of-truth file for DB schema, API contracts, theme files, etc._
+See the "Where things live" table in README.md.
 
 ## Architecture decisions
 
-_Populate as you build — non-obvious choices a reader couldn't infer from the code (3-5 bullets)._
-
-## Product
-
-_Describe the high-level user-facing capabilities of this app once they exist._
+- Every public route is prerendered to static HTML and hydrated (`hydrateRoot`), so content, metadata and the LCP image are in the initial HTML.
+- Heavy libraries load on demand: GSAP after hydration, Lenis on idle, Swiper and Three.js only when their sections approach the viewport, Motion features via `LazyMotion`.
+- Business facts live in typed config files; copy never states fleet sizes, temperatures, certifications, addresses or guaranteed timings that are not confirmed.
+- Legacy URLs `/logistics/road-transportation` and `/logistics/project-cargo` 301 to the consolidated GCC and heavy transport pages.
 
 ## User preferences
 
-_Populate as you build — explicit user instructions worth remembering across sessions._
+- Favicon uses the Airzone Group logo (confirmed by the owner), not the Logistics letterhead file named "airzone logo.png".
+- Keep Group, Logistics and Travel identities and contact details separate.
 
 ## Gotchas
 
-_Populate as you build — sharp edges, "always run X before Y" rules._
-
-## Pointers
-
-- See the `pnpm-workspace` skill for workspace structure, TypeScript setup, and package details
+- On Windows Git Bash set `MSYS_NO_PATHCONV=1` when passing `/` paths to scripts.
+- `scripts/serve.mjs` caches gzip output in memory; restart it after rebuilding.
+- The shadcn/ui kit in `src/components/ui` is unused and excluded from Tailwind scanning.

@@ -81,3 +81,13 @@ See `seo-launch-checklist.md` for the concrete owner setup steps, reporting dime
 | Live integrations/security | Actual GA4 receipt, Google/Bing indexing, business profiles, published HTTPS/headers/API routing and external AI citations remain blocked by missing ID/account access or an unpublished/unverified domain |
 
 The browser pass preceded the straightforward final receipt-focus/localized-label and service-title changes. Those final changes were checked by TypeScript and the rebuilt-document/event validator, not a second full browser pass. Local/development results do not establish live domain availability or ranking gains.
+
+## Update — 11 Oct 2026: logistics-first redesign
+
+- Positioning changed to logistics-first (GCC transportation, heavy transport and trailers, Dayana local delivery, temperature-controlled warehousing, customs support). Travel & Tourism remains as a separate business with all routes preserved.
+- New indexable routes (EN + AR): `/logistics/gcc-transportation`, `/logistics/heavy-transport`, `/logistics/dayana-local-delivery`, `/locations`. `/logistics/warehousing` upgraded from noindex utility page to a full indexable service page. `/logistics/customs-clearance` reframed as customs support and freight coordination (explicitly not a customs authority or broker).
+- `/logistics/road-transportation` and `/logistics/project-cargo` now return 301 to the GCC transportation and heavy transport pages (server) with canonical redirect stubs for static hosting.
+- Build output: **78 route documents, 54 indexable sitemap URLs** (was 74 / 44). `validate:seo` passes.
+- Structured data: Service `areaServed` lists the five warehouse cities (City) or GCC states (Country) where relevant; Dayana carries a `Brand`; BreadcrumbList on `/locations`. No LocalBusiness schema, because no verified facility addresses exist.
+- Organization logo is now the high-resolution Group logo (`airzone-group-logo-1200.png`); social card `social-share-v2.png`.
+- Fonts are self-hosted, so Google Fonts requests and CSP origins were removed.

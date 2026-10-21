@@ -1,9 +1,9 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import assert from 'node:assert/strict';
-import { fileURLToPath } from 'node:url';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const app = await import(path.join(root, 'dist/server/entry-server.js'));
+const app = await import(pathToFileURL(path.join(root, 'dist/server/entry-server.js')).href);
 const dir = path.join(root, 'dist/public');
 const titles = new Set();
 const routes = app.allRoutes();
@@ -21,7 +21,8 @@ for (const route of routes) {
   assert.equal((html.match(/rel="canonical"/g) || []).length, 1, `${route}: one canonical`);
   assert(html.includes(`href="${m.canonical}"`), `${route}: self canonical`);
   assert(html.includes(`lang="${m.locale}" dir="${m.locale === 'ar' ? 'rtl' : 'ltr'}"`));
-  assert(html.includes(`name="robots" content="${m.indexable ? 'index, follow' : 'noindex, follow'}"`));
+  // Indexable pages also allow full snippets and large previews in search and AI answers.
+  assert(html.includes(`name="robots" content="${m.indexable ? 'index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1' : 'noindex, follow'}"`));
   for (const match of html.matchAll(/<script[^>]*type="application\/ld\+json"[^>]*>([\s\S]*?)<\/script>/g)) {
     const schema = JSON.parse(match[1]);
     for (const node of schema['@graph'] || []) {
@@ -58,7 +59,7 @@ const locations = [...xml.matchAll(/<loc>(.*?)<\/loc>/g)].map(m => m[1]);
 assert.equal(locations.length, app.indexableRoutes().length);
 assert.equal(new Set(locations).size, locations.length);
 for (const url of locations) { assert(url.startsWith('https://airzonegroup.com/')); assert(app.metadata(new URL(url).pathname).indexable); }
-assert(!xml.includes('replit.dev') && !xml.includes('/admin') && !xml.includes('/request-quote'));
+assert(!xml.includes('replit.dev') && !xml.includes('/admin') && !xml.includes('/callback') && !xml.includes('/travel/enquiry'));
 assert.equal(app.leadEvents('travel', 'travel').map(e => e.name).join(','), 'form_submit,generate_lead,travel_enquiry_submit');
 assert.equal(app.leadEvents('callback', 'group').map(e => e.name).join(','), 'form_submit,generate_lead,callback_request_submit');
 assert.equal(app.serviceCategory('name@example.com personal message'), 'general-logistics');

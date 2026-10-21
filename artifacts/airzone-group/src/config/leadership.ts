@@ -16,7 +16,7 @@ export const leadership: {
   eyebrow: { en: 'A MESSAGE FROM OUR LEADERSHIP', ar: 'رسالة من قيادتنا' },
   headline: { en: 'Built on trust. Focused on what comes next.', ar: 'نبني على الثقة. ونتطلع إلى ما هو آتٍ.' },
   message: {
-    en: "At Airzone Group, our aim is to make important journeys and business movements easier to navigate. Through our specialist Logistics and Travel & Tourism businesses, we focus on understanding each customer's needs, coordinating the details carefully and building relationships that last.",
-    ar: 'في مجموعة إيرزون، نهدف إلى جعل الرحلات المهمة وحركة الأعمال أيسر وأوضح. ومن خلال أعمالنا المتخصصة في الخدمات اللوجستية والسفر والسياحة، نحرص على فهم احتياج كل عميل، وتنسيق التفاصيل بعناية، وبناء علاقات تدوم.',
+    en: "At Airzone Group, our aim is to make business cargo movements and important journeys easier to plan and manage. Through Airzone Logistics Services Est and Airzone Travel & Tourism, we focus on understanding each customer's requirement, coordinating customs, transport, storage and travel details carefully, and building relationships founded on clear communication and realistic commitments.",
+    ar: 'في مجموعة إيرزون، نهدف إلى جعل حركة البضائع التجارية والرحلات المهمة أيسر في التخطيط والإدارة. ومن خلال مؤسسة إيرزون للخدمات اللوجستية وإيرزون للسفر والسياحة، نحرص على فهم احتياج كل عميل، وتنسيق تفاصيل الجمارك والنقل والتخزين والسفر بعناية، وبناء علاقات قائمة على التواصل الواضح والالتزامات الواقعية.',
   },
 };

@@ -47,3 +47,17 @@ Thumbs.db
 # Replit
 .cache/
 .local/
+
+# Local tooling output
+/.config/
+
+# QA reports (Playwright results, Lighthouse runs); baselines in scripts/qa/__screenshots__ are committed
+/scripts/qa-reports/
+
+# Environment files (keep secrets out of git)
+.env
+.env.*
+!.env.example
+
+# Vercel (Build Output API files written by `pnpm run vercel-build`, and the CLI project link)
+.vercel

@@ -1,0 +1,19 @@
+{
+  "source": "attached_assets/Scroll_driven_airplane_animation_.mp4",
+  "fps": 24,
+  "band": [
+    85,
+    633
+  ],
+  "clean_from": 105,
+  "d": {
+    "count": 192,
+    "width": 1280,
+    "height": 720
+  },
+  "m": {
+    "count": 96,
+    "width": 720,
+    "height": 720
+  }
+}

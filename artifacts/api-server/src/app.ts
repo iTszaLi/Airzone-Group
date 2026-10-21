@@ -14,6 +14,12 @@ import {
 
 const app: Express = express();
 
+// The API always runs behind one platform proxy (Vercel or the Replit router),
+// which sets X-Forwarded-For. Trusting that single hop gives req.ip the real
+// visitor address, so the enquiry rate limit counts each visitor separately
+// instead of treating every request as coming from the proxy.
+app.set("trust proxy", 1);
+
 app.use(
   pinoHttp({
     logger,
@@ -34,7 +40,22 @@ app.use(
   }),
 );
 app.use(CLERK_PROXY_PATH, clerkProxyMiddleware());
-app.use(cors({ credentials: true, origin: true }));
+
+// The website calls the API on the same origin, which needs no CORS headers.
+// Cross-origin browser access (with credentials) is only granted to origins
+// listed explicitly in ALLOWED_ORIGINS (comma-separated, exact match).
+const allowedOrigins = (process.env.ALLOWED_ORIGINS ?? "")
+  .split(",")
+  .map((origin) => origin.trim())
+  .filter(Boolean);
+app.use(
+  cors({
+    credentials: true,
+    origin: (origin, callback) => {
+      callback(null, !origin || allowedOrigins.includes(origin));
+    },
+  }),
+);
 app.use(helmet());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

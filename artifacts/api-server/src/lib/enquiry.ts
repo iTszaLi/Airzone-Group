@@ -1,4 +1,5 @@
 import { randomUUID } from "node:crypto";
+import { eq } from "drizzle-orm";
 import { db, enquiriesTable, type Enquiry } from "@workspace/db";
 
 type EnquiryKind = "logistics" | "travel" | "contact" | "callback";
@@ -52,4 +53,12 @@ export async function saveEnquiry(input: {
 
   if (!enquiry) throw new Error("Database did not return the saved enquiry");
   return { enquiry, reference };
+}
+
+/** Merge extra fields into a stored enquiry's details (for example the email notification outcome). */
+export async function addEnquiryDetails(enquiry: Enquiry, extra: Record<string, unknown>): Promise<void> {
+  await db
+    .update(enquiriesTable)
+    .set({ details: { ...enquiry.details, ...extra } })
+    .where(eq(enquiriesTable.id, enquiry.id));
 }
